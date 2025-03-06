@@ -1,6 +1,6 @@
 public class GameLose : GameState
 {
-    public GameLose(GameStateMachine _gameStateMachine, string _stateName) : base(_gameStateMachine, _stateName)
+    public GameLose(GameStateMachine _gameStateMachine, Enum.GameState _whichState) : base(_gameStateMachine, _whichState)
     {
     }
 

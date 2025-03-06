@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 class GameManager : MonoBehaviour
@@ -6,11 +7,7 @@ class GameManager : MonoBehaviour
     public static GameManager instance = null;
     public GameStateMachine gameStateMachine;
 
-    [Header("Game States")] 
-    [SerializeField]protected PlayerRound PlayerRound;//玩家回合
-    [SerializeField]protected EnemyRound EnemyRound;//敌人回合
-    [SerializeField]protected GameWin GameWin;
-    [SerializeField]protected GameLose GameLose;
+
 
     [Header("Game Data")] 
     [SerializeField] private int PlayerHP;
@@ -26,22 +23,18 @@ class GameManager : MonoBehaviour
     }
     private void Awake()
     {
-        //实例化所有状态
-        PlayerRound = new PlayerRound (gameStateMachine,"Player Round");
-        EnemyRound = new EnemyRound (gameStateMachine, "Enemy Round");
-        GameWin = new GameWin (gameStateMachine, "Game Win");
-        GameLose = new GameLose (gameStateMachine, "Game Lose");
-        
-        gameStateMachine = new GameStateMachine();
         if (instance == null)
         {
             instance = this;
         }
+        gameStateMachine = new GameStateMachine();
+        gameStateMachine.Initializate(gameStateMachine.PlayerRound);
+        InitializeAllValue();
     }
 
     protected void Start()
     {
-        gameStateMachine.Initializate(PlayerRound);
+        
         gameStateMachine.SynchronousHp(PlayerHP, EnemyHP);
     }
     /// <summary>
@@ -51,16 +44,18 @@ class GameManager : MonoBehaviour
     {
         if (PlayerHP <= 0)
         {
-            gameStateMachine.ChangeState(GameLose);
+            gameStateMachine.ChangeState(gameStateMachine.GameLose);
         }
         else if (EnemyHP <= 0)
         {
-            gameStateMachine.ChangeState(GameWin);
+            gameStateMachine.ChangeState(gameStateMachine.GameWin);
         }
     }
-
+    /// <summary>
+    /// 如果在玩家环节按下结束键，那么自动跳到敌人环节
+    /// </summary>
     public void PressEndRoundButton()
     {
-        gameStateMachine.ChangeState(EnemyRound);
+        gameStateMachine.ChangeState(gameStateMachine.EnemyRound);
     }
 }

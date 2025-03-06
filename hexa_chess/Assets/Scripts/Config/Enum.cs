@@ -10,4 +10,12 @@ public static class Enum
         Grass
     }
 
+    public enum GameState
+    {
+        PlayerRound,
+        EnemyRound,
+        GameWin,
+        GameLose,
+    }
+
 }
