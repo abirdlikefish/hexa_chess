@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
     public GameStateMachine gameStateMachine;
@@ -59,8 +59,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void PressEndRoundButton()
     {
-        
+        gameStateMachine.ChangeState(EnemyRound);
     }
 }
