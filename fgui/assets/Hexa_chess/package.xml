@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="wcwip4ah">
+  <resources>
+    <component id="ittp0" name="PlayView.xml" path="/" exported="true"/>
+    <component id="rznp1" name="ScreenInputBtn.xml" path="/"/>
+  </resources>
+  <publish name=""/>
+</packageDescription>
