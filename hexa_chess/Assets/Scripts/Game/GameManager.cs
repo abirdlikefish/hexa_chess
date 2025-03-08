@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,6 +14,9 @@ class GameManager : MonoBehaviour
     [SerializeField] private int PlayerHP;
     [SerializeField] private int EnemyHP;
 
+    [Header("Unit Management")]
+    [SerializeField] private List<Unit> PlayerUnits;//场上所有我方单位的集合
+    [SerializeField] private List<Unit> EnemyUnits;//场上所有敌方单位的集合
     /// <summary>
     /// 初始化所有数值
     /// </summary>
@@ -57,5 +61,23 @@ class GameManager : MonoBehaviour
     public void PressEndRoundButton()
     {
         gameStateMachine.ChangeState(gameStateMachine.EnemyRound);
+    }
+
+    /// <summary>
+    /// 当我们创建友方单位的时候，把他加入GameManage的List里面管理
+    /// </summary>
+    /// <param name="the new player unit we build"></param>
+    public void AddUnitIntoPlayerUnits(Unit newPlayerUnit)
+    {
+        PlayerUnits.Add(newPlayerUnit);
+    }
+    
+    /// <summary>
+    /// 当友方单位寄了，需要在List中删除
+    /// </summary>
+    /// <param name="The player unit which has diec"></param>
+    public void RemoveUnitInPlayerUnits(Unit playerUnit)
+    {
+        PlayerUnits.Remove(playerUnit);
     }
 }

@@ -15,7 +15,26 @@ public static class Enum
         PlayerRound,
         EnemyRound,
         GameWin,
-        GameLose,
+        GameLose
+    }
+
+    /// <summary>
+    /// 有三种单位：步兵，炮兵，坦克
+    /// </summary>
+    public enum UnitType
+    {
+        Infantry,
+        Artillery,
+        Tank
+    }
+
+    public enum UnitStates
+    {
+        Action,//到自己的回合
+        Move,//移动
+        Attack,//攻击
+        Waiting,//到别人的回合
+        Die,//死了
     }
 
 }
