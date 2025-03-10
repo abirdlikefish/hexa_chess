@@ -7,9 +7,7 @@ class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
     public GameStateMachine gameStateMachine;
-
-
-
+    
     [Header("Game Data")] 
     [SerializeField] private int PlayerHP;
     [SerializeField] private int EnemyHP;
@@ -32,13 +30,14 @@ class GameManager : MonoBehaviour
             instance = this;
         }
         gameStateMachine = new GameStateMachine();
-        gameStateMachine.Initializate(gameStateMachine.PlayerRound);
         InitializeAllValue();
     }
+    
 
     protected void Start()
     {
-        
+        gameStateMachine.BuildState();
+        gameStateMachine.Initializate(gameStateMachine.PlayerRound);
         gameStateMachine.SynchronousHp(PlayerHP, EnemyHP);
     }
     /// <summary>
@@ -79,5 +78,10 @@ class GameManager : MonoBehaviour
     public void RemoveUnitInPlayerUnits(Unit_new playerUnit)
     {
         PlayerUnits.Remove(playerUnit);
+    }
+
+    public void ChangeGameState()
+    {
+        gameStateMachine.currentState.PressTestButton();
     }
 }

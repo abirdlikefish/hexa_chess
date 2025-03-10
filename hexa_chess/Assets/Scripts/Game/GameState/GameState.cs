@@ -13,12 +13,12 @@ public class GameState
 
     public virtual void Enter()
     {
-        Debug.Log("Entered Game State: " + whichState);
+        Debug.Log("Entered Game State: " + whichState.ToString());
     }
 
     public virtual void Exit()
     {
-        Debug.Log("Exited Game State: " + whichState);
+        Debug.Log("Exited Game State: " + whichState.ToString());
     }
 
     public virtual void PressTestButton()

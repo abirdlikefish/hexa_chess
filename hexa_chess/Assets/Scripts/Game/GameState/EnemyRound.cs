@@ -21,6 +21,6 @@ public class EnemyRound : GameState
     
     public override void PressTestButton()
     {
-        gameStateMachine.ChangeState(GameStateMachine.Instance.EnemyRound);
+        gameStateMachine.ChangeState(gameStateMachine.EnemyRound);
     }
 }
