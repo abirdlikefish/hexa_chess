@@ -21,4 +21,8 @@ public class GameState
         Debug.Log("Exited Game State: " + whichState);
     }
 
+    public virtual void PressTestButton()
+    {
+    }
+
 }

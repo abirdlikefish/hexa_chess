@@ -10,11 +10,13 @@ public class Unit_new : MonoBehaviour, IUnit
     public  UnitStates unitState;
     //生命值
     public int currentHp;
+    public int currentAction;//现在的行动点数是多少
 
     public void UnitInitialize(UnitConfig iniConfig)
     {
         unitConfig = iniConfig;
         unitState = UnitStates.Waiting;
+        GameManager.instance.AddUnitIntoPlayerUnits(this);
     }
     public void Attack(IUnit unit)
     {
@@ -28,7 +30,7 @@ public class Unit_new : MonoBehaviour, IUnit
 
     public void Move()
     {
-        
+        //TODO: 这里调用移动的函数，传入当前坐标和当前行动力
     }
 
 }

@@ -165,12 +165,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1338144257}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ddf7d100baa4ab1aaa59e8b0f303735, type: 3}
+  m_Script: {fileID: 11500000, guid: 15584a97720d469b941e31f579fae3da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WinText: {fileID: 0}
-  LoseText: {fileID: 0}
-  EndRoundButton: {fileID: 0}
+  PlayerHP: 0
+  EnemyHP: 0
+  PlayerUnits: []
+  EnemyUnits: []
 --- !u!114 &1338144260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,6 +186,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerHP: 0
   EnemyHP: 0
+  PlayerUnits: []
+  EnemyUnits: []
 --- !u!1 &1574992045
 GameObject:
   m_ObjectHideFlags: 0

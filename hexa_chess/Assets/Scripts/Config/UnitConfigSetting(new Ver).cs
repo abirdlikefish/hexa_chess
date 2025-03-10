@@ -39,4 +39,6 @@ public enum UnitStates
     Waiting,//待命
     Move,//移动
     Attack,//攻击
+    Station,//驻扎
+    Rest,//休息
 }
