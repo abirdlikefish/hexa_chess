@@ -7,6 +7,7 @@ public class midGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("midGameManager Start");
         MapManager.Init();
         UIManager.Init();
     }

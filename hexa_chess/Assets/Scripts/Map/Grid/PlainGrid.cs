@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EmptyGrid : BaseGrid
+public class PlainGrid : BaseGrid
 {
     public override bool Init()
     {
-        gridType = Enum.GridType.Empty;
+        gridType = Enum.GridType.Plain;
         gridPicture = Resources.Load<Sprite>(Const.GridPicturePath[gridType]);
         moveCost = 1.0f;
         atkOffset = 0.0f;
