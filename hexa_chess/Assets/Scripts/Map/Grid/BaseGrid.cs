@@ -8,13 +8,13 @@ public class BaseGrid
     protected Sprite gridPicture;
     public Sprite GridPicture { get { return gridPicture; } }
     // protected GameObject parentGO;
-    public Enum.GridType gridType;
+    public MyEnum.GridType gridType;
     public float moveCost;
     public float atkOffset;
     public float defOffset;
     public virtual bool Init()
     {
-        gridType = Enum.GridType.Empty;
+        gridType = MyEnum.GridType.Empty;
         return true;
     }
 }

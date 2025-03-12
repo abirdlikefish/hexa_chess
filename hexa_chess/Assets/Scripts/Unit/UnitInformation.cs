@@ -10,7 +10,7 @@ public class UnitInformation
     /// <summary>
     /// 是哪种类型
     /// </summary>
-    public Enum.UnitType unitType;
+    public MyEnum.UnitType unitType;
     /// <summary>
     /// 最大生命值
     /// </summary>

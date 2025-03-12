@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Enum
+public static class MyEnum
 {
     public enum GridType
     {
@@ -43,13 +43,19 @@ public static class Enum
         Legal,
         Illegal,
         Empty,
+        HighLight,
     }
     public enum TheOperator
     {
         Player,
         Enemy
     }
-
+    public enum UIView
+    {
+        Empty,
+        PlayView,
+        MapEditView,
+    }
     public enum GameState
     {
         PlayerRound,

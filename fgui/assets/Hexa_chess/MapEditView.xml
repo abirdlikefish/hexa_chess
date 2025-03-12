@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="1920,1080">
+  <displayList>
+    <component id="n2_pdzn" name="ScreenInputBtn" src="rznp1" fileName="ScreenInputBtn.xml" xy="0,0" size="1920,1080">
+      <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
+    </component>
+    <list id="n1_pdzn" name="GridList" xy="218,958" size="76,103" layout="row" defaultItem="ui://wcwip4ahpdzn3"/>
+  </displayList>
+</component>

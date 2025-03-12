@@ -4,5 +4,8 @@
     <component id="n0_rznp" name="ScreenInputBtn" src="rznp1" fileName="ScreenInputBtn.xml" xy="1,0" size="1920,1080">
       <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </component>
+    <component id="n1_iudv" name="TestBtn" src="pdzn3" fileName="Btn.xml" xy="717,1000" size="242,59">
+      <Button icon="ui://wcwip4ahiudva"/>
+    </component>
   </displayList>
 </component>

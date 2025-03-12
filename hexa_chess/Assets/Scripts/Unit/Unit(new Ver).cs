@@ -16,7 +16,6 @@ public class Unit_new : MonoBehaviour, IUnit
     {
         unitConfig = iniConfig;
         unitState = UnitStates.Waiting;
-        GameManager.instance.AddUnitIntoPlayerUnits(this);
     }
     public void Attack(IUnit unit)
     {

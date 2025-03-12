@@ -3,9 +3,9 @@ using UnityEngine;
 public class GameState
 {
     protected GameStateMachine gameStateMachine;
-    protected Enum.GameState whichState;
+    protected MyEnum.GameState whichState;
 
-    public GameState(GameStateMachine _gameStateMachine, Enum.GameState _whichState)
+    public GameState(GameStateMachine _gameStateMachine, MyEnum.GameState _whichState)
     {
         gameStateMachine = _gameStateMachine;
         whichState = _whichState;

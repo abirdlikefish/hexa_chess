@@ -9,9 +9,9 @@ public class UnitState
     /// <summary>
     /// 枚举状态
     /// </summary>
-    public Enum.UnitStates state;
+    public MyEnum.UnitStates state;
 
-    public UnitState(Unit whichUnit, Enum.UnitStates state)
+    public UnitState(Unit whichUnit, MyEnum.UnitStates state)
     {
         WhichUnit = whichUnit;
         this.state = state;
