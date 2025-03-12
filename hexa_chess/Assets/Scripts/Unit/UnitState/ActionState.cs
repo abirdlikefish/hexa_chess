@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ActionState : UnitState
 {
-    public ActionState(Unit whichUnit, Enum.UnitStates state) : base(whichUnit, state)
+    public ActionState(Unit whichUnit, MyEnum.UnitStates state) : base(whichUnit, state)
     {
     }
 

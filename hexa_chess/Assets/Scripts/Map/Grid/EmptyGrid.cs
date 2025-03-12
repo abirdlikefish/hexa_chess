@@ -6,10 +6,11 @@ public class EmptyGrid : BaseGrid
 {
     public override bool Init()
     {
-        parentGO = new GameObject(Enum.GridType.Empty.ToString());
-        gridType = Enum.GridType.Empty;
-        goMap = new Dictionary<Vector2Int, GameObject>();
-        gridPicture = Resources.Load<GameObject>(Const.GridPicturePath[gridType]);
+        gridType = MyEnum.GridType.Empty;
+        gridPicture = Resources.Load<Sprite>(MyConst.GridPicturePath[gridType]);
+        moveCost = 1.0f;
+        atkOffset = 0.0f;
+        defOffset = 0.0f;
         return true;
     }
 }

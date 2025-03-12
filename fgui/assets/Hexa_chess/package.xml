@@ -3,6 +3,15 @@
   <resources>
     <component id="ittp0" name="PlayView.xml" path="/" exported="true"/>
     <component id="rznp1" name="ScreenInputBtn.xml" path="/"/>
+    <component id="pdzn2" name="MapEditView.xml" path="/" exported="true"/>
+    <component id="pdzn3" name="Btn.xml" path="/"/>
+    <image id="pdzn4" name="河.png" path="/Resources/Grid/"/>
+    <image id="pdzn5" name="林.png" path="/Resources/Grid/"/>
+    <image id="pdzn6" name="平.png" path="/Resources/Grid/"/>
+    <image id="pdzn7" name="丘.png" path="/Resources/Grid/"/>
+    <image id="pdzn8" name="山.png" path="/Resources/Grid/"/>
+    <image id="pdzn9" name="洼.png" path="/Resources/Grid/"/>
+    <image id="iudva" name="testbutton.png" path="/Resources/"/>
   </resources>
   <publish name=""/>
 </packageDescription>
