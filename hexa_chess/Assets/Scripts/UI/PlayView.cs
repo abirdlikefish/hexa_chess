@@ -19,21 +19,23 @@ public class PlayView : IFguiView
     private void InitEvent()
     {
         screenInputBtn.onClick.Add(TrySelectGrid);
+        screenInputBtn.onRightClick.Add(TrySelectGrid_right);
     }
 
     private void TrySelectGrid(EventContext context)
     {
-        // 获取点击事件的输入事件
         InputEvent inputEvent = context.inputEvent;
-
-        // 获取点击位置的屏幕坐标
         Vector2 screenPosition = new Vector2(inputEvent.x, Screen.height - inputEvent.y);
-
-        // 将屏幕坐标转换为世界坐标
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, -Camera.main.transform.position.z));
-
-        Debug.Log("Button clicked at world position: " + worldPosition);
-        // MapManager.Pos_To_Coord(worldPosition);
-        MapManager.Instance.SetGrid( MapManager.Pos_To_Coord(worldPosition) , Enum.GridType.Empty);
+        Vector2Int coord = MapManager.Pos_To_Coord(worldPosition);
+        MapManager.Instance.SearchMovableArea(Enum.TheOperator.Player , coord , 5);
+    }
+    private void TrySelectGrid_right(EventContext context)
+    {
+        InputEvent inputEvent = context.inputEvent;
+        Vector2 screenPosition = new Vector2(inputEvent.x, Screen.height - inputEvent.y);
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, -Camera.main.transform.position.z));
+        Vector2Int coord = MapManager.Pos_To_Coord(worldPosition);
+        MapManager.Instance.ChangeVirtualField(Enum.TheOperator.Player , coord , true);
     }
 }
