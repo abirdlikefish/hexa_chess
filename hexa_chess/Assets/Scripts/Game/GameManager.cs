@@ -12,9 +12,11 @@ class GameManager : MonoBehaviour
     [SerializeField] private int PlayerHP;
     [SerializeField] private int EnemyHP;
 
-    [Header("Unit Management")]
+    /*
+     [Header("Unit Management")]
     [SerializeField] private List<Unit_new> PlayerUnits;//场上所有我方单位的集合
     [SerializeField] private List<Unit_new> EnemyUnits;//场上所有敌方单位的集合
+    */
     /// <summary>
     /// 初始化所有数值
     /// </summary>
@@ -62,6 +64,7 @@ class GameManager : MonoBehaviour
         gameStateMachine.ChangeState(gameStateMachine.EnemyRound);
     }
 
+    /*
     /// <summary>
     /// 当我们创建友方单位的时候，把他加入GameManage的List里面管理
     /// </summary>
@@ -79,6 +82,7 @@ class GameManager : MonoBehaviour
     {
         PlayerUnits.Remove(playerUnit);
     }
+    */
 
     public void ChangeGameState()
     {
