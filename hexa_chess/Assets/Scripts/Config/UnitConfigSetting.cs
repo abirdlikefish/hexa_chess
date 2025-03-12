@@ -36,9 +36,13 @@ public enum UnitType
 
 public enum UnitStates
 {
-    Waiting,//待命
-    Move,//移动
-    Attack,//攻击
+    Able,//未操作过
+    Disable,//已操作过
+}
+
+public enum OprationBuff
+{
+    Normal,//常态
     Station,//驻扎
-    Rest,//休息
+    Rest,//休整
 }
