@@ -13,4 +13,5 @@ public class GameLose : GameState
     {
         base.Exit();
     }
+    
 }

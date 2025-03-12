@@ -18,10 +18,9 @@ public class EnemyRound : GameState
     {
         base.Exit();
     }
-
-    public IEnumerator TestForStateMachine()
+    
+    public override void PressTestButton()
     {
-        Debug.Log("Enemies are in action");
-        yield return new WaitForSeconds(3.0f);
+        gameStateMachine.ChangeState(gameStateMachine.EnemyRound);
     }
 }

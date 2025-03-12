@@ -15,5 +15,10 @@ public class PlayerRound : GameState
     {
         base.Exit();
     }
+
+    public override void PressTestButton()
+    {
+        gameStateMachine.ChangeState(gameStateMachine.EnemyRound);
+    }
     
 }
