@@ -1,21 +1,20 @@
 using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
     public GameStateMachine gameStateMachine;
-
-    [Header("Game States")] 
-    [SerializeField]protected PlayerRound PlayerRound;//玩家回合
-    [SerializeField]protected EnemyRound EnemyRound;//敌人回合
-    [SerializeField]protected GameWin GameWin;
-    [SerializeField]protected GameLose GameLose;
-
+    
     [Header("Game Data")] 
     [SerializeField] private int PlayerHP;
     [SerializeField] private int EnemyHP;
 
+    [Header("Unit Management")]
+    [SerializeField] private List<Unit_new> PlayerUnits;//场上所有我方单位的集合
+    [SerializeField] private List<Unit_new> EnemyUnits;//场上所有敌方单位的集合
     /// <summary>
     /// 初始化所有数值
     /// </summary>
@@ -26,22 +25,19 @@ public class GameManager : MonoBehaviour
     }
     private void Awake()
     {
-        //实例化所有状态
-        PlayerRound = new PlayerRound (gameStateMachine,"Player Round");
-        EnemyRound = new EnemyRound (gameStateMachine, "Enemy Round");
-        GameWin = new GameWin (gameStateMachine, "Game Win");
-        GameLose = new GameLose (gameStateMachine, "Game Lose");
-        
-        gameStateMachine = new GameStateMachine();
         if (instance == null)
         {
             instance = this;
         }
+        gameStateMachine = new GameStateMachine();
+        InitializeAllValue();
     }
+    
 
     protected void Start()
     {
-        gameStateMachine.Initializate(PlayerRound);
+        gameStateMachine.BuildState();
+        gameStateMachine.Initializate(gameStateMachine.PlayerRound);
         gameStateMachine.SynchronousHp(PlayerHP, EnemyHP);
     }
     /// <summary>
@@ -51,16 +47,41 @@ public class GameManager : MonoBehaviour
     {
         if (PlayerHP <= 0)
         {
-            gameStateMachine.ChangeState(GameLose);
+            gameStateMachine.ChangeState(gameStateMachine.GameLose);
         }
         else if (EnemyHP <= 0)
         {
-            gameStateMachine.ChangeState(GameWin);
+            gameStateMachine.ChangeState(gameStateMachine.GameWin);
         }
     }
-
-    private void Update()
+    /// <summary>
+    /// 如果在玩家环节按下结束键，那么自动跳到敌人环节
+    /// </summary>
+    public void PressEndRoundButton()
     {
-        
+        gameStateMachine.ChangeState(gameStateMachine.EnemyRound);
+    }
+
+    /// <summary>
+    /// 当我们创建友方单位的时候，把他加入GameManage的List里面管理
+    /// </summary>
+    /// <param name="the new player unit we build"></param>
+    public void AddUnitIntoPlayerUnits(Unit_new newPlayerUnit)
+    {
+        PlayerUnits.Add(newPlayerUnit);
+    }
+    
+    /// <summary>
+    /// 当友方单位寄了，需要在List中删除
+    /// </summary>
+    /// <param name="The player unit which has diec"></param>
+    public void RemoveUnitInPlayerUnits(Unit_new playerUnit)
+    {
+        PlayerUnits.Remove(playerUnit);
+    }
+
+    public void ChangeGameState()
+    {
+        gameStateMachine.currentState.PressTestButton();
     }
 }

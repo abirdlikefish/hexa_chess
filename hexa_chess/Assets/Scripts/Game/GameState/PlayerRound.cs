@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerRound : GameState
 {
-    public PlayerRound(GameStateMachine _gameStateMachine, string _stateName) : base(_gameStateMachine, _stateName)
+    public PlayerRound(GameStateMachine _gameStateMachine, MyEnum.GameState _whichState) : base(_gameStateMachine, _whichState)
     {
     }
 
@@ -14,6 +14,11 @@ public class PlayerRound : GameState
     public override void Exit()
     {
         base.Exit();
+    }
+
+    public override void PressTestButton()
+    {
+        gameStateMachine.ChangeState(gameStateMachine.EnemyRound);
     }
     
 }

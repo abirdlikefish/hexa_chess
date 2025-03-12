@@ -3,22 +3,26 @@ using UnityEngine;
 public class GameState
 {
     protected GameStateMachine gameStateMachine;
-    private string stateName;
+    protected MyEnum.GameState whichState;
 
-    public GameState(GameStateMachine _gameStateMachine, string _stateName)
+    public GameState(GameStateMachine _gameStateMachine, MyEnum.GameState _whichState)
     {
         gameStateMachine = _gameStateMachine;
-        stateName = _stateName;
+        whichState = _whichState;
     }
 
     public virtual void Enter()
     {
-        Debug.Log("Entered Game State: " + stateName);
+        Debug.Log("Entered Game State: " + whichState.ToString());
     }
 
     public virtual void Exit()
     {
-        Debug.Log("Exited Game State: " + stateName);
+        Debug.Log("Exited Game State: " + whichState.ToString());
+    }
+
+    public virtual void PressTestButton()
+    {
     }
 
 }

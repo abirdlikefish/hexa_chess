@@ -1,11 +1,14 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyRound : GameState
 {
-    public EnemyRound(GameStateMachine _gameStateMachine, string _stateName) : base(_gameStateMachine, _stateName)
+    public EnemyRound(GameStateMachine _gameStateMachine, MyEnum.GameState _whichState) : base(_gameStateMachine, _whichState)
     {
     }
+
     public override void Enter()
     {
         base.Enter();
@@ -14,5 +17,10 @@ public class EnemyRound : GameState
     public override void Exit()
     {
         base.Exit();
+    }
+    
+    public override void PressTestButton()
+    {
+        gameStateMachine.ChangeState(gameStateMachine.EnemyRound);
     }
 }

@@ -4,16 +4,50 @@ using UnityEngine;
 
 public class GameStateMachine
 {
-    public GameState currentState { get; private set; }
+    private static GameStateMachine instance;
+
+    public static GameStateMachine Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new GameStateMachine();
+            }
+
+            return instance;
+        }
+    }
+
+    public GameState currentState { get; private set; } = null;
+
     [Header("Game Data")] 
     public int playerCurrentHp;
     public int enemyCurrentHp;
+    
+    [Header("Game States")] 
+    public PlayerRound PlayerRound; //玩家回合
+    public EnemyRound EnemyRound; //敌人回合
+    public GameWin GameWin;
+    public GameLose GameLose;
     
     public void Initializate(GameState startState)
     {
         currentState = startState;
         currentState.Enter();
     }
+    
+    /// <summary>
+    /// 实例化所有Game State
+    /// </summary>
+    public void BuildState()
+    {
+        PlayerRound = new PlayerRound(this, MyEnum.GameState.PlayerRound);
+        EnemyRound = new EnemyRound(this, MyEnum.GameState.EnemyRound);
+        GameWin = new GameWin(this, MyEnum.GameState.GameWin);
+        GameLose = new GameLose(this, MyEnum.GameState.GameLose);
+    }
+
     /// <summary>
     /// 同步StateMachine和GameManager里面的数值
     /// </summary>
@@ -24,6 +58,7 @@ public class GameStateMachine
         playerCurrentHp = newPlayerHp;
         enemyCurrentHp = newEnemyHp;
     }
+    
 
     public void ChangeState(GameState newState)
     {
@@ -31,6 +66,4 @@ public class GameStateMachine
         currentState = newState;
         currentState.Enter();
     }
-    
-    
 }
