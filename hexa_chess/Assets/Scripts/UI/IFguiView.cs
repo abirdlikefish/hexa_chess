@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IFguiView  
+public interface IFguiView
 {
-    bool Init();
+    IFguiView Init();
+    void Show();
+    void Hide();
 }

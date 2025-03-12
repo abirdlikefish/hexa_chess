@@ -8,28 +8,28 @@ public class GridInfo : MonoBehaviour
     private static Sprite fogSprite;
     private static Sprite uiSprite;
     private GameObject unit;
-    private Dictionary<Enum.GridSpriteLayer,SpriteRenderer> spriteLayer;
-    private Enum.GridType gridType;
+    private Dictionary<MyEnum.GridSpriteLayer,SpriteRenderer> spriteLayer;
+    private MyEnum.GridType gridType;
     private Vector2Int gridPosition;
     private BaseGrid baseGrid;
-    private Dictionary<Enum.TheOperator, GridState> gridState;
-    public Enum.GridUIState currentUIState;
+    private Dictionary<MyEnum.TheOperator, GridState> gridState;
+    public MyEnum.GridUIState currentUIState;
     public class GridState
     {
         private GridState() { }
-        private Enum.TheOperator theOperator;
+        private MyEnum.TheOperator theOperator;
         private GridInfo gridInfo;
         public GridState(GridInfo gridInfo)
         {
             this.gridInfo = gridInfo;
-            currentState = Enum.GridState.UnInit;
+            currentState = MyEnum.GridState.UnInit;
             atkOffset = 0;
             defOffset = 0;
             moveOffset = 0;
             controlledCnt = 0;
             watchedCnt = 0;
         }
-        public Enum.GridState currentState;
+        public MyEnum.GridState currentState;
         public float atkOffset;
         public float defOffset;
         public float moveOffset;
@@ -43,44 +43,44 @@ public class GridInfo : MonoBehaviour
                 watchedCnt = value;
                 if(watchedCnt > 0)
                 {
-                    ChangeState(Enum.GridState.Show);
+                    ChangeState(MyEnum.GridState.Show);
                 }
                 else
                 {
-                    ChangeState(Enum.GridState.Hide);
+                    ChangeState(MyEnum.GridState.Hide);
                 }
             }
         }
-        public void ChangeState(Enum.GridState state)
+        public void ChangeState(MyEnum.GridState state)
         {
             if(currentState == state) return;
             currentState = state;
-            if(theOperator == Enum.TheOperator.Player)
+            if(theOperator == MyEnum.TheOperator.Player)
             {
                 gridInfo.ChangeSpriteLayer(state);
             }
         }
-        public GridState Init(Enum.TheOperator theOperator)
+        public GridState Init(MyEnum.TheOperator theOperator)
         {
             this.theOperator = theOperator;
             return this;
         }
     }
-    private void ChangeSpriteLayer(Enum.GridState state)
+    private void ChangeSpriteLayer(MyEnum.GridState state)
     {
-        spriteLayer[Enum.GridSpriteLayer.Base].enabled = false;
-        spriteLayer[Enum.GridSpriteLayer.Fog].enabled = false;
-        spriteLayer[Enum.GridSpriteLayer.UI].enabled = false;
+        spriteLayer[MyEnum.GridSpriteLayer.Base].enabled = false;
+        spriteLayer[MyEnum.GridSpriteLayer.Fog].enabled = false;
+        spriteLayer[MyEnum.GridSpriteLayer.UI].enabled = false;
         switch (state)
         {
-            case Enum.GridState.Fog:
-                spriteLayer[Enum.GridSpriteLayer.Fog].enabled = true;
+            case MyEnum.GridState.Fog:
+                spriteLayer[MyEnum.GridSpriteLayer.Fog].enabled = true;
                 break;
-            case Enum.GridState.Show:
-                spriteLayer[Enum.GridSpriteLayer.Base].enabled = true;
+            case MyEnum.GridState.Show:
+                spriteLayer[MyEnum.GridSpriteLayer.Base].enabled = true;
                 break;
-            case Enum.GridState.Hide:
-                spriteLayer[Enum.GridSpriteLayer.UI].enabled = true;
+            case MyEnum.GridState.Hide:
+                spriteLayer[MyEnum.GridSpriteLayer.UI].enabled = true;
                 break;
         }
     }
@@ -102,44 +102,44 @@ public class GridInfo : MonoBehaviour
         gridInfo.gridPosition = gridPosition;
         gridInfo.gridType = baseGrid.gridType;
 
-        gridInfo.spriteLayer = new Dictionary<Enum.GridSpriteLayer, SpriteRenderer>();
-        foreach (Enum.GridSpriteLayer layer in Enum.GridSpriteLayer.GetValues(typeof(Enum.GridSpriteLayer)))
+        gridInfo.spriteLayer = new Dictionary<MyEnum.GridSpriteLayer, SpriteRenderer>();
+        foreach (MyEnum.GridSpriteLayer layer in MyEnum.GridSpriteLayer.GetValues(typeof(MyEnum.GridSpriteLayer)))
         {
             GameObject midGo = new GameObject(layer.ToString());
             midGo.transform.SetParent(go.transform);
             midGo.transform.localPosition = Vector3.zero;
             gridInfo.spriteLayer[layer] = midGo.AddComponent<SpriteRenderer>();
             gridInfo.spriteLayer[layer].enabled = false;
-            gridInfo.spriteLayer[layer].sortingLayerName = Const.GridSpriteSortingLayer[layer];
+            gridInfo.spriteLayer[layer].sortingLayerName = MyConst.GridSpriteSortingLayer[layer];
         }
-        gridInfo.spriteLayer[Enum.GridSpriteLayer.Base].sprite = baseGrid.GridPicture;
-        gridInfo.spriteLayer[Enum.GridSpriteLayer.Fog].sprite = fogSprite;
-        gridInfo.spriteLayer[Enum.GridSpriteLayer.UI].sprite = uiSprite;
+        gridInfo.spriteLayer[MyEnum.GridSpriteLayer.Base].sprite = baseGrid.GridPicture;
+        gridInfo.spriteLayer[MyEnum.GridSpriteLayer.Fog].sprite = fogSprite;
+        gridInfo.spriteLayer[MyEnum.GridSpriteLayer.UI].sprite = uiSprite;
         // gridInfo.spriteLayer[Enum.GridSpriteLayer.UI].enabled = true;
-        gridInfo.currentUIState = Enum.GridUIState.Hide;
-        gridInfo.ChangeUIState(Enum.GridUIState.Hide);
+        gridInfo.currentUIState = MyEnum.GridUIState.Hide;
+        gridInfo.ChangeUIState(MyEnum.GridUIState.Hide);
 
 
-        gridInfo.gridState = new Dictionary<Enum.TheOperator, GridState>();
-        foreach (Enum.TheOperator theOperator in Enum.TheOperator.GetValues(typeof(Enum.TheOperator)))
+        gridInfo.gridState = new Dictionary<MyEnum.TheOperator, GridState>();
+        foreach (MyEnum.TheOperator theOperator in MyEnum.TheOperator.GetValues(typeof(MyEnum.TheOperator)))
         {
             gridInfo.gridState[theOperator] = new GridState(gridInfo).Init(theOperator);
-            gridInfo.gridState[theOperator].ChangeState(Enum.GridState.Fog);
+            gridInfo.gridState[theOperator].ChangeState(MyEnum.GridState.Fog);
         }
         return gridInfo;
     }
     
-    public void ChangeState(Enum.TheOperator theOperator, Enum.GridState state)
+    public void ChangeState(MyEnum.TheOperator theOperator, MyEnum.GridState state)
     {
         gridState[theOperator].ChangeState(state);
     }
 
-    public void ChangeUIState(Enum.GridUIState state)
+    public void ChangeUIState(MyEnum.GridUIState state)
     {
         if(currentUIState == state) return;
         currentUIState = state;
-        spriteLayer[Enum.GridSpriteLayer.UI].enabled = (state != Enum.GridUIState.Hide);
-        spriteLayer[Enum.GridSpriteLayer.UI].color = Const.GridUIColor[state];
+        spriteLayer[MyEnum.GridSpriteLayer.UI].enabled = (state != MyEnum.GridUIState.Hide);
+        spriteLayer[MyEnum.GridSpriteLayer.UI].color = MyConst.GridUIColor[state];
     }
     public bool RemoveUnit()
     {
@@ -150,7 +150,7 @@ public class GridInfo : MonoBehaviour
         unit = null;
         return true;
     }
-    public bool AddUnit(GameObject unit , Enum.TheOperator theOperator)
+    public bool AddUnit(GameObject unit , MyEnum.TheOperator theOperator)
     {
         if(this.unit != null)
         {
@@ -159,33 +159,33 @@ public class GridInfo : MonoBehaviour
         this.unit = unit;
         return true;
     }
-    public bool ChangeControlArea(Enum.TheOperator theOperator , bool isAdd)
+    public bool ChangeControlArea(MyEnum.TheOperator theOperator , bool isAdd)
     {
-        foreach(Enum.TheOperator midOperator in Enum.TheOperator.GetValues(typeof(Enum.TheOperator)))
+        foreach(MyEnum.TheOperator midOperator in MyEnum.TheOperator.GetValues(typeof(MyEnum.TheOperator)))
         {
             if(midOperator == theOperator) continue;
             gridState[midOperator].controlledCnt += isAdd ? 1 : -1;
         }
         return true;
     }
-    public bool ChangeVirtualField(Enum.TheOperator theOperator , bool isAdd)
+    public bool ChangeVirtualField(MyEnum.TheOperator theOperator , bool isAdd)
     {
         gridState[theOperator].WatchedCnt += isAdd ? 1 : -1;
         return true;
     }
-    public float GetMoveCost(Enum.TheOperator theOperator)
+    public float GetMoveCost(MyEnum.TheOperator theOperator)
     {
-        if(gridState[theOperator].currentState != Enum.GridState.Show || baseGrid.moveCost < 0 || (unit != null /* && unit.theOperator != theOperator*/))
+        if(gridState[theOperator].currentState != MyEnum.GridState.Show || baseGrid.moveCost < 0 || (unit != null /* && unit.theOperator != theOperator*/))
         {
             return -1;
         }
         return (baseGrid.moveCost + gridState[theOperator].moveOffset) * (gridState[theOperator].controlledCnt > 0 ? 2 : 1);
     }
-    public float GetAtkOffset(Enum.TheOperator theOperator)
+    public float GetAtkOffset(MyEnum.TheOperator theOperator)
     {
         return baseGrid.atkOffset + gridState[theOperator].atkOffset;
     }
-    public float GetDefOffset(Enum.TheOperator theOperator)
+    public float GetDefOffset(MyEnum.TheOperator theOperator)
     {
         return baseGrid.defOffset + gridState[theOperator].defOffset;
     }

@@ -6,8 +6,8 @@ public class RoadGrid : BaseGrid
 {
     public override bool Init()
     {
-        gridType = Enum.GridType.Road;
-        gridPicture = Resources.Load<Sprite>(Const.GridPicturePath[gridType]);
+        gridType = MyEnum.GridType.Road;
+        gridPicture = Resources.Load<Sprite>(MyConst.GridPicturePath[gridType]);
         moveCost = 0.5f;
         atkOffset = 0.0f;
         defOffset = 0.0f;
