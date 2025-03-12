@@ -6,7 +6,8 @@ using FairyGUI;
 public class PlayView : IFguiView
 {
     GComponent playView ;
-    GButton screenInputBtn;
+    // GButton screenInputBtn;
+    GButton testBtn;
     List<IFguiCom> fguiComs;
     public IFguiView Init()
     {
@@ -15,6 +16,7 @@ public class PlayView : IFguiView
         {
             new ScreenInputBtn().Create(playView)
         };
+        testBtn = playView.GetChild("TestBtn").asButton;
         InitEvent();
         return this;
     }
@@ -29,6 +31,7 @@ public class PlayView : IFguiView
 
     private void InitEvent()
     {
+        testBtn.onClick.Add(() => MyEvent.OnClick_testBtn?.Invoke());
         // screenInputBtn.onClick.Add(TrySelectGrid);
         // screenInputBtn.onRightClick.Add(TrySelectGrid_right);
     }

@@ -31,14 +31,24 @@ class GameManager : MonoBehaviour
         }
         gameStateMachine = new GameStateMachine();
         InitializeAllValue();
+
+        MapManager.Init();
+        UIManager.Init();
+
     }
     
 
     protected void Start()
     {
         gameStateMachine.BuildState();
-        gameStateMachine.Initializate(gameStateMachine.PlayerRound);
+        // gameStateMachine.Initializate(gameStateMachine.PlayerRound);
+        gameStateMachine.Initializate(MyEnum.GameState.PlayerRound);
         gameStateMachine.SynchronousHp(PlayerHP, EnemyHP);
+
+        MapManager.Instance.CreateMap(10);
+        UIManager.Instance.ShowView(MyEnum.UIView.PlayView);
+
+        MyEvent.OnClick_testBtn += ChangeGameState;
     }
     /// <summary>
     /// 判断是否需要结束游戏，每次更新大本营血量的时候都调用
@@ -47,13 +57,17 @@ class GameManager : MonoBehaviour
     {
         if (PlayerHP <= 0)
         {
-            gameStateMachine.ChangeState(gameStateMachine.GameLose);
+            // gameStateMachine.ChangeState(gameStateMachine.GameLose);
+            gameStateMachine.ChangeState(MyEnum.GameState.GameLose);
         }
         else if (EnemyHP <= 0)
         {
-            gameStateMachine.ChangeState(gameStateMachine.GameWin);
+            // gameStateMachine.ChangeState(gameStateMachine.GameWin);
+            gameStateMachine.ChangeState(MyEnum.GameState.GameWin);
         }
     }
+
+/* 这个丢到具体的GameState里面去
     /// <summary>
     /// 如果在玩家环节按下结束键，那么自动跳到敌人环节
     /// </summary>
@@ -61,6 +75,7 @@ class GameManager : MonoBehaviour
     {
         gameStateMachine.ChangeState(gameStateMachine.EnemyRound);
     }
+*/
 
     /// <summary>
     /// 当我们创建友方单位的时候，把他加入GameManage的List里面管理
@@ -85,3 +100,4 @@ class GameManager : MonoBehaviour
         gameStateMachine.currentState.PressTestButton();
     }
 }
+
