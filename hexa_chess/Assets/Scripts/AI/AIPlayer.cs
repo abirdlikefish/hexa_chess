@@ -116,6 +116,7 @@ public class AIPlayer
     // todo: unit位置修改
     private List<Vector2Int> GetReachablePos(Unit unit)
     {
-       return MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Enemy, new Vector2Int(), unit.CurrentAction);
+    //    return MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Enemy, new Vector2Int(), unit.CurrentAction);
+       return MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Enemy, new Vector2Int(), 5);
     }
 }
