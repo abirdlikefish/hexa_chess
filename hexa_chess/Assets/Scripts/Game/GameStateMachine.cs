@@ -26,18 +26,10 @@ public class GameStateMachine
     public int playerCurrentHp;
     public int enemyCurrentHp;
     
-    // [Header("Game States")] 
-    // public PlayerRound PlayerRound; //玩家回合
-    // public EnemyRound EnemyRound; //敌人回合
-    // public GameWin GameWin;
-    // public GameLose GameLose;
-    
     public void Initializate(MyEnum.GameState startState)
     {
         currentState = null;
         ChangeState(startState);
-        // currentState = startState;
-        // currentState.Enter();
     }
     
     /// <summary>
@@ -50,11 +42,6 @@ public class GameStateMachine
         stateList.Add(MyEnum.GameState.EnemyRound, new EnemyRound(this, MyEnum.GameState.EnemyRound));
         stateList.Add(MyEnum.GameState.GameWin, new GameWin(this, MyEnum.GameState.GameWin));
         stateList.Add(MyEnum.GameState.GameLose, new GameLose(this, MyEnum.GameState.GameLose));
-
-        // PlayerRound = new PlayerRound(this, MyEnum.GameState.PlayerRound);
-        // EnemyRound = new EnemyRound(this, MyEnum.GameState.EnemyRound);
-        // GameWin = new GameWin(this, MyEnum.GameState.GameWin);
-        // GameLose = new GameLose(this, MyEnum.GameState.GameLose);
     }
 
     /// <summary>
