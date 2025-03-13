@@ -8,6 +8,7 @@ class GameManager : MonoBehaviour
     public static GameManager instance = null;
     public GameStateMachine gameStateMachine;
     
+    
     [Header("Game Data")] 
     [SerializeField] private int PlayerHP;
     [SerializeField] private int EnemyHP;
@@ -32,6 +33,7 @@ class GameManager : MonoBehaviour
             instance = this;
         }
         gameStateMachine = new GameStateMachine();
+        
         InitializeAllValue();
 
         MapManager.Init();
@@ -43,13 +45,10 @@ class GameManager : MonoBehaviour
     protected void Start()
     {
         gameStateMachine.BuildState();
-        // gameStateMachine.Initializate(gameStateMachine.PlayerRound);
         gameStateMachine.Initializate(MyEnum.GameState.PlayerRound);
         gameStateMachine.SynchronousHp(PlayerHP, EnemyHP);
-
         MapManager.Instance.CreateMap(10);
         UIManager.Instance.ShowView(MyEnum.UIView.PlayView);
-
         MyEvent.OnClick_testBtn += ChangeGameState;
     }
     /// <summary>
@@ -69,7 +68,12 @@ class GameManager : MonoBehaviour
         }
     }
 
-/* 这个丢到具体的GameState里面去
+    public void Update()
+    {
+        gameStateMachine.currentState.Update();
+    }
+
+    /* 这个丢到具体的GameState里面去
     /// <summary>
     /// 如果在玩家环节按下结束键，那么自动跳到敌人环节
     /// </summary>

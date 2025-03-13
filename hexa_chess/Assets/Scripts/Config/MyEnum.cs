@@ -83,4 +83,13 @@ public static class MyEnum
         Die,//死了
     }
 
+    public enum PlayerRoundState
+    {
+        Idle,//默认等待
+        WaitInput_WhichAction,//选中兵之后等待选哪种行动
+        WaitInput_Position,//选中移动的话需要选地块
+        WaitInput_Enemy,//选中攻击的话需要选打谁
+        UnitActing,//兵在行动
+    }
+
 }
