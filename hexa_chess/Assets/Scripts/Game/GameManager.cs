@@ -32,7 +32,8 @@ class GameManager : MonoBehaviour
         {
             instance = this;
         }
-        gameStateMachine = new GameStateMachine();
+        // gameStateMachine = new GameStateMachine();
+        gameStateMachine = GameStateMachine.Instance;
         
         InitializeAllValue();
 

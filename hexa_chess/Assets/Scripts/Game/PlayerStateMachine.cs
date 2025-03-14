@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class PlayerStateMachine
 {
-    private static PlayerStateMachine instance;
+    // private static PlayerStateMachine instance;
 
-    public static PlayerStateMachine Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new PlayerStateMachine();
-            }
+    // public static PlayerStateMachine Instance
+    // {
+    //     get
+    //     {
+    //         if (instance == null)
+    //         {
+    //             instance = new PlayerStateMachine();
+    //         }
 
-            return instance;
-        }
-    }
+    //         return instance;
+    //     }
+    // }
     public PlayerRoundState currentState { get; private set; } = null;
     private Dictionary<MyEnum.PlayerRoundState, PlayerRoundState> stateList = null;
+    public Vector2Int? selectedGrid;
+    public IUnit selectedUnit;
 
     public void BuildState()
     {
@@ -39,9 +41,14 @@ public class PlayerStateMachine
 
     public void ChangeState(MyEnum.PlayerRoundState _newState)
     {
-        currentState.Exit();
+        currentState?.Exit();
         currentState = stateList[_newState];
         currentState.Enter();
+    }
+    public void Exit()
+    {
+        currentState?.Exit();
+        currentState = null;
     }
     
 }
