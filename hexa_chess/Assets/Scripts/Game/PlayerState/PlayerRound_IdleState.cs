@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerRound_IdleState : PlayerRoundState
 {
@@ -29,7 +30,11 @@ public class PlayerRound_IdleState : PlayerRoundState
 
     public override void Update()
     {
-        
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            SelectGrid(new Vector2Int((int)(mousePosition.x), (int)(mousePosition.y)));
+        }
     }
 
     public void SelectGrid(Vector2Int? coord)
