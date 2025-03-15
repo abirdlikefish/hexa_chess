@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerRound_IdleState : PlayerRoundState
 {
@@ -29,17 +30,13 @@ public class PlayerRound_IdleState : PlayerRoundState
 
     public override void Update()
     {
-        if (MyEvent.OnGridClick_left != null)
-        {
-            
-        }
     }
 
     public void SelectGrid(Vector2Int? coord)
     {
         if(coord == null)   return;
         playerStateMachine.selectedUnit = MapManager.Instance.GetUnit(coord.Value);
-        if(playerStateMachine.selectedUnit == null)    return;
+        if (playerStateMachine.selectedUnit == null)   return;
     // playerStateMachine.selectedUnit = new Unit();
         playerStateMachine.selectedGrid = coord;
         playerStateMachine.ChangeState(MyEnum.PlayerRoundState.WaitInput_WhichAction);
