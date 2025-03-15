@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyRound : GameState
 {
-    public EnemyRound(GameStateMachine _gameStateMachine, Enum.GameState _whichState) : base(_gameStateMachine, _whichState)
+    public EnemyRound(GameStateMachine _gameStateMachine, MyEnum.GameState _whichState) : base(_gameStateMachine, _whichState)
     {
     }
 
@@ -18,10 +18,10 @@ public class EnemyRound : GameState
     {
         base.Exit();
     }
-
-    public IEnumerator TestForStateMachine()
+    
+    public override void PressTestButton()
     {
-        Debug.Log("Enemies are in action");
-        yield return new WaitForSeconds(3.0f);
+        // gameStateMachine.ChangeState(gameStateMachine.EnemyRound);
+        gameStateMachine.ChangeState(MyEnum.GameState.EnemyRound);
     }
 }

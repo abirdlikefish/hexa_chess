@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameStateMachine
 {
+    private GameStateMachine(){}
     private static GameStateMachine instance;
 
     public static GameStateMachine Instance
@@ -14,28 +15,36 @@ public class GameStateMachine
             {
                 instance = new GameStateMachine();
             }
+
             return instance;
         }
     }
-    public GameState currentState { get; private set; }
-    
+
+    public GameState currentState { get; private set; } = null;
+    private Dictionary<MyEnum.GameState, GameState> stateList;
+
     [Header("Game Data")] 
     public int playerCurrentHp;
     public int enemyCurrentHp;
     
-    [Header("Game States")] 
-    public PlayerRound PlayerRound;//玩家回合
-    public EnemyRound EnemyRound;//敌人回合
-    public GameWin GameWin;
-    public GameLose GameLose;
-    
-    public void Initializate(GameState startState)
+    public void Initializate(MyEnum.GameState startState)
     {
-        BuildState();
-        currentState = startState;
-        currentState.Enter();
+        currentState = null;
+        ChangeState(startState);
     }
     
+    /// <summary>
+    /// 实例化所有Game State
+    /// </summary>
+    public void BuildState()
+    {
+        stateList = new Dictionary<MyEnum.GameState, GameState>();
+        stateList.Add(MyEnum.GameState.PlayerRound, new PlayerRound(this, MyEnum.GameState.PlayerRound));
+        stateList.Add(MyEnum.GameState.EnemyRound, new EnemyRound(this, MyEnum.GameState.EnemyRound));
+        stateList.Add(MyEnum.GameState.GameWin, new GameWin(this, MyEnum.GameState.GameWin));
+        stateList.Add(MyEnum.GameState.GameLose, new GameLose(this, MyEnum.GameState.GameLose));
+    }
+
     /// <summary>
     /// 同步StateMachine和GameManager里面的数值
     /// </summary>
@@ -47,23 +56,12 @@ public class GameStateMachine
         enemyCurrentHp = newEnemyHp;
     }
     
-    /// <summary>
-    /// 实例化所有Game State
-    /// </summary>
-    public void BuildState()
-    {
-        PlayerRound = new PlayerRound (this,Enum.GameState.PlayerRound);
-        EnemyRound = new EnemyRound (this, Enum.GameState.EnemyRound);
-        GameWin = new GameWin (this, Enum.GameState.GameWin);
-        GameLose = new GameLose (this, Enum.GameState.GameLose);
-    }
 
-    public void ChangeState(GameState newState)
+    // public void ChangeState(GameState newState)
+    public void ChangeState(MyEnum.GameState newState)
     {
-        currentState.Exit();
-        currentState = newState;
+        currentState?.Exit();
+        currentState = stateList[newState];
         currentState.Enter();
     }
-    
-    
 }

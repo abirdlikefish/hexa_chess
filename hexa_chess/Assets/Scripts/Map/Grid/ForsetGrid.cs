@@ -6,8 +6,8 @@ public class ForestGrid : BaseGrid
 {
     public override bool Init()
     {
-        gridType = Enum.GridType.Forest;
-        gridPicture = Resources.Load<Sprite>(Const.GridPicturePath[gridType]);
+        gridType = MyEnum.GridType.Forest;
+        gridPicture = Resources.Load<Sprite>(MyConst.GridPicturePath[gridType]);
         moveCost = 2.0f;
         atkOffset = 0.0f;
         defOffset = 1.0f;

@@ -1,6 +1,6 @@
 public class GameLose : GameState
 {
-    public GameLose(GameStateMachine _gameStateMachine, Enum.GameState _whichState) : base(_gameStateMachine, _whichState)
+    public GameLose(GameStateMachine _gameStateMachine, MyEnum.GameState _whichState) : base(_gameStateMachine, _whichState)
     {
     }
 
@@ -13,4 +13,5 @@ public class GameLose : GameState
     {
         base.Exit();
     }
+    
 }

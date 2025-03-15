@@ -3,9 +3,9 @@ using UnityEngine;
 public class GameState
 {
     protected GameStateMachine gameStateMachine;
-    protected Enum.GameState whichState;
+    protected MyEnum.GameState whichState;
 
-    public GameState(GameStateMachine _gameStateMachine, Enum.GameState _whichState)
+    public GameState(GameStateMachine _gameStateMachine, MyEnum.GameState _whichState)
     {
         gameStateMachine = _gameStateMachine;
         whichState = _whichState;
@@ -13,12 +13,20 @@ public class GameState
 
     public virtual void Enter()
     {
-        Debug.Log("Entered Game State: " + whichState);
+        Debug.Log("Entered Game State: " + whichState.ToString());
     }
 
     public virtual void Exit()
     {
-        Debug.Log("Exited Game State: " + whichState);
+        Debug.Log("Exited Game State: " + whichState.ToString());
+    }
+
+    public virtual void Update()
+    {
+    }
+
+    public virtual void PressTestButton()
+    {
     }
 
 }

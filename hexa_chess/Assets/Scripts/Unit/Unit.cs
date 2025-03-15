@@ -7,7 +7,7 @@ public class Unit : MonoBehaviour, IUnit
     //单位配置文件
     public UnitConfig unitConfig;
     //单位当前状态
-    public  UnitStates unitState;
+    public UnitStates unitState;
     //操作增益
     public OprationBuff oprationBuff;
     //生命值
@@ -28,7 +28,7 @@ public class Unit : MonoBehaviour, IUnit
     }
     public void Attack(IUnit other)
     {
-        if(unitState == UnitStates.Able)
+        if (unitState == UnitStates.Able)
         {
             //消耗当前所有行动力
             ActionCheck(currentAction);
@@ -46,10 +46,12 @@ public class Unit : MonoBehaviour, IUnit
         int finalDamage;
         switch (oprationBuff)
         {
-            case OprationBuff.Rest: finalDamage = damage += 1;
-            break;
-            default:    finalDamage = damage;
-            break;
+            case OprationBuff.Rest:
+                finalDamage = damage += 1;
+                break;
+            default:
+                finalDamage = damage;
+                break;
         }
         currentHp -= finalDamage;
         DestroyCheck();
@@ -57,7 +59,7 @@ public class Unit : MonoBehaviour, IUnit
 
     public void Move(int cost)
     {
-        if(unitState == UnitStates.Able)
+        if (unitState == UnitStates.Able)
         {
             Debug.Log("移动！");
             //todo:棋子寻路和移动方式
@@ -93,12 +95,12 @@ public class Unit : MonoBehaviour, IUnit
     
     private void ActionCheck(int ActionCost)
     {
-        if(unitState == UnitStates.Able && currentAction != 0)   
+        if (unitState == UnitStates.Able && currentAction != 0)
         {
             currentAction -= ActionCost;
-            if(currentAction < 0)   currentAction = 0;
-        } 
-        if(currentAction == 0)  unitState = UnitStates.Disable;
+            if (currentAction < 0) currentAction = 0;
+        }
+        if (currentAction == 0) unitState = UnitStates.Disable;
     }
 
     //回合结束检定，将单位转入可操作
@@ -110,7 +112,7 @@ public class Unit : MonoBehaviour, IUnit
     //摧毁检定
     private void DestroyCheck()
     {
-        if(currentHp <= 0)
+        if (currentHp <= 0)
         {
             Debug.Log("单位被摧毁");
             UnitManager.Instance.RemoveUnit(this,unitConfig.unitType);

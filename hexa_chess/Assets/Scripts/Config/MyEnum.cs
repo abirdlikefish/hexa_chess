@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Enum
+public static class MyEnum
 {
     public enum GridType
     {
@@ -43,13 +43,19 @@ public static class Enum
         Legal,
         Illegal,
         Empty,
+        HighLight,
     }
     public enum TheOperator
     {
         Player,
         Enemy
     }
-
+    public enum UIView
+    {
+        Empty,
+        PlayView,
+        MapEditView,
+    }
     public enum GameState
     {
         PlayerRound,
@@ -75,6 +81,15 @@ public static class Enum
         Attack,//攻击
         Waiting,//到别人的回合
         Die,//死了
+    }
+
+    public enum PlayerRoundState
+    {
+        Idle,//默认等待
+        WaitInput_WhichAction,//选中兵之后等待选哪种行动
+        WaitInput_Position,//选中移动的话需要选地块
+        WaitInput_Enemy,//选中攻击的话需要选打谁
+        UnitActing,//兵在行动
     }
 
 }
