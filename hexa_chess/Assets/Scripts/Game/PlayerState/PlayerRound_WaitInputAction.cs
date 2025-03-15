@@ -14,6 +14,7 @@ public class PlayerRound_WaitInputAction : PlayerRoundState
         base.Enter();
         MyEvent.OnGridClick_right += SelectGrid;
         MyEvent.OpenUnitUI?.Invoke(playerStateMachine.selectedUnit);
+        MyEvent.AnimaEnd += EndMove;
     }
 
     public override void ShowUI()
@@ -25,6 +26,7 @@ public class PlayerRound_WaitInputAction : PlayerRoundState
     {
         MyEvent.OnGridClick_right -= SelectGrid;
         MyEvent.OpenUnitUI?.Invoke(null);
+        MyEvent.AnimaEnd -= EndMove;
         base.Exit();
     }
     public override void Cansel()
@@ -57,6 +59,11 @@ public class PlayerRound_WaitInputAction : PlayerRoundState
         }
         playerStateMachine.selectedGrid = coord;
         MyEvent.OpenUnitUI?.Invoke(playerStateMachine.selectedUnit);
+    }
+
+    private void EndMove()
+    {
+        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
     }
     
 }

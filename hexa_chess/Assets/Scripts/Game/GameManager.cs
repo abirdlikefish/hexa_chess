@@ -57,18 +57,21 @@ class GameManager : MonoBehaviour
     /// <summary>
     /// 判断是否需要结束游戏，每次更新大本营血量的时候都调用
     /// </summary>
-    private void JudgeShouldEndGame()
+    public bool JudgeShouldEndGame()
     {
         if (PlayerHP <= 0)
         {
             // gameStateMachine.ChangeState(gameStateMachine.GameLose);
             gameStateMachine.ChangeState(MyEnum.GameState.GameLose);
+            return true;
         }
-        else if (EnemyHP <= 0)
+        if (EnemyHP <= 0)
         {
             // gameStateMachine.ChangeState(gameStateMachine.GameWin);
             gameStateMachine.ChangeState(MyEnum.GameState.GameWin);
+            return true;
         }
+        return false;
     }
 
     public void Update()

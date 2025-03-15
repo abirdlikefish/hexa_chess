@@ -11,6 +11,7 @@ public class PlayerRound_WaitInput_Enemy : PlayerRoundState
     {
         base.Enter();
         MyEvent.OnGridClick_left += SelectTarget;
+        MyEvent.AnimaEnd += EndAttack;
     }
 
     public override void ShowUI()
@@ -22,6 +23,7 @@ public class PlayerRound_WaitInput_Enemy : PlayerRoundState
     {
         base.Exit();
         MyEvent.OnGridClick_left -= SelectTarget;
+        MyEvent.AnimaEnd -= EndAttack;
     }
 
     public override void Cansel()
@@ -39,8 +41,17 @@ public class PlayerRound_WaitInput_Enemy : PlayerRoundState
     {
         if (targetcoord == null) return;
         IUnit selectedUnit =  MapManager.Instance.GetUnit(targetcoord.Value);
-        if (selectedUnit == null) return;//没选中东西
-        if (selectedUnit.isFriendUnit()) return;//选中友军
-        
+        if (selectedUnit == null || (selectedUnit != null && selectedUnit.isFriendUnit())) return;//没选中东西或者选中了友军
+        playerStateMachine.selectedUnit.Attack(selectedUnit);
     }
+
+    public void EndAttack()
+    {
+        if (GameManager.instance.JudgeShouldEndGame())
+        {
+            return;
+        }
+        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
+    }
+    
 }
