@@ -9,7 +9,7 @@ public class PlayerRound_IdleState : PlayerRoundState
     
     public override void Enter()
     {
-        Debug.Log("Now in PlayerRound, State is: " + playerState);
+        Debug.Log("Now in PlayerRound, State is: " + playerState.ToString());
     }
 
     public override void ShowUI()
@@ -19,14 +19,11 @@ public class PlayerRound_IdleState : PlayerRoundState
 
     public override void Exit()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Now exit from" + playerState.ToString() + " state");
     }
 
     public override void Update()
     {
-        if (MyEvent.OnGridClick_left != null)
-        {
-            
-        }
+        
     }
 }

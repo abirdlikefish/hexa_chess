@@ -47,6 +47,8 @@ class GameManager : MonoBehaviour
         gameStateMachine.BuildState();
         gameStateMachine.Initializate(MyEnum.GameState.PlayerRound);
         gameStateMachine.SynchronousHp(PlayerHP, EnemyHP);
+        
+        
         MapManager.Instance.CreateMap(10);
         UIManager.Instance.ShowView(MyEnum.UIView.PlayView);
         MyEvent.OnClick_testBtn += ChangeGameState;
@@ -72,36 +74,6 @@ class GameManager : MonoBehaviour
     {
         gameStateMachine.currentState.Update();
     }
-
-    /* 这个丢到具体的GameState里面去
-    /// <summary>
-    /// 如果在玩家环节按下结束键，那么自动跳到敌人环节
-    /// </summary>
-    public void PressEndRoundButton()
-    {
-        gameStateMachine.ChangeState(gameStateMachine.EnemyRound);
-    }
-*/
-
-    /*
-    /// <summary>
-    /// 当我们创建友方单位的时候，把他加入GameManage的List里面管理
-    /// </summary>
-    /// <param name="the new player unit we build"></param>
-    public void AddUnitIntoPlayerUnits(Unit_new newPlayerUnit)
-    {
-        PlayerUnits.Add(newPlayerUnit);
-    }
-    
-    /// <summary>
-    /// 当友方单位寄了，需要在List中删除
-    /// </summary>
-    /// <param name="The player unit which has diec"></param>
-    public void RemoveUnitInPlayerUnits(Unit_new playerUnit)
-    {
-        PlayerUnits.Remove(playerUnit);
-    }
-    */
 
     public void ChangeGameState()
     {

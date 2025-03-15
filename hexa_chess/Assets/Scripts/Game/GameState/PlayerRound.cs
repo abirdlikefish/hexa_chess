@@ -18,8 +18,11 @@ public class PlayerRound : GameState
     public override void Enter()
     {
         base.Enter();
-        playerRoundStateMachine = new PlayerStateMachine();
-        playerRoundStateMachine.BuildState();
+        if (playerRoundStateMachine == null)
+        {
+            playerRoundStateMachine = new PlayerStateMachine();
+            playerRoundStateMachine.BuildState();
+        }
         playerRoundStateMachine.Initialize(MyEnum.PlayerRoundState.Idle);
     }
 

@@ -13,7 +13,7 @@ public class Unit : MonoBehaviour, IUnit
     //生命值
     public int currentHp;
 
-    public int currentAction;//当前行动力
+    public float currentAction;//当前行动力
 
 
 
@@ -88,7 +88,7 @@ public class Unit : MonoBehaviour, IUnit
         ActionCheck(currentAction);
     }
     //行动力检定，判断单位操作是否转入无法操作
-    private void ActionCheck(int ActionCost)
+    private void ActionCheck(float ActionCost)
     {
         if (unitState == UnitStates.Able && currentAction != 0)
         {
