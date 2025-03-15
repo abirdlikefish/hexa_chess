@@ -13,37 +13,28 @@ public class PlayerRound_WaitInputAction : PlayerRoundState
     public override void Enter()
     {
         base.Enter();
+        MyEvent.OnClick_restBtn += RestUnit;
+        MyEvent.OnClick_stationBtn += StationUnit;
+        MyEvent.OnClick_dismissBtn += DismissUnit;
         MyEvent.OnGridClick_left += SelectGrid_left;
         MyEvent.OnGridClick_right += SelectGrid_right;
         MyEvent.OpenUnitUI?.Invoke(playerStateMachine.selectedUnit);
 MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Player, playerStateMachine.selectedGrid.Value, 5);
-        MyEvent.AnimaEnd += EndMove;
     }
-
-    public override void ShowUI()
-    {
-        base.ShowUI();
-    }
-
+    
     public override void Exit()
     {
+        MyEvent.OnClick_restBtn -= RestUnit;
+        MyEvent.OnClick_stationBtn -= StationUnit;
+        MyEvent.OnClick_dismissBtn -= DismissUnit;
         MyEvent.OnGridClick_right -= SelectGrid_right;
         MyEvent.OnGridClick_left -= SelectGrid_left;
         MyEvent.OpenUnitUI?.Invoke(null);
-        MyEvent.AnimaEnd -= EndMove;
         MapManager.Instance.CloseMapUI(MyEnum.TheOperator.Player);
         base.Exit();
     }
-    public override void Cancel()
-    {
-        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
-    }
 
-    public override void Update()
-    {
-        base.Update();
-    }
-
+    
     private void SelectedAttack()//点击了攻击按钮
     {
         playerStateMachine.ChangeState(MyEnum.PlayerRoundState.WaitInput_Enemy);
@@ -79,11 +70,25 @@ MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Player, playerStateMach
             Cancel();
             return;
         }
-playerStateMachine.selectedUnit.Move(path, 5);
+playerStateMachine.selectedUnit.Move(path , 5);
+    playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
     }
 
-    private void EndMove()
+    private void DismissUnit()
     {
+        playerStateMachine.selectedUnit.Dismiss();
+        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
+    }
+
+    private void StationUnit()
+    {
+        playerStateMachine.selectedUnit.Station();
+        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
+    }
+
+    private void RestUnit()
+    {
+        playerStateMachine.selectedUnit.Rest();
         playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
     }
     

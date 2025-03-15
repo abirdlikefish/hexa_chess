@@ -16,22 +16,13 @@ public class PlayerRound_IdleState : PlayerRoundState
         playerStateMachine.selectedUnit = null;
         MyEvent.OnGridClick_left += SelectGrid;
     }
-
-    public override void ShowUI()
-    {
-        
-    }
-
+    
     public override void Exit()
     {
         MyEvent.OnGridClick_left -= SelectGrid;
         // throw new System.NotImplementedException();
     }
-
-    public override void Update()
-    {
-    }
-
+    
     public void SelectGrid(Vector2Int? coord)
     {
         if(coord == null)   return;

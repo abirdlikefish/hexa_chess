@@ -19,7 +19,7 @@ public class PlayerStateMachine
     //     }
     // }
     public PlayerRoundState currentState { get; private set; } = null;
-    private Dictionary<MyEnum.PlayerRoundState, PlayerRoundState> stateList = null;
+    public Dictionary<MyEnum.PlayerRoundState, PlayerRoundState> stateList = null;
     public Vector2Int? selectedGrid;
     public IUnit selectedUnit;
 
@@ -33,6 +33,7 @@ public class PlayerStateMachine
         stateList.Add(MyEnum.PlayerRoundState.Idle, new PlayerRound_IdleState(this,MyEnum.PlayerRoundState.Idle));
         stateList.Add(MyEnum.PlayerRoundState.WaitInput_WhichAction, new PlayerRound_WaitInputAction(this,MyEnum.PlayerRoundState.WaitInput_WhichAction));
         stateList.Add(MyEnum.PlayerRoundState.WaitInput_Enemy, new PlayerRound_WaitInput_Enemy(this,MyEnum.PlayerRoundState.WaitInput_Enemy));
+        stateList.Add(MyEnum.PlayerRoundState.PlayingAnimation, new PlayerRound_PlayAnimation(this,MyEnum.PlayerRoundState.PlayingAnimation));
     }
 
     // public void Initialize(MyEnum.PlayerRoundState _startState)

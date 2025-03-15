@@ -16,17 +16,15 @@ public class PlayerRoundState
     {
         Debug.Log("Now in PlayerRound, State is: " + playerState);
     }
-
-    public virtual void ShowUI()
-    {
-    }
+    
 
     public virtual void Exit()
     {
     }
-
-    public virtual void Cancel()
+    
+    public void Cancel()
     {
+        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
     }
 
     public virtual void Update()
