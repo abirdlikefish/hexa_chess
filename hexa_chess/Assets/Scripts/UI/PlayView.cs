@@ -8,65 +8,95 @@ public class PlayView : IFguiView
     GComponent playView ;
     // GButton screenInputBtn;
     GButton testBtn;
-    List<IFguiCom> fguiComs;
+
+    GButton nextBtn;
+
+    GButton attackBtn;
+    GButton restBtn;
+    GButton stationBtn;
+    GButton dismissBtn;
+    GButton skipBtn;
+    GTextField atkTxt;
+    GTextField hpTxt;
+    GTextField moveForceTxt;
+
+    GTextField moneyTxt;
+    GTextField unitCntTxt;
+    GTextField roundTxt;
+
+    Controller unitUIController;
+
+    List<IFguiCom> fguiOtherComs;
     public IFguiView Init()
     {
         playView = UIPackage.CreateObject("Hexa_chess", "PlayView").asCom;
-        fguiComs = new List<IFguiCom>
-        {
-            new ScreenInputBtn().Create(playView)
-        };
-        testBtn = playView.GetChild("TestBtn").asButton;
+        InitComponent();
         InitEvent();
         return this;
     }
     public void Show()
     {
         GRoot.inst.AddChild(playView);
+        MyEvent.OpenUnitUI += OpenUnitUI;
+        MyEvent.SetGlobalInfo += SetGlobalInfo;
     }
     public void Hide()
     {
         GRoot.inst.RemoveChild(playView);
     }
+    private void InitComponent()
+    {
+        testBtn = playView.GetChild("TestBtn").asButton;
+        nextBtn = playView.GetChild("NextBtn").asButton;
+        attackBtn = playView.GetChild("AttackBtn").asButton;
+        restBtn = playView.GetChild("RestBtn").asButton;
+        stationBtn = playView.GetChild("StationBtn").asButton;
+        dismissBtn = playView.GetChild("DismissBtn").asButton;
+        skipBtn = playView.GetChild("SkipBtn").asButton;
+        atkTxt = playView.GetChild("AtkTxt").asTextField;
+        hpTxt = playView.GetChild("HpTxt").asTextField;
+        moveForceTxt = playView.GetChild("MoveForceTxt").asTextField;
+        moneyTxt = playView.GetChild("MoneyTxt").asTextField;
+        unitCntTxt = playView.GetChild("UnitCntTxt").asTextField;
+        roundTxt = playView.GetChild("RoundTxt").asTextField;
+        unitUIController = playView.GetController("UnitUIController");
 
+        fguiOtherComs = new List<IFguiCom>
+        {
+            new ScreenInputBtn().Create(playView)
+        };
+
+    }
     private void InitEvent()
     {
         testBtn.onClick.Add(() => MyEvent.OnClick_testBtn?.Invoke());
-        // screenInputBtn.onClick.Add(TrySelectGrid);
-        // screenInputBtn.onRightClick.Add(TrySelectGrid_right);
+        nextBtn.onClick.Add(() => MyEvent.OnClick_nextBtn?.Invoke());
+        attackBtn.onClick.Add(() => MyEvent.OnClick_attackBtn?.Invoke());
+        restBtn.onClick.Add(() => MyEvent.OnClick_restBtn?.Invoke());
+        stationBtn.onClick.Add(() => MyEvent.OnClick_stationBtn?.Invoke());
+        dismissBtn.onClick.Add(() => MyEvent.OnClick_dismissBtn?.Invoke());
+        skipBtn.onClick.Add(() => MyEvent.OnClick_skipBtn?.Invoke());
     }
 
-    // private void TrySelectGrid(EventContext context)
-    // {
-    //     InputEvent inputEvent = context.inputEvent;
-    //     Vector2 screenPosition = new Vector2(inputEvent.x, Screen.height - inputEvent.y);
-    //     Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, -Camera.main.transform.position.z));
-    //     Vector2Int coord = MapManager.Pos_To_Coord(worldPosition);
-    //     if(MapManager.Instance.IsInMap(coord) == false)
-    //     {
-    //         MyEvent.OnGridClick_left?.Invoke(null);
-    //     }
-    //     else
-    //     {
-    //         MyEvent.OnGridClick_left?.Invoke(coord);
-    //     }
-        
-    //     // MapManager.Instance.SearchMovableArea(Enum.TheOperator.Player , coord , 5);
-    // }
-    // private void TrySelectGrid_right(EventContext context)
-    // {
-    //     InputEvent inputEvent = context.inputEvent;
-    //     Vector2 screenPosition = new Vector2(inputEvent.x, Screen.height - inputEvent.y);
-    //     Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, -Camera.main.transform.position.z));
-    //     Vector2Int coord = MapManager.Pos_To_Coord(worldPosition);
-    //     // MapManager.Instance.ChangeVirtualField(Enum.TheOperator.Player , coord , true);
-    //     if(MapManager.Instance.IsInMap(coord) == false)
-    //     {
-    //         MyEvent.OnGridClick_right?.Invoke(null);
-    //     }
-    //     else
-    //     {
-    //         MyEvent.OnGridClick_right?.Invoke(coord);
-    //     }
-    // }
+    private void OpenUnitUI(IUnit unit)
+    {
+        Debug.Log("OpenUnitUI");
+        if(unit == null)
+        {
+            unitUIController.selectedPage = "Hide";
+            return;
+        }
+        unitUIController.selectedPage = "Show";
+        atkTxt.text = "1";
+        hpTxt.text = "10";
+        moveForceTxt.text = "3";
+    }
+    private void SetGlobalInfo()
+    {
+        Debug.Log("SetGlobalInfo");
+        moneyTxt.text = "1000";
+        unitCntTxt.text = "10";
+        roundTxt.text = "1";
+    }
+
 }

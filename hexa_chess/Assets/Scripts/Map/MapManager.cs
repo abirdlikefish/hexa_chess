@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -10,20 +11,28 @@ public interface IMapManager
     public void CreateMap(int size);
     public bool IsInMap(Vector2Int coord);
     public bool RemoveUnit(Vector2Int coord);
-    public bool AddUnit(Vector2Int coord, GameObject unit);
+    public bool AddUnit(Vector2Int coord, IUnit unit);
+    public IUnit GetUnit(Vector2Int coord);
     public bool ChangeControlArea( MyEnum.TheOperator theOperator , Vector2Int coord, bool isAdd);
     public bool ChangeVirtualField( MyEnum.TheOperator theOperator , Vector2Int coord, bool isAdd);
     public float GetAtkOffset(MyEnum.TheOperator theOperator , Vector2Int coord);
     public float GetDefOffset(MyEnum.TheOperator theOperator , Vector2Int coord);
     public List<Vector2Int> SearchMovableArea(MyEnum.TheOperator theOperator , Vector2Int coord , float moveForce);
-    public void CloseMapUI();
-    public void ChangeGrid(Vector2Int coord, MyEnum.GridType gridType);
-    public void HighLightGrid(Vector2Int coord, bool isHighLight);
+    /// <summary>
+    /// 从后向前遍历 ， 终点非法则返回null
+    /// </summary>
+    public List<Vector2Int> GetMovePath(Vector2Int endCoord);
+    public List<Vector2Int> SearchAttackArea(MyEnum.TheOperator theOperator , Vector2Int coord , float atkRange);
+    public List<Vector2Int> SetVirtualArea(MyEnum.TheOperator theOperator , Vector2Int coord , float viewRange);
+    public void CloseMapUI(MyEnum.TheOperator theOperator);
+    // public void ChangeGrid(Vector2Int coord, MyEnum.GridType gridType);
+    // public void HighLightGrid(Vector2Int coord, bool isHighLight);
 }
 public interface IMapManager_edit
 {
     public void EditMap(int mapSize);
     public void ChangeGrid_edit(Vector2Int coord, MyEnum.GridType gridType);
+    public void HighLightGrid(Vector2Int coord, bool isHighLight);
 }
 public class MapManager : IMapManager , IMapManager_edit
 {
@@ -51,19 +60,21 @@ public class MapManager : IMapManager , IMapManager_edit
         GridInfo.Init();
         instance = new MapManager();
         instance.InitGridList();
-        // instance.CreateMap(10);
+        Debug.Log("MapManager Init");
     }
     private GridInfo[,] gridMap;
     struct SearchMovableAreaGridInfo
     {
         public Vector2Int lastCoord;
         public float moveCost;
+        public int height;
         public MyEnum.MoveDirection lastMoveDirection;
         public int setFrame;
-        public void SetGrid(Vector2Int lastCoord, float moveCost, MyEnum.MoveDirection lastMoveDirection)
+        public void SetGrid(Vector2Int lastCoord, float moveCost , int height, MyEnum.MoveDirection lastMoveDirection)
         {
             this.lastCoord = lastCoord;
             this.moveCost = moveCost;
+            this.height = height;
             this.lastMoveDirection = lastMoveDirection;
             setFrame = Time.frameCount;
         }
@@ -245,13 +256,21 @@ public class MapManager : IMapManager , IMapManager_edit
         }
         return gridMap[coord.x, coord.y].RemoveUnit();
     }
-    public bool AddUnit(Vector2Int coord, GameObject unit)
+    public bool AddUnit(Vector2Int coord, IUnit unit)
     {
         if(!IsInMap(coord))
         {
             return false;
         }
         return gridMap[coord.x, coord.y].AddUnit(unit, MyEnum.TheOperator.Player);
+    }
+    public IUnit GetUnit(Vector2Int coord)
+    {
+        if(!IsInMap(coord))
+        {
+            return null;
+        }
+        return gridMap[coord.x, coord.y].GetUnit();
     }
     public bool ChangeControlArea( MyEnum.TheOperator theOperator , Vector2Int coord, bool isAdd)
     {
@@ -281,9 +300,9 @@ public class MapManager : IMapManager , IMapManager_edit
             Debug.LogError("HighLightGrid: Out of Map");
             return;
         }
-        gridMap[coord.x, coord.y].ChangeUIState(isHighLight ? MyEnum.GridUIState.HighLight : MyEnum.GridUIState.Hide);
+        gridMap[coord.x, coord.y].ChangeUIState(MyEnum.TheOperator.Player , isHighLight ? MyEnum.GridUIState.HighLight : MyEnum.GridUIState.Hide);
     }
-    public void CloseMapUI()
+    public void CloseMapUI(MyEnum.TheOperator theOperator)
     {
         for (int x = 0; x < mapSize * 2 - 1; x++)
         {
@@ -291,12 +310,12 @@ public class MapManager : IMapManager , IMapManager_edit
             {
                 if(gridMap[x, y] != null)
                 {
-                    gridMap[x, y].ChangeUIState(MyEnum.GridUIState.Hide);
+                    gridMap[x, y].ChangeUIState(theOperator , MyEnum.GridUIState.Hide);
                 }
             }
         }
     }
-    private void OpenMapUI()
+    private void OpenMapUI(MyEnum.TheOperator theOperator)
     {
         for (int x = 0; x < mapSize * 2 - 1; x++)
         {
@@ -304,7 +323,7 @@ public class MapManager : IMapManager , IMapManager_edit
             {
                 if(gridMap[x, y] != null)
                 {
-                    gridMap[x, y].ChangeUIState(MyEnum.GridUIState.Empty);
+                    gridMap[x, y].ChangeUIState(theOperator , MyEnum.GridUIState.Empty);
                 }
             }
         }
@@ -316,10 +335,9 @@ public class MapManager : IMapManager , IMapManager_edit
             Debug.LogError("SearchMovableArea: Out of Map");
             return null;
         }
-        OpenMapUI();
-        // SortedDictionary<int , Vector2Int> searchQueue = new SortedDictionary<int, Vector2Int>();
+        OpenMapUI(theOperator);
         GridHeap searchQueue = new GridHeap();
-        searchMovableAreaGridInfoMap[coord.x, coord.y].SetGrid(coord, 0, MyEnum.MoveDirection.Up);
+        searchMovableAreaGridInfoMap[coord.x, coord.y].SetGrid(coord, 0 , gridMap[coord.x , coord.y].GetHeight(), MyEnum.MoveDirection.Up);
         searchQueue.Add(new Vector3(0, coord.x, coord.y));
         List<Vector2Int> movableGridList = new List<Vector2Int>();
         while(searchQueue.Count > 0)
@@ -336,16 +354,17 @@ public class MapManager : IMapManager , IMapManager_edit
                 if(!IsInMap(nextCoord)) continue;
                 float nextCost = midCost + gridMap[nextCoord.x, nextCoord.y].GetMoveCost(theOperator);
                 if(nextCost > moveForce)  continue;
-                if(gridMap[nextCoord.x, nextCoord.y].GetMoveCost(theOperator) < 0)
+                if(gridMap[nextCoord.x, nextCoord.y].GetMoveCost(theOperator) < 0 || 
+                    gridMap[nextCoord.x, nextCoord.y].GetHeight() > gridMap[midCoord.x, midCoord.y].GetHeight())
                 {
-                    gridMap[nextCoord.x, nextCoord.y].ChangeUIState(MyEnum.GridUIState.Illegal);
+                    gridMap[nextCoord.x, nextCoord.y].ChangeUIState(theOperator , MyEnum.GridUIState.Illegal);
                     continue;
                 }
                 if(searchMovableAreaGridInfoMap[nextCoord.x, nextCoord.y].setFrame < Time.frameCount || searchMovableAreaGridInfoMap[nextCoord.x, nextCoord.y].moveCost > nextCost)
                 {
-                    searchMovableAreaGridInfoMap[nextCoord.x, nextCoord.y].SetGrid(midCoord, nextCost, moveDirection);
+                    searchMovableAreaGridInfoMap[nextCoord.x, nextCoord.y].SetGrid(midCoord, nextCost, gridMap[nextCoord.x , nextCoord.y].GetHeight() , moveDirection);
                     searchQueue.Add(new Vector3(nextCost, nextCoord.x, nextCoord.y));
-                    gridMap[nextCoord.x, nextCoord.y].ChangeUIState(MyEnum.GridUIState.Legal);
+                    gridMap[nextCoord.x, nextCoord.y].ChangeUIState(theOperator , MyEnum.GridUIState.Legal);
                 }
             }
         }
@@ -434,7 +453,102 @@ public class MapManager : IMapManager , IMapManager_edit
         public int Count => heap.Count - 1;
     }
     
+    public List<Vector2Int> GetMovePath(Vector2Int endCoord)
+    {
+        if(!IsInMap(endCoord) || gridMap[endCoord.x, endCoord.y].currentUIState != MyEnum.GridUIState.Legal)
+        {
+            return null;
+        }
+        List<Vector2Int> movePath = new List<Vector2Int>();
+        Vector2Int midCoord = endCoord;
+        while(searchMovableAreaGridInfoMap[midCoord.x, midCoord.y].lastCoord != midCoord)
+        {
+            movePath.Add(midCoord);
+            midCoord = searchMovableAreaGridInfoMap[midCoord.x, midCoord.y].lastCoord;
+        }
+        movePath.Add(midCoord);
+        // movePath.Reverse();
+        return movePath;
+    }
 
-
+    private bool[,] isSearched;
+    public List<Vector2Int> SearchAttackArea(MyEnum.TheOperator theOperator , Vector2Int coord , float atkRange)
+    {
+        if(!IsInMap(coord))
+        {
+            Debug.LogError("SearchAttackArea: Out of Map");
+            return null;
+        }
+        isSearched = new bool[mapSize * 2, mapSize * 2];
+        OpenMapUI(theOperator);
+        List<Vector2Int> attackGridList = new List<Vector2Int>();
+        Queue<Vector2Int> searchQueue = new Queue<Vector2Int>();
+        searchQueue.Enqueue(coord);
+        isSearched[coord.x, coord.y] = true;
+        while(searchQueue.Count > 0)
+        {
+            Vector2Int midCoord = searchQueue.Dequeue();
+            // isSearched[midCoord.x, midCoord.y] = true;
+            // if(MapManager.GetMinCost(midCoord - coord) > atkRange) continue;
+            foreach(MyEnum.MoveDirection moveDirection in MyEnum.MoveDirection.GetValues(typeof(MyEnum.MoveDirection)))
+            {
+                Vector2Int nextCoord = midCoord + MyConst.MoveStep[moveDirection];
+                if(!IsInMap(nextCoord)) continue;
+                if(isSearched[nextCoord.x, nextCoord.y]) continue;
+                if(gridMap[nextCoord.x, nextCoord.y].GetHeight() > gridMap[midCoord.x, midCoord.y].GetHeight()) continue;
+                if(MapManager.GetMinCost(nextCoord - coord) != MapManager.GetMinCost(midCoord - coord) + 1) continue;
+                if(MapManager.GetMinCost(nextCoord - coord) > atkRange) continue;
+                isSearched[nextCoord.x, nextCoord.y] = true;
+                searchQueue.Enqueue(nextCoord);
+                if(gridMap[nextCoord.x, nextCoord.y].GetUnit() != null)
+                {
+                    gridMap[nextCoord.x, nextCoord.y].ChangeUIState(theOperator , MyEnum.GridUIState.Legal);
+                    attackGridList.Add(nextCoord);
+                }
+            }
+                
+        }
+        return attackGridList;
+    }
+    public List<Vector2Int> SetVirtualArea(MyEnum.TheOperator theOperator , Vector2Int coord , float viewRange)
+    {
+        if(!IsInMap(coord))
+        {
+            Debug.LogError("SetVirtualArea: Out of Map");
+            return null;
+        }
+        isSearched = new bool[mapSize * 2, mapSize * 2];
+        List<Vector2Int> virtualGridList = new List<Vector2Int>();
+        Queue<Vector2Int> searchQueue = new Queue<Vector2Int>();
+        searchQueue.Enqueue(coord);
+        isSearched[coord.x, coord.y] = true;
+        while(searchQueue.Count > 0)
+        {
+            Vector2Int midCoord = searchQueue.Dequeue();
+            // if(MapManager.GetMinCost(midCoord - coord) > viewRange) continue;
+            foreach(MyEnum.MoveDirection moveDirection in MyEnum.MoveDirection.GetValues(typeof(MyEnum.MoveDirection)))
+            {
+                Vector2Int nextCoord = midCoord + MyConst.MoveStep[moveDirection];
+                if(!IsInMap(nextCoord)) continue;
+                if(isSearched[nextCoord.x, nextCoord.y]) continue;
+                if(MapManager.GetMinCost(nextCoord - coord) != MapManager.GetMinCost(midCoord - coord) + 1) continue;
+                if(MapManager.GetMinCost(nextCoord - coord) > viewRange) continue;
+                isSearched[nextCoord.x, nextCoord.y] = true;
+                searchQueue.Enqueue(nextCoord);
+                gridMap[nextCoord.x, nextCoord.y].ChangeVirtualField(theOperator, true);
+                if(gridMap[nextCoord.x, nextCoord.y].GetHeight() > gridMap[midCoord.x, midCoord.y].GetHeight()) continue;
+                virtualGridList.Add(nextCoord);
+            }
+        }
+        return virtualGridList;
+    }
+    public static int GetMinCost(Vector2Int coord)
+    {
+        if(coord.x == 0)    return coord.y;
+        else if(coord.y == 0)    return coord.x;
+        else if(coord.x * coord.y > 0)    return Mathf.Abs(coord.x + coord.y);
+        else    return Mathf.Max(Mathf.Abs(coord.x) , Mathf.Abs(coord.y));
+        // if(coord.x * coord.y < 0)    return Mathf.Max(Mathf.Abs(coord.x) , Mathf.Abs(coord.y));
+    }
 }
 

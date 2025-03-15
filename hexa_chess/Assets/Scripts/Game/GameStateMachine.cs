@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameStateMachine
 {
+    private GameStateMachine(){}
     private static GameStateMachine instance;
 
     public static GameStateMachine Instance

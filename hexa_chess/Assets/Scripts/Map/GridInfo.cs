@@ -7,7 +7,7 @@ public class GridInfo : MonoBehaviour
     private static GameObject parentGo;
     private static Sprite fogSprite;
     private static Sprite uiSprite;
-    private GameObject unit;
+    private IUnit unit;
     private Dictionary<MyEnum.GridSpriteLayer,SpriteRenderer> spriteLayer;
     private MyEnum.GridType gridType;
     private Vector2Int gridPosition;
@@ -117,7 +117,7 @@ public class GridInfo : MonoBehaviour
         gridInfo.spriteLayer[MyEnum.GridSpriteLayer.UI].sprite = uiSprite;
         // gridInfo.spriteLayer[Enum.GridSpriteLayer.UI].enabled = true;
         gridInfo.currentUIState = MyEnum.GridUIState.Hide;
-        gridInfo.ChangeUIState(MyEnum.GridUIState.Hide);
+        gridInfo.ChangeUIState(MyEnum.TheOperator.Player , MyEnum.GridUIState.Hide);
 
 
         gridInfo.gridState = new Dictionary<MyEnum.TheOperator, GridState>();
@@ -134,12 +134,21 @@ public class GridInfo : MonoBehaviour
         gridState[theOperator].ChangeState(state);
     }
 
-    public void ChangeUIState(MyEnum.GridUIState state)
+    public void ChangeUIState(MyEnum.TheOperator theOperator , MyEnum.GridUIState state)
     {
-        if(currentUIState == state) return;
-        currentUIState = state;
-        spriteLayer[MyEnum.GridSpriteLayer.UI].enabled = (state != MyEnum.GridUIState.Hide);
-        spriteLayer[MyEnum.GridSpriteLayer.UI].color = MyConst.GridUIColor[state];
+        if(theOperator != MyEnum.TheOperator.Player)
+        {
+            currentUIState = state;
+            spriteLayer[MyEnum.GridSpriteLayer.UI].enabled = false;
+            return;
+        }
+        else
+        {
+            // if(currentUIState == state) return;
+            currentUIState = state;
+            spriteLayer[MyEnum.GridSpriteLayer.UI].enabled = (state != MyEnum.GridUIState.Hide);
+            spriteLayer[MyEnum.GridSpriteLayer.UI].color = MyConst.GridUIColor[state];
+        }
     }
     public bool RemoveUnit()
     {
@@ -150,7 +159,7 @@ public class GridInfo : MonoBehaviour
         unit = null;
         return true;
     }
-    public bool AddUnit(GameObject unit , MyEnum.TheOperator theOperator)
+    public bool AddUnit(IUnit unit , MyEnum.TheOperator theOperator)
     {
         if(this.unit != null)
         {
@@ -158,6 +167,10 @@ public class GridInfo : MonoBehaviour
         }
         this.unit = unit;
         return true;
+    }
+    public IUnit GetUnit()
+    {
+        return unit;
     }
     public bool ChangeControlArea(MyEnum.TheOperator theOperator , bool isAdd)
     {
@@ -180,6 +193,10 @@ public class GridInfo : MonoBehaviour
             return -1;
         }
         return (baseGrid.moveCost + gridState[theOperator].moveOffset) * (gridState[theOperator].controlledCnt > 0 ? 2 : 1);
+    }
+    public int GetHeight()
+    {
+        return baseGrid.height;
     }
     public float GetAtkOffset(MyEnum.TheOperator theOperator)
     {
