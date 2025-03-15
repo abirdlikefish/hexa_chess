@@ -79,7 +79,7 @@ MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Player, playerStateMach
             Cancel();
             return;
         }
-playerStateMachine.selectedUnit.Move(5);
+playerStateMachine.selectedUnit.Move(path, 5);
     }
 
     private void EndMove()
