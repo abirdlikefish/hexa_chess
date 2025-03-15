@@ -23,7 +23,8 @@ public class PlayerStateMachine
     public Vector2Int? selectedGrid;
     public IUnit selectedUnit;
 
-    public void BuildState()
+    // public void BuildState()
+    private void BuildState()
     {
         if (stateList == null)
         {
@@ -34,10 +35,12 @@ public class PlayerStateMachine
         stateList.Add(MyEnum.PlayerRoundState.WaitInput_Enemy, new PlayerRound_WaitInput_Enemy(this,MyEnum.PlayerRoundState.WaitInput_Enemy));
     }
 
-    public void Initialize(MyEnum.PlayerRoundState _startState)
+    // public void Initialize(MyEnum.PlayerRoundState _startState)
+    public void Initialize()
     {
-        currentState = null;
-        ChangeState(_startState);
+        // currentState = null;
+        // ChangeState(_startState);
+        BuildState();
     }
 
     public void ChangeState(MyEnum.PlayerRoundState _newState)

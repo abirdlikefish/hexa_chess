@@ -10,6 +10,7 @@ public class PlayerRound_WaitInput_Enemy : PlayerRoundState
     public override void Enter()
     {
         base.Enter();
+MapManager.Instance.SearchAttackArea(MyEnum.TheOperator.Player, playerStateMachine.selectedGrid.Value , 5);
         MyEvent.OnGridClick_left += SelectTarget;
         MyEvent.AnimaEnd += EndAttack;
     }
@@ -22,13 +23,14 @@ public class PlayerRound_WaitInput_Enemy : PlayerRoundState
     public override void Exit()
     {
         base.Exit();
+        MapManager.Instance.CloseMapUI(MyEnum.TheOperator.Player);
         MyEvent.OnGridClick_left -= SelectTarget;
         MyEvent.AnimaEnd -= EndAttack;
     }
 
-    public override void Cansel()
+    public override void Cancel()
     {
-        base.Cansel();
+        base.Cancel();
     }
 
     public override void Update()
@@ -40,8 +42,8 @@ public class PlayerRound_WaitInput_Enemy : PlayerRoundState
     public void SelectTarget(Vector2Int? targetcoord)
     {
         if (targetcoord == null) return;
-        IUnit selectedUnit =  MapManager.Instance.GetUnit(targetcoord.Value);
-        if (selectedUnit == null || (selectedUnit != null && selectedUnit.isFriendUnit())) return;//没选中东西或者选中了友军
+        IUnit selectedUnit = MapManager.Instance.GetAttackedUnit(targetcoord.Value);
+        if (selectedUnit == null) return;//没选中东西或者选中了友军
         playerStateMachine.selectedUnit.Attack(selectedUnit);
     }
 

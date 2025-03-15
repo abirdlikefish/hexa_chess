@@ -27,16 +27,19 @@ public class GameStateMachine
     public int playerCurrentHp;
     public int enemyCurrentHp;
     
-    public void Initializate(MyEnum.GameState startState)
+    // public void Initializate(MyEnum.GameState startState)
+    public void Initializate()
     {
-        currentState = null;
-        ChangeState(startState);
+        // currentState = null;
+        // ChangeState(startState);
+        BuildState();
     }
     
     /// <summary>
     /// 实例化所有Game State
     /// </summary>
-    public void BuildState()
+    // public void BuildState()
+    private void BuildState()
     {
         stateList = new Dictionary<MyEnum.GameState, GameState>();
         stateList.Add(MyEnum.GameState.PlayerRound, new PlayerRound(this, MyEnum.GameState.PlayerRound));

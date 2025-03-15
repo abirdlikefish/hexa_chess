@@ -9,8 +9,10 @@ public class PlayerRound : GameState
         _whichState)
     {
         playerRoundStateMachine = new PlayerStateMachine();
-        playerRoundStateMachine.BuildState();
-        playerRoundStateMachine.Initialize(MyEnum.PlayerRoundState.Idle);
+        // playerRoundStateMachine.BuildState();
+        // playerRoundStateMachine.Initialize(MyEnum.PlayerRoundState.Idle);
+        playerRoundStateMachine.Initialize();
+        playerRoundStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
     }
 
     public override void Update()
@@ -28,15 +30,15 @@ public class PlayerRound : GameState
     public override void Exit()
     {
         base.Exit();
-        MapManager.Instance.CloseMapUI(MyEnum.TheOperator.Player);
+        // MapManager.Instance.CloseMapUI(MyEnum.TheOperator.Player);
         playerRoundStateMachine.Exit();
         MyEvent.OnClick_nextBtn -= NextBtnClick;
     }
 
-    public override void PressTestButton()
-    {
-        gameStateMachine.ChangeState(MyEnum.GameState.EnemyRound);
-    }
+    // public override void PressTestButton()
+    // {
+    //     gameStateMachine.ChangeState(MyEnum.GameState.EnemyRound);
+    // }
     private void NextBtnClick()
     {
         gameStateMachine.ChangeState(MyEnum.GameState.EnemyRound);

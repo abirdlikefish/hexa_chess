@@ -25,7 +25,7 @@ public class PlayerRoundState
     {
     }
 
-    public virtual void Cansel()
+    public virtual void Cancel()
     {
     }
 

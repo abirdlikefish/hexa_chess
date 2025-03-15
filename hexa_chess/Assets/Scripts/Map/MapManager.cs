@@ -21,8 +21,9 @@ public interface IMapManager
     /// <summary>
     /// 从后向前遍历 ， 终点非法则返回null
     /// </summary>
-    public List<Vector2Int> GetMovePath(Vector2Int endCoord);
+    public List<Vector2Int> GetMovePath(Vector2Int endCoord , out float moveCost);
     public List<Vector2Int> SearchAttackArea(MyEnum.TheOperator theOperator , Vector2Int coord , float atkRange);
+    public IUnit GetAttackedUnit(Vector2Int coord);
     public List<Vector2Int> SetVirtualArea(MyEnum.TheOperator theOperator , Vector2Int coord , float viewRange);
     public void CloseMapUI(MyEnum.TheOperator theOperator);
     // public void ChangeGrid(Vector2Int coord, MyEnum.GridType gridType);
@@ -453,10 +454,11 @@ public class MapManager : IMapManager , IMapManager_edit
         public int Count => heap.Count - 1;
     }
     
-    public List<Vector2Int> GetMovePath(Vector2Int endCoord)
+    public List<Vector2Int> GetMovePath(Vector2Int endCoord , out float moveCost)
     {
         if(!IsInMap(endCoord) || gridMap[endCoord.x, endCoord.y].currentUIState != MyEnum.GridUIState.Legal)
         {
+            moveCost = -1;
             return null;
         }
         List<Vector2Int> movePath = new List<Vector2Int>();
@@ -467,6 +469,7 @@ public class MapManager : IMapManager , IMapManager_edit
             midCoord = searchMovableAreaGridInfoMap[midCoord.x, midCoord.y].lastCoord;
         }
         movePath.Add(midCoord);
+        moveCost = searchMovableAreaGridInfoMap[endCoord.x, endCoord.y].moveCost;
         // movePath.Reverse();
         return movePath;
     }
@@ -509,6 +512,19 @@ public class MapManager : IMapManager , IMapManager_edit
                 
         }
         return attackGridList;
+    }
+    public IUnit GetAttackedUnit(Vector2Int coord)
+    {
+        if(!IsInMap(coord))
+        {
+            Debug.LogError("GetAttackedUnit: Out of Map");
+            return null;
+        }
+        if(gridMap[coord.x, coord.y].currentUIState != MyEnum.GridUIState.Legal)
+        {
+            return null;
+        }
+        return gridMap[coord.x, coord.y].GetUnit();
     }
     public List<Vector2Int> SetVirtualArea(MyEnum.TheOperator theOperator , Vector2Int coord , float viewRange)
     {

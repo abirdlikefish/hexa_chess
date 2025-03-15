@@ -45,14 +45,16 @@ class GameManager : MonoBehaviour
 
     protected void Start()
     {
-        gameStateMachine.BuildState();
-        gameStateMachine.Initializate(MyEnum.GameState.PlayerRound);
+        // gameStateMachine.BuildState();
+        // gameStateMachine.Initializate(MyEnum.GameState.PlayerRound);
+        gameStateMachine.Initializate();
+        gameStateMachine.ChangeState(MyEnum.GameState.PlayerRound);
         gameStateMachine.SynchronousHp(PlayerHP, EnemyHP);
         
         
         MapManager.Instance.CreateMap(10);
         UIManager.Instance.ShowView(MyEnum.UIView.PlayView);
-        MyEvent.OnClick_testBtn += ChangeGameState;
+        // MyEvent.OnClick_testBtn += ChangeGameState;
     }
     /// <summary>
     /// 判断是否需要结束游戏，每次更新大本营血量的时候都调用
@@ -79,9 +81,9 @@ class GameManager : MonoBehaviour
         gameStateMachine.currentState.Update();
     }
 
-    public void ChangeGameState()
-    {
-        gameStateMachine.currentState.PressTestButton();
-    }
+    // public void ChangeGameState()
+    // {
+    //     gameStateMachine.currentState.PressTestButton();
+    // }
 }
 
