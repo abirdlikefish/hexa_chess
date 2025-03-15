@@ -13,7 +13,7 @@ public class Unit : MonoBehaviour, IUnit
     //生命值
     public int currentHp;
 
-    public float currentAction;//当前行动力
+    public int currentAction;//当前行动力
 
     public bool friendUnit;//阵营归属
 

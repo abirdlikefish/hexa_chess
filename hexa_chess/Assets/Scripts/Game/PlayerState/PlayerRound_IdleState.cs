@@ -42,6 +42,7 @@ public class PlayerRound_IdleState : PlayerRoundState
         if(coord == null)   return;
         playerStateMachine.selectedUnit = MapManager.Instance.GetUnit(coord.Value);
         if(playerStateMachine.selectedUnit == null)    return;
+        Debug.Log("Success SelectGrid");
     // playerStateMachine.selectedUnit = new Unit();
         playerStateMachine.selectedGrid = coord;
         playerStateMachine.ChangeState(MyEnum.PlayerRoundState.WaitInput_WhichAction);

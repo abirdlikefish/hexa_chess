@@ -32,7 +32,7 @@ public class UnitFactory : MonoBehaviour
         Vector2 vector2 = new Vector2(transform.position.x,transform.position.y);
         gameObject.GetComponent<IUnit>().ReWritePosition(vector2);
         //存入地图
-        MapManager.Instance.AddUnit(MapManager.Pos_To_Coord(vector2),gameObject);
+        MapManager.Instance.AddUnit(MapManager.Pos_To_Coord(vector2),gameObject.GetComponent<IUnit>());
         return gameObject.GetComponent<IUnit>();
     }
 }
