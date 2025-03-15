@@ -30,19 +30,13 @@ public class PlayerRound_IdleState : PlayerRoundState
 
     public override void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            SelectGrid(new Vector2Int((int)(mousePosition.x), (int)(mousePosition.y)));
-        }
     }
 
     public void SelectGrid(Vector2Int? coord)
     {
         if(coord == null)   return;
         playerStateMachine.selectedUnit = MapManager.Instance.GetUnit(coord.Value);
-        if(playerStateMachine.selectedUnit == null)    return;
-        Debug.Log("Success SelectGrid");
+        if (playerStateMachine.selectedUnit == null)   return;
     // playerStateMachine.selectedUnit = new Unit();
         playerStateMachine.selectedGrid = coord;
         playerStateMachine.ChangeState(MyEnum.PlayerRoundState.WaitInput_WhichAction);

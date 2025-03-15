@@ -7,13 +7,12 @@ public class PlayerRound_WaitInputAction : PlayerRoundState
     public PlayerRound_WaitInputAction(PlayerStateMachine _playerStateMachine, MyEnum.PlayerRoundState _playerState) : base(_playerStateMachine, _playerState)
     {
         MyEvent.OnClick_attackBtn += SelectedAttack;
-        
     }
 
     public override void Enter()
     {
         base.Enter();
-        MyEvent.OnGridClick_left += SelectGrid;
+        MyEvent.OnGridClick_right += SelectGrid;
         MyEvent.OpenUnitUI?.Invoke(playerStateMachine.selectedUnit);
     }
 
@@ -24,7 +23,7 @@ public class PlayerRound_WaitInputAction : PlayerRoundState
 
     public override void Exit()
     {
-        MyEvent.OnGridClick_left -= SelectGrid;
+        MyEvent.OnGridClick_right -= SelectGrid;
         MyEvent.OpenUnitUI?.Invoke(null);
         base.Exit();
     }
@@ -36,11 +35,6 @@ public class PlayerRound_WaitInputAction : PlayerRoundState
     public override void Update()
     {
         base.Update();
-    }
-
-    private void SelectedMove()//点击了移动按钮
-    {
-        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.WaitInput_Position);
     }
 
     private void SelectedAttack()//点击了攻击按钮

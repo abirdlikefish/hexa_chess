@@ -31,6 +31,7 @@ public class PlayerStateMachine
         }
         stateList.Add(MyEnum.PlayerRoundState.Idle, new PlayerRound_IdleState(this,MyEnum.PlayerRoundState.Idle));
         stateList.Add(MyEnum.PlayerRoundState.WaitInput_WhichAction, new PlayerRound_WaitInputAction(this,MyEnum.PlayerRoundState.WaitInput_WhichAction));
+        stateList.Add(MyEnum.PlayerRoundState.WaitInput_Enemy, new PlayerRound_WaitInput_Enemy(this,MyEnum.PlayerRoundState.WaitInput_Enemy));
     }
 
     public void Initialize(MyEnum.PlayerRoundState _startState)
