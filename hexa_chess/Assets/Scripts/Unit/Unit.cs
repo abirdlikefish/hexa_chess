@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Linq;
 public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
 {
     //单位配置文件
@@ -63,6 +64,7 @@ public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
     {
         if (unitState == UnitStates.Able)
         {
+            IUnit temp = MapManager.Instance.GetUnit(MapManager.Pos_To_Coord(position));
             Debug.Log("移动！");
             Sequence sequence = DOTween.Sequence();
             foreach (var point in path)
@@ -74,11 +76,14 @@ public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
             sequence.OnPlay(() => {
                 unitState = UnitStates.Disable;
                 Debug.Log("单位移动中，不可操作");
+                MapManager.Instance.RemoveUnit(MapManager.Pos_To_Coord(position));
             });
             sequence.Play();
             sequence.OnComplete(() => {
                 unitState = UnitStates.Able;
-                Debug.Log("移动动画完成");});
+                Debug.Log("移动动画完成");
+                MapManager.Instance.AddUnit(path.Last(),temp);
+            });
                 MyEvent.AnimaEnd();
             ActionCheck(cost);
 
