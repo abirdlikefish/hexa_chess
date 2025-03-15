@@ -20,4 +20,9 @@ public interface IUnit
 
     UnitStates GetStates();
 
+    bool isFriendUnit();
+
+    void ReWritePosition(Vector2 vector2);
+
+    Vector2 GetUnitPos();
 }

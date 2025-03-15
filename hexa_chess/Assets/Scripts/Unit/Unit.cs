@@ -15,6 +15,10 @@ public class Unit : MonoBehaviour, IUnit
 
     public int currentAction;//当前行动力
 
+    public bool friendUnit;//阵营归属
+
+    public Vector2 position;
+
 
 
     public void UnitInitialize(UnitConfig iniConfig)
@@ -86,6 +90,7 @@ public class Unit : MonoBehaviour, IUnit
         ActionCheck(currentAction);
     }
     //行动力检定，判断单位操作是否转入无法操作
+    
     private void ActionCheck(int ActionCost)
     {
         if(unitState == UnitStates.Able && currentAction != 0)   
@@ -95,6 +100,7 @@ public class Unit : MonoBehaviour, IUnit
         } 
         if(currentAction == 0)  unitState = UnitStates.Disable;
     }
+
     //回合结束检定，将单位转入可操作
     private void RoundEndCheck()
     {
@@ -107,6 +113,8 @@ public class Unit : MonoBehaviour, IUnit
         if(currentHp <= 0)
         {
             Debug.Log("单位被摧毁");
+            UnitManager.Instance.RemoveUnit(this,unitConfig.unitType);
+            Destroy(gameObject);
         }
     }
 
@@ -127,4 +135,19 @@ public class Unit : MonoBehaviour, IUnit
     {
         return unitState;
     }
+
+    public bool isFriendUnit()
+    {
+        return friendUnit;
+    }
+
+    public void ReWritePosition(Vector2 vector2)
+    {
+        position = vector2;
+    }
+
+    public Vector2 GetUnitPos()
+    {
+        return position;
+    } 
 }
