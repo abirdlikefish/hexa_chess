@@ -46,24 +46,24 @@ public class Unit : MonoBehaviour, IUnit
         int finalDamage;
         switch (oprationBuff)
         {
-            case OprationBuff.Rest:
-                finalDamage = damage += 1;
-                break;
-            default:
-                finalDamage = damage;
-                break;
+            case OprationBuff.Rest: finalDamage = damage += 1;
+            break;
+            case OprationBuff.Station: finalDamage = damage - 2;
+            break;
+            default:    finalDamage = damage;
+            break;
         }
         currentHp -= finalDamage;
         DestroyCheck();
     }
 
-    public void Move(int cost)
+    public void Move(Vector2Int beginPoint,Vector2Int endPoint)
     {
         if (unitState == UnitStates.Able)
         {
             Debug.Log("移动！");
-            //todo:棋子寻路和移动方式
             ActionCheck(cost);
+
         }
         else
         {
@@ -126,9 +126,11 @@ public class Unit : MonoBehaviour, IUnit
         Debug.Log("返还资源！");
     }
 
+    //回收单位
     private void RecycleUnit()
     {
         Debug.Log("回收单位！");
+        UnitManager.Instance.RemoveUnit(this,unitConfig.unitType);
         Destroy(gameObject);
         //todo:回收对象池
     }
@@ -152,4 +154,9 @@ public class Unit : MonoBehaviour, IUnit
     {
         return position;
     } 
+
+    public int GetActionForce()
+    {
+        return currentAction;
+    }
 }

@@ -28,11 +28,13 @@ public class UnitFactory : MonoBehaviour
     {
         //生成实例对象
         GameObject gameObject = Instantiate((GameObject)Resources.Load("Unit"),transform);
+        UnitConfig config = (UnitConfig)Resources.Load("unitConfig");
+        gameObject.GetComponent<Unit>().UnitInitialize(config);
         //地图坐标转换
         Vector2 vector2 = new Vector2(transform.position.x,transform.position.y);
         gameObject.GetComponent<IUnit>().ReWritePosition(vector2);
         //存入地图
-        MapManager.Instance.AddUnit(MapManager.Pos_To_Coord(vector2),gameObject);
+        MapManager.Instance.AddUnit(MapManager.Pos_To_Coord(vector2),gameObject.GetComponent<IUnit>());
         return gameObject.GetComponent<IUnit>();
     }
 }
