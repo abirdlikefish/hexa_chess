@@ -20,6 +20,7 @@ public class PlayerRound_PlayAnimation : PlayerRoundState
 
     private void EndAnimation()
     {
+        GameManager.instance.JudgeShouldEndGame();
         playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
     }
 }
