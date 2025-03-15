@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Unit : MonoBehaviour, IUnit
+using DG.Tweening;
+public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
 {
     //单位配置文件
     public UnitConfig unitConfig;
@@ -25,6 +26,7 @@ public class Unit : MonoBehaviour, IUnit
     {
         unitConfig = iniConfig;
         unitState = UnitStates.Able;
+        DOTween.Init();
     }
     public void Attack(IUnit other)
     {
@@ -57,11 +59,27 @@ public class Unit : MonoBehaviour, IUnit
         DestroyCheck();
     }
 
-    public void Move(Vector2Int beginPoint,Vector2Int endPoint)
+    public void Move(List<Vector2Int> path,int cost)
     {
         if (unitState == UnitStates.Able)
         {
             Debug.Log("移动！");
+            Sequence sequence = DOTween.Sequence();
+            foreach (var point in path)
+            {
+                sequence.Append(
+                    transform.DOMove((Vector3)MapManager.Coord_To_Pos(point),
+                    unitConfig.movingSpeed));
+            }
+            sequence.OnPlay(() => {
+                unitState = UnitStates.Disable;
+                Debug.Log("单位移动中，不可操作");
+            });
+            sequence.Play();
+            sequence.OnComplete(() => {
+                unitState = UnitStates.Able;
+                Debug.Log("移动动画完成");});
+                MyEvent.AnimaEnd();
             ActionCheck(cost);
 
         }
@@ -73,11 +91,13 @@ public class Unit : MonoBehaviour, IUnit
 
     public void Station()
     {
-
+        ActionCheck(currentAction);
+        oprationBuff = OprationBuff.Station;
     }
 
     public void Rest()
     {
+        ActionCheck(currentAction);
         oprationBuff = OprationBuff.Rest;
     }
 
@@ -91,8 +111,8 @@ public class Unit : MonoBehaviour, IUnit
     {
         ActionCheck(currentAction);
     }
+
     //行动力检定，判断单位操作是否转入无法操作
-    
     private void ActionCheck(int ActionCost)
     {
         if (unitState == UnitStates.Able && currentAction != 0)
@@ -103,12 +123,6 @@ public class Unit : MonoBehaviour, IUnit
         if (currentAction == 0) unitState = UnitStates.Disable;
     }
 
-    //回合结束检定，将单位转入可操作
-    private void RoundEndCheck()
-    {
-        unitState = UnitStates.Able;
-        currentAction = unitConfig.Action;
-    }
     //摧毁检定
     private void DestroyCheck()
     {
@@ -135,6 +149,11 @@ public class Unit : MonoBehaviour, IUnit
         //todo:回收对象池
     }
 
+    public void RecoverHp(int hp)
+    {
+        currentHp += hp;
+    }
+
     public UnitStates GetStates()
     {
         return unitState;
@@ -158,5 +177,17 @@ public class Unit : MonoBehaviour, IUnit
     public int GetActionForce()
     {
         return currentAction;
+    }
+
+    //回合结束检定，将单位转入可操作
+    public void RoundBeginCheck()
+    {
+        unitState = UnitStates.Able;
+        currentAction = unitConfig.Action;
+    }
+
+    public OprationBuff GetOprationBuff()
+    {
+        return oprationBuff;
     }
 }

@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public interface UnitManagerHandler
+public interface UnitManagerAPI
 {
     bool CheckAllOperated();//检查所有单位是否全部操作
 
-    IUnit GetAbleUnit();//返回一个没有操作过的单位
+    IUnitManagerOp GetAbleUnit();//返回一个没有操作过的单位
 
     void RoundBeginOperation();//回合开始，对所有单位初始化
+
+    void RoundEndOperation();//回合结束，对所有单位的血量进行回复
 
     void ResetManager();//重置管理器设置
 
@@ -18,6 +20,7 @@ public interface UnitManagerHandler
 
     //根据参数移除单位
     void RemoveUnit(IUnit unit, UnitType type);
+
 }
 
 public interface UnitPoolHandler
@@ -28,12 +31,12 @@ public interface UnitPoolHandler
     bool isEmptyPool();//检测是否为空池
 }
 
-public class UnitManager : UnitManagerHandler
+public class UnitManager : UnitManagerAPI
 {
     private static UnitManager _instance;
     private UnitManager()
     {
-        manager = new Dictionary<UnitType, List<IUnit>>();
+        manager = new Dictionary<UnitType, List<IUnitManagerOp>>();
     }
 
     //单例访问模式
@@ -49,7 +52,7 @@ public class UnitManager : UnitManagerHandler
         }
     }
 
-    private Dictionary<UnitType,List<IUnit>> manager;
+    private Dictionary<UnitType,List<IUnitManagerOp>> manager;
 
     //检查是否有未操作单位
     public bool CheckAllOperated()
@@ -68,7 +71,7 @@ public class UnitManager : UnitManagerHandler
     }
 
     //获取一个没有被操作过的单位
-    public IUnit GetAbleUnit()
+    public IUnitManagerOp GetAbleUnit()
     {
         foreach(var i in manager)
         {
@@ -90,7 +93,32 @@ public class UnitManager : UnitManagerHandler
 
     public void RoundBeginOperation()
     {
+        foreach (var type in manager)
+        {
+            foreach (var item in type.Value)
+            {
+                item.RoundBeginCheck();
+            }
+        }
+    }
 
+    public void RoundEndOperation()
+    {
+        foreach (var type in manager)
+        {
+            foreach (var item in type.Value)
+            {
+                switch(item.GetOprationBuff())
+                {
+                    case OprationBuff.Rest: item.RecoverHp(2);
+                    break;
+                    case OprationBuff.Station: item.RecoverHp(1);
+                    break;
+                    default:
+                    break;
+                }
+            }
+        }
     }
     public void CreateNewUnit(Transform position, UnitType unitType)
     {
@@ -105,9 +133,9 @@ public class UnitManager : UnitManagerHandler
         var item = manager[type];
         foreach (var i in item)
         {
-            if(i == unit)
+            if( (IUnit)i == unit)
             {
-                manager[type].Remove(unit);
+                manager[type].Remove(i);
                 break;
             }
         }

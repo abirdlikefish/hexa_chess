@@ -10,6 +10,8 @@ public class UnitConfig : ScriptableObject
     public int Action; //行动点数
     public int Attak; //攻击力
     public int AttackRadius; //攻击范围
+
+    public float movingSpeed;
     /// <summary>
     /// 生成所需的金币数目
     /// </summary>
