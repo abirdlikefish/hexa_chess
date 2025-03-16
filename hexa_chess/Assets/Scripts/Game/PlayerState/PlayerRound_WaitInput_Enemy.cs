@@ -27,10 +27,17 @@ MapManager.Instance.SearchAttackArea(MyEnum.TheOperator.Player, playerStateMachi
     {
         if (targetcoord == null) return;
         IUnit selectedUnit = MapManager.Instance.GetAttackedUnit(targetcoord.Value);
-        if (selectedUnit == null) return;//没选中东西或者选中了友军
+        if (selectedUnit == null)
+        {
+            Cancel();
+            return;
+        }
         playerStateMachine.selectedUnit.Attack(selectedUnit);
         playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
     }
-    
-    
+
+    public override void Cancel()
+    {
+        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.WaitInput_WhichAction);
+    }
 }

@@ -7,15 +7,18 @@ public class PlayerRound_WaitInputAction : PlayerRoundState
 {
     public PlayerRound_WaitInputAction(PlayerStateMachine _playerStateMachine, MyEnum.PlayerRoundState _playerState) : base(_playerStateMachine, _playerState)
     {
-        MyEvent.OnClick_attackBtn += SelectedAttack;
+
     }
 
     public override void Enter()
     {
         base.Enter();
-        MyEvent.OnClick_restBtn += RestUnit;
-        MyEvent.OnClick_stationBtn += StationUnit;
-        MyEvent.OnClick_dismissBtn += DismissUnit;
+        //每个单位有五种操作
+        MyEvent.OnClick_attackBtn += SelectedAttack;
+        MyEvent.OnClick_restBtn += SelectedRest;
+        MyEvent.OnClick_stationBtn += SelectedStation;
+        MyEvent.OnClick_dismissBtn += SelectedDismiss;
+        //左键取消选中
         MyEvent.OnGridClick_left += SelectGrid_left;
         MyEvent.OnGridClick_right += SelectGrid_right;
         MyEvent.OpenUnitUI?.Invoke(playerStateMachine.selectedUnit);
@@ -24,16 +27,15 @@ MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Player, playerStateMach
     
     public override void Exit()
     {
-        MyEvent.OnClick_restBtn -= RestUnit;
-        MyEvent.OnClick_stationBtn -= StationUnit;
-        MyEvent.OnClick_dismissBtn -= DismissUnit;
+        MyEvent.OnClick_restBtn -= SelectedRest;
+        MyEvent.OnClick_stationBtn -= SelectedStation;
+        MyEvent.OnClick_dismissBtn -= SelectedDismiss;
         MyEvent.OnGridClick_right -= SelectGrid_right;
         MyEvent.OnGridClick_left -= SelectGrid_left;
         MyEvent.OpenUnitUI?.Invoke(null);
         MapManager.Instance.CloseMapUI(MyEnum.TheOperator.Player);
         base.Exit();
     }
-
     
     private void SelectedAttack()//点击了攻击按钮
     {
@@ -74,19 +76,19 @@ playerStateMachine.selectedUnit.Move(path , 5);
     playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
     }
 
-    private void DismissUnit()
+    private void SelectedDismiss()
     {
         playerStateMachine.selectedUnit.Dismiss();
         playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
     }
 
-    private void StationUnit()
+    private void SelectedStation()
     {
         playerStateMachine.selectedUnit.Station();
         playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
     }
 
-    private void RestUnit()
+    private void SelectedRest()
     {
         playerStateMachine.selectedUnit.Rest();
         playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);

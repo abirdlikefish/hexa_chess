@@ -22,7 +22,7 @@ public class PlayerRoundState
     {
     }
     
-    public void Cancel()
+    public virtual void Cancel()
     {
         playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
     }

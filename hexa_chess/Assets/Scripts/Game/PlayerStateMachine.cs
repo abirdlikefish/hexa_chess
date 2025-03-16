@@ -30,10 +30,14 @@ public class PlayerStateMachine
         {
             stateList = new Dictionary<MyEnum.PlayerRoundState, PlayerRoundState>();
         }
-        stateList.Add(MyEnum.PlayerRoundState.Idle, new PlayerRound_IdleState(this,MyEnum.PlayerRoundState.Idle));
-        stateList.Add(MyEnum.PlayerRoundState.WaitInput_WhichAction, new PlayerRound_WaitInputAction(this,MyEnum.PlayerRoundState.WaitInput_WhichAction));
-        stateList.Add(MyEnum.PlayerRoundState.WaitInput_Enemy, new PlayerRound_WaitInput_Enemy(this,MyEnum.PlayerRoundState.WaitInput_Enemy));
-        stateList.Add(MyEnum.PlayerRoundState.PlayingAnimation, new PlayerRound_PlayAnimation(this,MyEnum.PlayerRoundState.PlayingAnimation));
+
+        stateList.Add(MyEnum.PlayerRoundState.Idle, new PlayerRound_IdleState(this, MyEnum.PlayerRoundState.Idle));
+        stateList.Add(MyEnum.PlayerRoundState.WaitInput_WhichAction,
+            new PlayerRound_WaitInputAction(this, MyEnum.PlayerRoundState.WaitInput_WhichAction));
+        stateList.Add(MyEnum.PlayerRoundState.WaitInput_Enemy,
+            new PlayerRound_WaitInput_Enemy(this, MyEnum.PlayerRoundState.WaitInput_Enemy));
+        stateList.Add(MyEnum.PlayerRoundState.PlayingAnimation,
+            new PlayerRound_PlayAnimation(this, MyEnum.PlayerRoundState.PlayingAnimation));
     }
 
     // public void Initialize(MyEnum.PlayerRoundState _startState)
@@ -50,10 +54,10 @@ public class PlayerStateMachine
         currentState = stateList[_newState];
         currentState.Enter();
     }
+
     public void Exit()
     {
         currentState?.Exit();
         currentState = null;
     }
-    
 }
