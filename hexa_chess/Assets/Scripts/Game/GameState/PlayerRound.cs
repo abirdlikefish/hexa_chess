@@ -33,6 +33,7 @@ public class PlayerRound : GameState
         // MapManager.Instance.CloseMapUI(MyEnum.TheOperator.Player);
         playerRoundStateMachine.Exit();
         MyEvent.OnClick_nextBtn -= NextBtnClick;
+        GameManager.instance.IncreaseRoundsCounter();
     }
 
     // public override void PressTestButton()

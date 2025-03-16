@@ -89,8 +89,7 @@ public static class MyEnum
         WaitInput_WhichAction,//选中兵之后等待选哪种行动
         WaitInput_Enemy,//选中攻击的话需要选打谁
         PlayingAnimation,//正在播放对应的动作动画
-        
-        SelectedFactory,//选的不是常规单位而是生产单位的工厂
+        SelectedBase,//选的不是常规单位而是大本营
     }
 
 }
