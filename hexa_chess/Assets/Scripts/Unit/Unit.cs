@@ -4,37 +4,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System.Linq;
-public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
+public class Unit : MonoBehaviour, IUnit
 {
     //单位配置文件
     public UnitConfig unitConfig;
     //单位当前状态
-    public UnitStates unitState;
+    public MyEnum.UnitStates unitState;
     //操作增益
-    public OprationBuff oprationBuff;
+    public MyEnum.OprationBuff oprationBuff;
     //生命值
     public int currentHp;
 
-    public int currentAction;//当前行动力
+    public float currentAction;//当前行动力
 
-    public bool friendUnit;//阵营归属
+    public MyEnum.TheOperator theOperator;//阵营归属
 
-    public Vector2 position;
+    public Vector2Int croodPosition;
 
 
 
     public void UnitInitialize(UnitConfig iniConfig)
     {
         unitConfig = iniConfig;
-        unitState = UnitStates.Able;
+        unitState = MyEnum.UnitStates.Able;
         DOTween.Init();
     }
     public void Attack(IUnit other)
     {
-        if (unitState == UnitStates.Able)
+        if (unitState == MyEnum.UnitStates.Able)
         {
             //消耗当前所有行动力
-            ActionCheck(currentAction);
             Debug.Log("单位攻击指令执行！");
             other.GetDamage(unitConfig.Attak);
         }
@@ -49,9 +48,9 @@ public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
         int finalDamage;
         switch (oprationBuff)
         {
-            case OprationBuff.Rest: finalDamage = damage += 1;
+            case MyEnum.OprationBuff.Rest: finalDamage = damage += 1;
             break;
-            case OprationBuff.Station: finalDamage = damage - 2;
+            case MyEnum.OprationBuff.Station: finalDamage = damage - 2;
             break;
             default:    finalDamage = damage;
             break;
@@ -60,11 +59,11 @@ public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
         DestroyCheck();
     }
 
-    public void Move(List<Vector2Int> path,int cost)
+    public void Move(List<Vector2Int> path,float cost)
     {
-        if (unitState == UnitStates.Able)
+        if (unitState == MyEnum.UnitStates.Able)
         {
-            IUnit temp = MapManager.Instance.GetUnit(MapManager.Pos_To_Coord(position));
+            IUnit temp = MapManager.Instance.GetUnit(croodPosition);
             Debug.Log("移动！");
             Sequence sequence = DOTween.Sequence();
             foreach (var point in path)
@@ -74,18 +73,18 @@ public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
                     unitConfig.movingSpeed));
             }
             sequence.OnPlay(() => {
-                unitState = UnitStates.Disable;
+                unitState = MyEnum.UnitStates.Disable;
                 Debug.Log("单位移动中，不可操作");
-                MapManager.Instance.RemoveUnit(MapManager.Pos_To_Coord(position));
+                MapManager.Instance.RemoveUnit(croodPosition);
             });
             sequence.Play();
             sequence.OnComplete(() => {
-                unitState = UnitStates.Able;
+                unitState = MyEnum.UnitStates.Able;
                 Debug.Log("移动动画完成");
                 MapManager.Instance.AddUnit(path.Last(),temp);
             });
                 MyEvent.AnimaEnd();
-            ActionCheck(cost);
+            currentAction -= cost;
 
         }
         else
@@ -96,14 +95,16 @@ public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
 
     public void Station()
     {
-        ActionCheck(currentAction);
-        oprationBuff = OprationBuff.Station;
+        currentAction = 0;
+        oprationBuff = MyEnum.OprationBuff.Station;
+        unitState = MyEnum.UnitStates.Disable;
     }
 
     public void Rest()
     {
-        ActionCheck(currentAction);
-        oprationBuff = OprationBuff.Rest;
+        currentAction = 0;
+        oprationBuff = MyEnum.OprationBuff.Rest;
+        unitState = MyEnum.UnitStates.Disable;
     }
 
     public void Dismiss()
@@ -114,19 +115,10 @@ public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
 
     public void Skip()
     {
-        ActionCheck(currentAction);
+        currentAction = 0;
+        unitState = MyEnum.UnitStates.Disable;
     }
 
-    //行动力检定，判断单位操作是否转入无法操作
-    private void ActionCheck(int ActionCost)
-    {
-        if (unitState == UnitStates.Able && currentAction != 0)
-        {
-            currentAction -= ActionCost;
-            if (currentAction < 0) currentAction = 0;
-        }
-        if (currentAction == 0) unitState = UnitStates.Disable;
-    }
 
     //摧毁检定
     private void DestroyCheck()
@@ -134,7 +126,7 @@ public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
         if (currentHp <= 0)
         {
             Debug.Log("单位被摧毁");
-            UnitManager.Instance.RemoveUnit(this,unitConfig.unitType);
+            UnitManager.Instance.RemoveUnit(this);
             Destroy(gameObject);
         }
     }
@@ -149,7 +141,7 @@ public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
     private void RecycleUnit()
     {
         Debug.Log("回收单位！");
-        UnitManager.Instance.RemoveUnit(this,unitConfig.unitType);
+        UnitManager.Instance.RemoveUnit(this);
         Destroy(gameObject);
         //todo:回收对象池
     }
@@ -159,27 +151,27 @@ public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
         currentHp += hp;
     }
 
-    public UnitStates GetStates()
+    public MyEnum.UnitStates GetStates()
     {
         return unitState;
     }
 
-    public bool isFriendUnit()
+    public MyEnum.TheOperator GetOperater()
     {
-        return friendUnit;
+        return theOperator;
     }
 
-    public void ReWritePosition(Vector2 vector2)
+    public void ReWriteCrood(Vector2Int crood)
     {
-        position = vector2;
+        croodPosition = crood;
     }
 
-    public Vector2 GetUnitPos()
+    public Vector2Int GetUnitPos()
     {
-        return position;
+        return croodPosition;
     } 
 
-    public int GetActionForce()
+    public float GetActionForce()
     {
         return currentAction;
     }
@@ -187,12 +179,27 @@ public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
     //回合结束检定，将单位转入可操作
     public void RoundBeginCheck()
     {
-        unitState = UnitStates.Able;
+        unitState = MyEnum.UnitStates.Able;
         currentAction = unitConfig.Action;
     }
 
-    public OprationBuff GetOprationBuff()
+    public MyEnum.OprationBuff GetOprationBuff()
     {
         return oprationBuff;
+    }
+
+    public MyEnum.UnitType GetUnitType()
+    {
+        return unitConfig.unitType;
+    }
+
+    public int GetUnitHp()
+    {
+        return currentHp;
+    }
+
+    public UnitConfig GetUnitConfig()
+    {
+        return unitConfig;
     }
 }
