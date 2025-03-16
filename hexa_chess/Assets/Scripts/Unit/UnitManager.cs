@@ -7,7 +7,7 @@ public interface UnitManagerAPI
 {
     bool CheckAllOperated();//检查所有单位是否全部操作
 
-    IUnitManagerOp GetAbleUnit();//返回一个没有操作过的单位
+    IUnit GetAbleUnit();//返回一个没有操作过的单位
 
     void RoundBeginOperation();//回合开始，对所有单位初始化
 
@@ -16,17 +16,17 @@ public interface UnitManagerAPI
     void ResetManager();//重置管理器设置
 
     //创建新单位
-    void CreateNewUnit(Transform position,UnitType unitType);
+    void CreateNewUnit(Vector2Int crood,MyEnum.UnitType unitType);
 
     //根据参数移除单位
-    void RemoveUnit(IUnit unit, UnitType type);
+    void RemoveUnit(IUnit unit);
 
 }
 
 public interface UnitPoolHandler
 {
     void Inpool(GameObject gameObject);//进池操作
-    GameObject OutPool(UnitType unitType);//出池操作
+    GameObject OutPool(MyEnum.UnitType unitType);//出池操作
 
     bool isEmptyPool();//检测是否为空池
 }
@@ -36,7 +36,8 @@ public class UnitManager : UnitManagerAPI
     private static UnitManager _instance;
     private UnitManager()
     {
-        manager = new Dictionary<UnitType, List<IUnitManagerOp>>();
+        manager = new Dictionary<MyEnum.UnitType, List<IUnit>>();
+        unitFactory = new UnitFactory();
     }
 
     //单例访问模式
@@ -52,7 +53,9 @@ public class UnitManager : UnitManagerAPI
         }
     }
 
-    private Dictionary<UnitType,List<IUnitManagerOp>> manager;
+    private Dictionary<MyEnum.UnitType,List<IUnit>> manager;
+
+    private UnitFactory unitFactory;
 
     //检查是否有未操作单位
     public bool CheckAllOperated()
@@ -63,7 +66,7 @@ public class UnitManager : UnitManagerAPI
             foreach(var item in temp)
             {
                 
-                if( item.GetStates() == UnitStates.Able) 
+                if( item.GetStates() == MyEnum.UnitStates.Able) 
                     return true;
             }
         }
@@ -71,7 +74,7 @@ public class UnitManager : UnitManagerAPI
     }
 
     //获取一个没有被操作过的单位
-    public IUnitManagerOp GetAbleUnit()
+    public IUnit GetAbleUnit()
     {
         foreach(var i in manager)
         {
@@ -79,7 +82,7 @@ public class UnitManager : UnitManagerAPI
             foreach(var item in temp)
             {
                 
-                if( item.GetStates() == UnitStates.Able) 
+                if( item.GetStates() == MyEnum.UnitStates.Able) 
                     return item;
             }
         }
@@ -110,9 +113,9 @@ public class UnitManager : UnitManagerAPI
             {
                 switch(item.GetOprationBuff())
                 {
-                    case OprationBuff.Rest: item.RecoverHp(2);
+                    case MyEnum.OprationBuff.Rest: item.RecoverHp(2);
                     break;
-                    case OprationBuff.Station: item.RecoverHp(1);
+                    case MyEnum.OprationBuff.Station: item.RecoverHp(1);
                     break;
                     default:
                     break;
@@ -120,22 +123,22 @@ public class UnitManager : UnitManagerAPI
             }
         }
     }
-    public void CreateNewUnit(Transform position, UnitType unitType)
+    public void CreateNewUnit(Vector2Int crood,MyEnum.UnitType unitType)
     {
         Debug.Log("加载一个单位");
         //单位加入管理器
-        manager[unitType].Add(UnitFactory.LoadUnit(position,unitType));
+        manager[unitType].Add(unitFactory.LoadUnit(crood,unitType));
         
     }
 
-    public void RemoveUnit(IUnit unit,UnitType type)
+    public void RemoveUnit(IUnit unit)
     {
-        var item = manager[type];
+        var item = manager[unit.GetUnitType()];
         foreach (var i in item)
         {
-            if( (IUnit)i == unit)
+            if( i == unit)
             {
-                manager[type].Remove(i);
+                manager[unit.GetUnitType()].Remove(unit);
                 break;
             }
         }
