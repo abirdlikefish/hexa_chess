@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="64,114" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="2"/>
+  <displayList>
+    <loader id="n2_9llv" name="Cover" xy="-104,78" size="50,50">
+      <gearDisplay controller="button" pages="0"/>
+    </loader>
+    <loader id="n3_9llv" name="Content" xy="-5,113" size="50,50">
+      <gearDisplay controller="button" pages="1,2,3"/>
+    </loader>
+  </displayList>
+  <Button/>
+</component>

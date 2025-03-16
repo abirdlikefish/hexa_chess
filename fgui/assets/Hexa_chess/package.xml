@@ -13,6 +13,7 @@
     <image id="pdzn9" name="洼.png" path="/Resources/Grid/"/>
     <image id="iudva" name="testbutton.png" path="/Resources/"/>
     <image id="ku3ub" name="Homura_stand0005.png" path="/Resources/"/>
+    <component id="9llvc" name="Btn_4.xml" path="/"/>
   </resources>
   <publish name=""/>
 </packageDescription>

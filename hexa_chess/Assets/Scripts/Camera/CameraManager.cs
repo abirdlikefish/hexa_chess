@@ -4,7 +4,7 @@ using Cinemachine;
 using UnityEngine;
 public interface ICameraManager
 {
-    void Move(Vector2 direction);
+    void Move(Vector3 direction);
     void LookAttGrid(Vector2Int grid);
 }
 public class CameraManager : MonoBehaviour , ICameraManager
@@ -27,11 +27,15 @@ public class CameraManager : MonoBehaviour , ICameraManager
         anchor = new GameObject("Anchor").transform;
         CinemachineVirtualCamera virtualCamera = GetComponent<CinemachineVirtualCamera>();
         virtualCamera.Follow = anchor.transform;
+        MyEvent.CameraMove += Move;
+        MyEvent.DragScreen += (delta) => Move(new Vector3(-delta.x,-delta.y,0));
     }
     private Transform anchor;
-    public void Move(Vector2 direction)
+    public void Move(Vector3 direction)
     {
-        anchor.position += new Vector3(direction.x, 0, direction.y);
+        // anchor.position += new Vector3(direction.x, 0, direction.y);
+        anchor.position += direction;
+        Debug.Log("Camera Move: " + direction);
     }
     public void LookAttGrid(Vector2Int grid)
     {
