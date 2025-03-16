@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameStateMachine
 {
+    private GameStateMachine(){}
     private static GameStateMachine instance;
 
     public static GameStateMachine Instance
@@ -26,35 +27,25 @@ public class GameStateMachine
     public int playerCurrentHp;
     public int enemyCurrentHp;
     
-    // [Header("Game States")] 
-    // public PlayerRound PlayerRound; //玩家回合
-    // public EnemyRound EnemyRound; //敌人回合
-    // public GameWin GameWin;
-    // public GameLose GameLose;
-    
-    public void Initializate(MyEnum.GameState startState)
+    // public void Initializate(MyEnum.GameState startState)
+    public void Initializate()
     {
-        currentState = null;
-        ChangeState(startState);
-        // currentState = startState;
-        // currentState.Enter();
+        // currentState = null;
+        // ChangeState(startState);
+        BuildState();
     }
     
     /// <summary>
     /// 实例化所有Game State
     /// </summary>
-    public void BuildState()
+    // public void BuildState()
+    private void BuildState()
     {
         stateList = new Dictionary<MyEnum.GameState, GameState>();
         stateList.Add(MyEnum.GameState.PlayerRound, new PlayerRound(this, MyEnum.GameState.PlayerRound));
         stateList.Add(MyEnum.GameState.EnemyRound, new EnemyRound(this, MyEnum.GameState.EnemyRound));
         stateList.Add(MyEnum.GameState.GameWin, new GameWin(this, MyEnum.GameState.GameWin));
         stateList.Add(MyEnum.GameState.GameLose, new GameLose(this, MyEnum.GameState.GameLose));
-
-        // PlayerRound = new PlayerRound(this, MyEnum.GameState.PlayerRound);
-        // EnemyRound = new EnemyRound(this, MyEnum.GameState.EnemyRound);
-        // GameWin = new GameWin(this, MyEnum.GameState.GameWin);
-        // GameLose = new GameLose(this, MyEnum.GameState.GameLose);
     }
 
     /// <summary>

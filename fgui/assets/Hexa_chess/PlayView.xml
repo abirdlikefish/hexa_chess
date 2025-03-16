@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="1920,1080">
+  <controller name="UnitUIController" pages="0,Hide,1,Show" selected="1"/>
   <displayList>
     <component id="n0_rznp" name="ScreenInputBtn" src="rznp1" fileName="ScreenInputBtn.xml" xy="1,0" size="1920,1080">
       <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
@@ -7,5 +8,36 @@
     <component id="n1_iudv" name="TestBtn" src="pdzn3" fileName="Btn.xml" xy="717,1000" size="242,59">
       <Button icon="ui://wcwip4ahiudva"/>
     </component>
+    <image id="n5_ku3u" name="n5" src="ku3ub" fileName="Resources/Homura_stand0005.png" xy="643,46" group="n12_ku3u"/>
+    <image id="n4_ku3u" name="n4" src="ku3ub" fileName="Resources/Homura_stand0005.png" xy="180,34" group="n12_ku3u"/>
+    <text id="n6_ku3u" name="MoneyTxt" xy="285,87" size="40,19" group="n12_ku3u" fontSize="12" text="" input="true"/>
+    <text id="n7_ku3u" name="UnitCntTxt" xy="706,102" size="40,19" group="n12_ku3u" fontSize="12" text="" input="true"/>
+    <text id="n8_ku3u" name="RoundTxt" xy="1603,107" size="55,44" group="n12_ku3u" fontSize="12" autoSize="none" text="" input="true"/>
+    <group id="n12_ku3u" name="n12" xy="180,34" size="1478,126"/>
+    <component id="n2_ku3u" name="NextBtn" src="pdzn3" fileName="Btn.xml" xy="1580,762" size="148,232">
+      <Button icon="ui://wcwip4ahku3ub"/>
+    </component>
+    <text id="n9_ku3u" name="AtkTxt" xy="84,847" size="57,52" group="n13_ku3u" fontSize="12" autoSize="none" text=""/>
+    <text id="n19_ku3u" name="HpTxt" xy="358,861" size="51,40" group="n13_ku3u" fontSize="12" autoSize="none" text=""/>
+    <text id="n10_ku3u" name="DefTxt" xy="185,854" size="43,41" group="n13_ku3u" fontSize="12" autoSize="none" text="" input="true"/>
+    <text id="n11_ku3u" name="MoveForceTxt" xy="278,854" size="47,45" group="n13_ku3u" fontSize="12" autoSize="none" text="" input="true"/>
+    <component id="n14_ku3u" name="AttackBtn" src="pdzn3" fileName="Btn.xml" xy="78,948" size="78,66" group="n13_ku3u">
+      <Button icon="ui://wcwip4ahku3ub"/>
+    </component>
+    <component id="n15_ku3u" name="StationBtn" src="pdzn3" fileName="Btn.xml" xy="171,937" size="80,70" group="n13_ku3u">
+      <Button icon="ui://wcwip4ahku3ub"/>
+    </component>
+    <component id="n16_ku3u" name="RestBtn" src="pdzn3" fileName="Btn.xml" xy="284,935" size="80,88" group="n13_ku3u">
+      <Button icon="ui://wcwip4ahku3ub"/>
+    </component>
+    <component id="n17_ku3u" name="DismissBtn" src="pdzn3" fileName="Btn.xml" xy="385,942" size="86,72" group="n13_ku3u">
+      <Button icon="ui://wcwip4ahku3ub"/>
+    </component>
+    <component id="n18_ku3u" name="SkipBtn" src="pdzn3" fileName="Btn.xml" xy="486,939" size="108,82" group="n13_ku3u">
+      <Button icon="ui://wcwip4ahku3ub"/>
+    </component>
+    <group id="n13_ku3u" name="UnitUI" xy="78,847" size="516,175" advanced="true">
+      <gearDisplay controller="UnitUIController" pages="1"/>
+    </group>
   </displayList>
 </component>

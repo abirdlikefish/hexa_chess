@@ -21,6 +21,10 @@ public class GameState
         Debug.Log("Exited Game State: " + whichState.ToString());
     }
 
+    public virtual void Update()
+    {
+    }
+
     public virtual void PressTestButton()
     {
     }

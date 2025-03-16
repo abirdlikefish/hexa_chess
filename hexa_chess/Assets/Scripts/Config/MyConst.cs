@@ -33,7 +33,7 @@ public static class MyConst
             { MyEnum.GridUIState.Legal, new Color(0, 1, 0, 0.5f) },
             { MyEnum.GridUIState.Illegal, new Color(1, 0, 0, 0.5f) },
             { MyEnum.GridUIState.Empty, new Color(1, 1, 1, 0.5f) },
-            { MyEnum.GridUIState.HighLight, new Color(1, 1, 1, 0.5f) }
+            { MyEnum.GridUIState.HighLight, new Color(0, 0, 1, 0.5f) }
         };
         GridSpriteSortingLayer = new Dictionary<MyEnum.GridSpriteLayer, string>
         {

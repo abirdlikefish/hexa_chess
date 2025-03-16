@@ -40,12 +40,12 @@ public class MapEditView : IFguiView
     {
         if(selectedCoord != null)
         {
-            MapManager.Instance.HighLightGrid(selectedCoord.Value, false);
+            MapManager.Instance_edit.HighLightGrid(selectedCoord.Value, false);
         }
         selectedCoord = coord;
         if (selectedCoord != null)
         {
-            MapManager.Instance.HighLightGrid(selectedCoord.Value, true);
+            MapManager.Instance_edit.HighLightGrid(selectedCoord.Value, true);
         }
     }
 

@@ -12,6 +12,7 @@
     <image id="pdzn8" name="山.png" path="/Resources/Grid/"/>
     <image id="pdzn9" name="洼.png" path="/Resources/Grid/"/>
     <image id="iudva" name="testbutton.png" path="/Resources/"/>
+    <image id="ku3ub" name="Homura_stand0005.png" path="/Resources/"/>
   </resources>
   <publish name=""/>
 </packageDescription>

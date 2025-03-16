@@ -12,6 +12,7 @@ public class BaseGrid
     public float moveCost;
     public float atkOffset;
     public float defOffset;
+    public int height;
     public virtual bool Init()
     {
         gridType = MyEnum.GridType.Empty;
