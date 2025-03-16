@@ -71,25 +71,25 @@ MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Player, playerStateMach
             return;
         }
 playerStateMachine.selectedUnit.Move(path , 5);
-    playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
+    playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
     }
 
     private void DismissUnit()
     {
         playerStateMachine.selectedUnit.Dismiss();
-        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
+        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
     }
 
     private void StationUnit()
     {
         playerStateMachine.selectedUnit.Station();
-        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
+        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
     }
 
     private void RestUnit()
     {
         playerStateMachine.selectedUnit.Rest();
-        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
+        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
     }
     
 }
