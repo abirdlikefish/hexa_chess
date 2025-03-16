@@ -34,6 +34,7 @@ public class PlayerRound : GameState
         playerRoundStateMachine.Exit();
         MyEvent.OnClick_nextBtn -= NextBtnClick;
         GameManager.instance.IncreaseRoundsCounter();
+        MyEvent.SetGlobalInfo(new Vector2(1,1) , new Vector2(1,1) , new Vector2(1,1));
     }
 
     // public override void PressTestButton()

@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 public interface IMapManager
@@ -37,6 +35,72 @@ public interface IMapManager_edit
 }
 public class MapManager : IMapManager , IMapManager_edit
 {
+    public static int GetMinCost(Vector2Int coord)
+    {
+        if(coord.x == 0)    return coord.y;
+        else if(coord.y == 0)    return coord.x;
+        else if(coord.x * coord.y > 0)    return Mathf.Abs(coord.x + coord.y);
+        else    return Mathf.Max(Mathf.Abs(coord.x) , Mathf.Abs(coord.y));
+        // if(coord.x * coord.y < 0)    return Mathf.Max(Mathf.Abs(coord.x) , Mathf.Abs(coord.y));
+    }
+    public static Vector2Int Pos_To_Coord(Vector2 pos)
+    {
+        float x = pos.x / MyConst.GridSize;
+        float y = pos.y / MyConst.GridSize;
+        x *= Mathf.Tan(30 * Mathf.Deg2Rad);
+        y -= x;
+        x = x / Mathf.Sin(30 * Mathf.Deg2Rad);
+        return new Vector2Int(Mathf.RoundToInt(x), Mathf.RoundToInt(y));
+    }
+    public static Vector2 Coord_To_Pos(Vector2Int coord)
+    {
+        float x = coord.x * Mathf.Sin(30 * Mathf.Deg2Rad);
+        float y = coord.y + x;
+        x /= Mathf.Tan(30 * Mathf.Deg2Rad);
+        return new Vector2(x, y) * MyConst.GridSize;
+    }
+    public static List<Vector2Int> GetHexGridCoord(int size , Vector2Int beginCoord)
+    {
+        if(size == 0)    return new List<Vector2Int>();
+        List<Vector2Int> hexGridCoord = new List<Vector2Int>();
+        Vector2Int ptr = beginCoord;
+        hexGridCoord.Add(ptr);
+        for(int i = 1; i < size; i++)
+        {
+            ptr += MyConst.MoveStep[MyEnum.MoveDirection.Up];
+            for(int k = 0; k < i; k++)
+            {
+                hexGridCoord.Add(ptr);
+                ptr += MyConst.MoveStep[MyEnum.MoveDirection.RigD];
+            }
+            for(int k = 0; k < i; k++)
+            {
+                hexGridCoord.Add(ptr);
+                ptr += MyConst.MoveStep[MyEnum.MoveDirection.Down];
+            }
+            for(int k = 0; k < i; k++)
+            {
+                hexGridCoord.Add(ptr);
+                ptr += MyConst.MoveStep[MyEnum.MoveDirection.LefD];
+            }
+            for(int k = 0; k < i; k++)
+            {
+                hexGridCoord.Add(ptr);
+                ptr += MyConst.MoveStep[MyEnum.MoveDirection.LefU];
+            }
+            for(int k = 0; k < i; k++)
+            {
+                hexGridCoord.Add(ptr);
+                ptr += MyConst.MoveStep[MyEnum.MoveDirection.Up];
+            }
+            for(int k = 0; k < i; k++)
+            {
+                hexGridCoord.Add(ptr);
+                ptr += MyConst.MoveStep[MyEnum.MoveDirection.RigU];
+            }
+        }
+        return hexGridCoord;
+    }
     private static MapManager instance;
     public static IMapManager Instance{
         get{
@@ -95,27 +159,33 @@ public class MapManager : IMapManager , IMapManager_edit
         mapSize = size;
         gridMap = new GridInfo[mapSize * 2 - 1, mapSize * 2 - 1];
         searchMovableAreaGridInfoMap = new SearchMovableAreaGridInfo[mapSize * 2 - 1, mapSize * 2 - 1];
-        for (int x = 0; x < mapSize * 2 - 1; x++)
+        
+        List<Vector2Int> hexGridCoord = GetHexGridCoord(mapSize, new Vector2Int(mapSize - 1 , mapSize - 1));
+        foreach(Vector2Int coord in hexGridCoord)
         {
-            for (int y = 0; y < mapSize * 2 - 1; y++)
-            {
-                if(IsInMap(new Vector2Int(x, y)) )
-                {
-                    gridMap[x, y] = GridInfo.CreateGrid(gridList[mapSO.GetGridType(x,y)], new Vector2Int(x, y));
-                }
-
-                // if(x + y < mapSize - 1 || x + y > mapSize * 2 - 1 - 1 + mapSize - 1)
-                // {
-                //     gridMap[x, y] = gridList[Enum.GridType.Empty];
-                //     gridList[Enum.GridType.Empty].AddGrid(new Vector2Int(x, y));
-                // }
-                // else
-                // {
-                //     gridMap[x, y] = gridList[Enum.GridType.Grass];
-                //     gridList[Enum.GridType.Grass].AddGrid(new Vector2Int(x, y));
-                // }
-            }
+            gridMap[coord.x, coord.y] = GridInfo.CreateGrid(gridList[mapSO.GetGridType(coord.x,coord.y)], new Vector2Int(coord.x, coord.y));
         }
+        // for (int x = 0; x < mapSize * 2 - 1; x++)
+        // {
+        //     for (int y = 0; y < mapSize * 2 - 1; y++)
+        //     {
+        //         if(IsInMap(new Vector2Int(x, y)) )
+        //         {
+        //             gridMap[x, y] = GridInfo.CreateGrid(gridList[mapSO.GetGridType(x,y)], new Vector2Int(x, y));
+        //         }
+
+        //         // if(x + y < mapSize - 1 || x + y > mapSize * 2 - 1 - 1 + mapSize - 1)
+        //         // {
+        //         //     gridMap[x, y] = gridList[Enum.GridType.Empty];
+        //         //     gridList[Enum.GridType.Empty].AddGrid(new Vector2Int(x, y));
+        //         // }
+        //         // else
+        //         // {
+        //         //     gridMap[x, y] = gridList[Enum.GridType.Grass];
+        //         //     gridList[Enum.GridType.Grass].AddGrid(new Vector2Int(x, y));
+        //         // }
+        //     }
+        // }
     }
     public void EditMap(int mapSize)
     {
@@ -216,28 +286,12 @@ public class MapManager : IMapManager , IMapManager_edit
         gridList.Add(MyEnum.GridType.Mount, midGrid);
 
     }
-    public static Vector2Int Pos_To_Coord(Vector2 pos)
-    {
-        float x = pos.x / MyConst.GridSize;
-        float y = pos.y / MyConst.GridSize;
-        x *= Mathf.Tan(30 * Mathf.Deg2Rad);
-        y -= x;
-        x = x / Mathf.Sin(30 * Mathf.Deg2Rad);
-        return new Vector2Int(Mathf.RoundToInt(x), Mathf.RoundToInt(y));
-    } 
-    public static Vector2 Coord_To_Pos(Vector2Int coord)
-    {
-        float x = coord.x * Mathf.Sin(30 * Mathf.Deg2Rad);
-        float y = coord.y + x;
-        x /= Mathf.Tan(30 * Mathf.Deg2Rad);
-        return new Vector2(x, y) * MyConst.GridSize;
-    }
     public bool IsInMap(Vector2Int coord)
     {
-        // x + y < mapSize - 1 || x + y > mapSize * 2 - 1 - 1 + mapSize - 1
-        return  coord.x >= 0 && coord.x < mapSize * 2 - 1 &&
-                coord.y >= 0 && coord.y < mapSize * 2 - 1 &&
-                coord.x + coord.y >= mapSize - 1 && coord.x + coord.y <= mapSize * 3 - 3;
+        return GetMinCost(coord - new Vector2Int(mapSize - 1, mapSize - 1)) < mapSize;
+        // return  coord.x >= 0 && coord.x < mapSize * 2 - 1 &&
+        //         coord.y >= 0 && coord.y < mapSize * 2 - 1 &&
+        //         coord.x + coord.y >= mapSize - 1 && coord.x + coord.y <= mapSize * 3 - 3;
     }
 
     // public bool SetGrid(Vector2Int coord, Enum.GridState gridState)
@@ -557,14 +611,6 @@ public class MapManager : IMapManager , IMapManager_edit
             }
         }
         return virtualGridList;
-    }
-    public static int GetMinCost(Vector2Int coord)
-    {
-        if(coord.x == 0)    return coord.y;
-        else if(coord.y == 0)    return coord.x;
-        else if(coord.x * coord.y > 0)    return Mathf.Abs(coord.x + coord.y);
-        else    return Mathf.Max(Mathf.Abs(coord.x) , Mathf.Abs(coord.y));
-        // if(coord.x * coord.y < 0)    return Mathf.Max(Mathf.Abs(coord.x) , Mathf.Abs(coord.y));
     }
 }
 
