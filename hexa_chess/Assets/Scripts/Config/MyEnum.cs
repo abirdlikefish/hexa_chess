@@ -65,22 +65,27 @@ public static class MyEnum
     }
 
     /// <summary>
-    /// 有三种单位：步兵，炮兵，坦克
+    /// 三种单位：步兵，炮兵，坦克
     /// </summary>
     public enum UnitType
     {
         Infantry,
         Artillery,
-        Tank
+        Tank,
+        Base,
     }
 
     public enum UnitStates
     {
-        Action,//到自己的回合
-        Move,//移动
-        Attack,//攻击
-        Waiting,//到别人的回合
-        Die,//死了
+        Able,//可操作
+        Disable,//不可操作
+    }
+
+    public enum OprationBuff
+    {
+        Normal,//常态
+        Station,//驻扎
+        Rest,//休整
     }
 
     public enum PlayerRoundState
@@ -89,8 +94,7 @@ public static class MyEnum
         WaitInput_WhichAction,//选中兵之后等待选哪种行动
         WaitInput_Enemy,//选中攻击的话需要选打谁
         PlayingAnimation,//正在播放对应的动作动画
-        
-        SelectedFactory,//选的不是常规单位而是生产单位的工厂
+        SelectedBase,//选的不是常规单位而是大本营
     }
 
 }

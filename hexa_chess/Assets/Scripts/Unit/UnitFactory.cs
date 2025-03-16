@@ -5,36 +5,24 @@ using UnityEngine.UIElements;
 
 public class UnitFactory : MonoBehaviour
 {
-    private static UnitFactory _instance;
 
-    private UnitFactory()
+    public UnitFactory()
     {
 
     }
-    //单例访问模式
-    public static UnitFactory Instacne
-    {
-        get
-        {
-            if(_instance == null)
-            {
-                _instance = new UnitFactory();
-            }
-            return _instance;
-        }
-    }
 
-    public static IUnitManagerOp LoadUnit(Transform transform,UnitType unitType)
+    public IUnit LoadUnit(Vector2Int crood,MyEnum.UnitType unitType)
     {
         //生成实例对象
-        GameObject gameObject = Instantiate((GameObject)Resources.Load("Unit"),transform);
-        UnitConfig config = (UnitConfig)Resources.Load("unitConfig");
+        GameObject gameObject = Instantiate((GameObject)Resources.Load("Unit"));//占位语句，表示加载预制体
+        UnitConfig config = (UnitConfig)Resources.Load("unitConfig");//占位语句，表示资源加载过程
         gameObject.GetComponent<Unit>().UnitInitialize(config);
         //地图坐标转换
-        Vector2 vector2 = new Vector2(transform.position.x,transform.position.y);
-        gameObject.GetComponent<Unit>().ReWritePosition(vector2);
+        Vector2 vector2 = MapManager.Coord_To_Pos(crood);
+        gameObject.transform.position = vector2;
+        gameObject.GetComponent<Unit>().ReWriteCrood(crood);
         //存入地图
-        MapManager.Instance.AddUnit(MapManager.Pos_To_Coord(vector2),gameObject.GetComponent<IUnit>());
-        return gameObject.GetComponent<IUnitManagerOp>();
+        MapManager.Instance.AddUnit(crood,gameObject.GetComponent<IUnit>());
+        return gameObject.GetComponent<IUnit>();
     }
 }

@@ -5,9 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewUnitConfig", menuName = "ScriptableObject/UnitConfig")]
 public class UnitConfig : ScriptableObject
 {
-    public UnitType unitType;//单位类型
+    public MyEnum.UnitType unitType;//单位类型
     public int MaxHp;//生命值
-    public int Action; //行动点数
+    public float Action; //行动点数
     public int Attak; //攻击力
     public int AttackRadius; //攻击范围
 
@@ -26,25 +26,3 @@ public class UnitConfig : ScriptableObject
     public bool HaveZOC;
 }
 
-/// <summary>
-/// 三种单位：步兵，炮兵，坦克
-/// </summary>
-public enum UnitType
- {
-    Infantry,
-    Artillery,
-    Tank
-}
-
-public enum UnitStates
-{
-    Able,//未操作过
-    Disable,//已操作过
-}
-
-public enum OprationBuff
-{
-    Normal,//常态
-    Station,//驻扎
-    Rest,//休整
-}

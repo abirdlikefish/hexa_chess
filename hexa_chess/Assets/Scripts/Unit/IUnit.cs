@@ -7,8 +7,7 @@ public interface IUnit
     /// <summary>
     /// 单位玩家输入操作接口
     /// </summary>
-    /// <param name="cost"></param>
-    void Move(List<Vector2Int> path,int cost);//移动
+    void Move(List<Vector2Int> path,float cost);//移动
 
     void Attack(IUnit other);//传入攻击对象的脚本接口
 
@@ -32,28 +31,24 @@ public interface IUnit
 
     
     //单位归属查询
-    bool isFriendUnit();
+    MyEnum.TheOperator GetOperater();
     //获取单位位置
-    Vector2 GetUnitPos();
+    Vector2Int GetUnitPos();
     //获取单位行动力
-    int GetActionForce();
+    float GetActionForce();
+
+    int GetUnitHp();
+
+    UnitConfig GetUnitConfig();
 
     
-    
-}
 
-
-public interface IUnitManagerOp : IUnit
-{
     /// <summary>
     /// 管理器操作接口
     /// </summary>
     void RoundBeginCheck();
-
-    //当前单位操作状态
-    UnitStates GetStates();
-
+    MyEnum.UnitStates GetStates();
+    MyEnum.OprationBuff GetOprationBuff();
+    MyEnum.UnitType GetUnitType();
     
-
-    OprationBuff GetOprationBuff();
 }
