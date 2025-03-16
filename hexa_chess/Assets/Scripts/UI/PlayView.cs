@@ -39,10 +39,14 @@ public class PlayView : IFguiView
         GRoot.inst.AddChild(playView);
         MyEvent.OpenUnitUI += OpenUnitUI;
         MyEvent.SetGlobalInfo += SetGlobalInfo;
+        Stage.inst.onMouseWheel.Add(OnMouseWheel);
     }
     public void Hide()
     {
         GRoot.inst.RemoveChild(playView);
+        MyEvent.OpenUnitUI -= OpenUnitUI;
+        MyEvent.SetGlobalInfo -= SetGlobalInfo;
+        Stage.inst.onMouseWheel.Remove(OnMouseWheel);
     }
     private void InitComponent()
     {
@@ -91,12 +95,19 @@ public class PlayView : IFguiView
         hpTxt.text = "10";
         moveForceTxt.text = "3";
     }
-    private void SetGlobalInfo()
+    private void SetGlobalInfo(Vector2 money , Vector2 unitCnt , Vector2 round)
     {
         Debug.Log("SetGlobalInfo");
-        moneyTxt.text = "1000";
-        unitCntTxt.text = "10";
-        roundTxt.text = "1";
+        moneyTxt.text = money.x.ToString() + "/+" + money.y.ToString();
+        unitCntTxt.text = unitCnt.x.ToString() + "/" + unitCnt.y.ToString();
+        roundTxt.text = round.x.ToString() + "/" + round.y.ToString();
+    }
+    private void OnMouseWheel(EventContext context)
+    {
+        InputEvent inputEvent = (InputEvent)context.data;
+        float delta = inputEvent.mouseWheelDelta;
+        Debug.Log("Mouse Wheel Delta: " + delta);
+        MyEvent.CameraMove?.Invoke(new Vector3(0,0,delta));
     }
 
 }

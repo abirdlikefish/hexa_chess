@@ -15,8 +15,16 @@ public static class MyEvent
     public static Action OnClick_stationBtn;
     public static Action OnClick_dismissBtn;
     public static Action OnClick_skipBtn;
-
+    
     // game manager -> ui
     public static Action<IUnit> OpenUnitUI;
-    public static Action SetGlobalInfo;
+    public static Action<Vector2, Vector2, Vector2> SetGlobalInfo;
+
+    public static Action<Vector3> CameraMove;
+    public static Action<Vector3> DragScreen;
+    
+    /// <summary>
+    /// 当移动，攻击等的动画结束之后调用
+    /// </summary>
+    public static Action AnimaEnd;
 }

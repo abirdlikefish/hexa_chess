@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="1920,1080">
-  <controller name="UnitUIController" pages="0,Hide,1,Show" selected="1"/>
+  <controller name="UnitUIController" pages="0,Hide,1,Show" selected="0"/>
   <displayList>
     <component id="n0_rznp" name="ScreenInputBtn" src="rznp1" fileName="ScreenInputBtn.xml" xy="1,0" size="1920,1080">
       <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
@@ -12,8 +12,8 @@
     <image id="n4_ku3u" name="n4" src="ku3ub" fileName="Resources/Homura_stand0005.png" xy="180,34" group="n12_ku3u"/>
     <text id="n6_ku3u" name="MoneyTxt" xy="285,87" size="40,19" group="n12_ku3u" fontSize="12" text="" input="true"/>
     <text id="n7_ku3u" name="UnitCntTxt" xy="706,102" size="40,19" group="n12_ku3u" fontSize="12" text="" input="true"/>
-    <text id="n8_ku3u" name="RoundTxt" xy="1603,107" size="55,44" group="n12_ku3u" fontSize="12" autoSize="none" text="" input="true"/>
-    <group id="n12_ku3u" name="n12" xy="180,34" size="1478,126"/>
+    <text id="n8_ku3u" name="RoundTxt" xy="1561,100" size="55,44" group="n12_ku3u" fontSize="12" autoSize="none" text="" input="true"/>
+    <group id="n12_ku3u" name="n12" xy="180,34" size="1436,126"/>
     <component id="n2_ku3u" name="NextBtn" src="pdzn3" fileName="Btn.xml" xy="1580,762" size="148,232">
       <Button icon="ui://wcwip4ahku3ub"/>
     </component>
