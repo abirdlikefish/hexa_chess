@@ -6,12 +6,12 @@ using UnityEngine.UIElements;
 public class UnitFactory : MonoBehaviour
 {
 
-    private UnitFactory()
+    public UnitFactory()
     {
 
     }
 
-    public static IUnit LoadUnit(Vector2Int crood,MyEnum.UnitType unitType)
+    public IUnit LoadUnit(Vector2Int crood,MyEnum.UnitType unitType)
     {
         //生成实例对象
         GameObject gameObject = Instantiate((GameObject)Resources.Load("Unit"));//占位语句，表示加载预制体

@@ -37,6 +37,7 @@ public class UnitManager : UnitManagerAPI
     private UnitManager()
     {
         manager = new Dictionary<MyEnum.UnitType, List<IUnit>>();
+        unitFactory = new UnitFactory();
     }
 
     //单例访问模式
@@ -53,6 +54,8 @@ public class UnitManager : UnitManagerAPI
     }
 
     private Dictionary<MyEnum.UnitType,List<IUnit>> manager;
+
+    private UnitFactory unitFactory;
 
     //检查是否有未操作单位
     public bool CheckAllOperated()
@@ -124,7 +127,7 @@ public class UnitManager : UnitManagerAPI
     {
         Debug.Log("加载一个单位");
         //单位加入管理器
-        manager[unitType].Add(UnitFactory.LoadUnit(crood,unitType));
+        manager[unitType].Add(unitFactory.LoadUnit(crood,unitType));
         
     }
 
