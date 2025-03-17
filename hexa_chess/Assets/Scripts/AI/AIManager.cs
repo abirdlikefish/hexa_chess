@@ -1,20 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IAIManger
+public interface IAIManager
 {
     public AIPlayer GetAIPlayer();
     /// <summary>
     /// 轮到aiplayer行动
     /// </summary>
     public void Action();
+
+    /// <summary>
+    /// 结束回合
+    /// </summary>
+    public void EndTurn();
 }
 
-public class AIManager : MonoBehaviour,IAIManger
+public class AIManager : MonoBehaviour,IAIManager
 {
     private static AIManager instance;
-    public static AIManager Instance
+    public static IAIManager Instance
     {
         get => instance;
     }
@@ -35,6 +41,8 @@ public class AIManager : MonoBehaviour,IAIManger
     {
         aiPlayer = new AIPlayer();
         aiPlayer.OnInit();
+
+        MyEvent.OnEnemyRoundBegin += Action;
     }
 
     public AIPlayer GetAIPlayer()
@@ -45,5 +53,10 @@ public class AIManager : MonoBehaviour,IAIManger
     public void Action()
     {
         aiPlayer.Turn();
+    }
+
+    public void EndTurn()
+    {
+        MyEvent.EnemyRoundEnd?.Invoke();
     }
 }

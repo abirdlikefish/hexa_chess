@@ -27,4 +27,13 @@ public static class MyEvent
     /// 当移动，攻击等的动画结束之后调用
     /// </summary>
     public static Action AnimaEnd;
+
+    /// <summary>
+    /// AI回合开始
+    /// </summary>
+    public static Action OnEnemyRoundBegin;
+    /// <summary>
+    /// AI回合结束
+    /// </summary>
+    public static Action EnemyRoundEnd;
 }
