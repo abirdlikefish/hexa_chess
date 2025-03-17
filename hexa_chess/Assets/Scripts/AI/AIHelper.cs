@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using static MyEnum;
 
 public class AIHelper
 {
@@ -45,16 +47,14 @@ public class AIHelper
     {
     }
 
-    public float GetMaxAttackDelta(Vector2Int beforePos, Vector2Int afterPos, int AttackRange)
+    public float GetAttackValue(Vector2Int pos)
     {
-        float delta = 0;
-
-
-
-        return delta;
+        MapManager.Instance.GetUnit(pos, UnitType.Army);
+        MapManager.Instance.GetUnit(pos, UnitType.City);
+        return 0;
     }
 
-    public float GetHomeDelta()
+    public float GetHomeDistanceDelta()
     {
         float delta = 0;
 
@@ -70,21 +70,20 @@ public class AIHelper
 
     public float GetDamage(IUnit unit)
     {
-        return unit.GetUnitConfig().Attak;
+        return unit.Atk;
     }
 
     public float GetHPPercentage(IUnit unit)
     {
         float delta = 0;
-        delta = (float)unit.GetUnitHp() / (float)unit.GetUnitConfig().MaxHp;
+        delta = (float)unit.CurrentHP / (float)unit.MaxHp;
         return delta;
     }
 
-    // todo: implement this enemys
     public float GetDistanceToEnemy(Vector2Int pos)
     {
         float res = 0;
-        List<Vector2Int> enemyPos = null;
+        List<Vector2Int> enemyPos = UnitManager.Instance.GetUnitList(MyEnum.TheOperator.Player).ConvertAll(x => x.Coord);
         float minDistance = 1000;
         foreach (var enemy in enemyPos)
         {
@@ -102,10 +101,10 @@ public class AIHelper
     public float GetEnemyNumCanAttackPos(Vector2Int pos)
     {
         float res = 0;
-        List<IUnit> enemys = null;
+        List<IUnit> enemys = UnitManager.Instance.GetUnitList(MyEnum.TheOperator.Player);
         foreach (var enemy in enemys)
         {
-            if (MapManager.GetMinCost(enemy.GetUnitPos() - pos) <= enemy.GetUnitConfig().AttackRadius)
+            if (MapManager.GetMinCost(enemy.Coord - pos) <= enemy.AttackRadius)
             {
                 res++;
             }
@@ -115,6 +114,11 @@ public class AIHelper
 
     public List<Vector2Int> GetReachablePos(IUnit unit)
     {
-        return MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Enemy, unit.GetUnitPos(), unit.GetActionForce());
+        return MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Enemy, unit.Coord, unit.MoveForce);
+    }
+
+    internal List<Vector2Int> GetAttackablePos(IUnit unit)
+    {
+        return MapManager.Instance.SearchAttackArea(MyEnum.TheOperator.Enemy, unit.Coord, unit.AttackRadius);
     }
 }

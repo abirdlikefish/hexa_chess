@@ -17,6 +17,7 @@ public class Unit : MonoBehaviour, IUnit
     public MyEnum.OperationBuff operationBuff;
     //生命值
     public int maxHp;
+    public int MaxHp { get { return maxHp; } }
     private int currentHp;
     public int CurrentHP {get {return currentHp;} set{currentHp = value;}}
 

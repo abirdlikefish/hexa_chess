@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 
 
 public class AIPlayer
@@ -17,7 +14,13 @@ public class AIPlayer
     ///// </summary>
     //private HashSet<Vector2Int> _inviews;
 
-    private List<Unit> _units;
+    private List<IUnit> _units
+    {
+        get
+        {
+            return UnitManager.Instance.GetUnitList(MyEnum.TheOperator.Enemy);
+        }
+    }
 
     public AIPlayer()
     {
@@ -36,12 +39,58 @@ public class AIPlayer
     /// </summary>
     public void Turn()
     {
-        CalculateOperation();
+        Debug.Log("AIPlayer Turn");
+        //CalculateOperation();
         EndTurn();
     }
 
     private void CalculateOperation()
     {
+        foreach (var unit in _units)
+        {
+            CalculateOperation(unit);
+        }
+    }
+
+    private void CalculateOperation(IUnit unit)
+    {
+        float homeDisDelta = AIHelper.Instance.GetHomeDistanceDelta();
+        float safetyDelta = AIHelper.Instance.SafetyDelta();
+        float damage = AIHelper.Instance.GetDamage(unit);
+        float hpPercentage = AIHelper.Instance.GetHPPercentage(unit);
+        float distanceToEnemy = AIHelper.Instance.GetDistanceToEnemy(unit.Coord);
+        float enemyNum = AIHelper.Instance.GetEnemyNumCanAttackPos(unit.Coord);
+
+        List<Vector2Int> moveablePos = AIHelper.Instance.GetReachablePos(unit);
+        List<Vector2Int> attackablePos = AIHelper.Instance.GetAttackablePos(unit);
+        //计算撤退
+        Dictionary<Vector2Int, double> retreatValues = new();
+        foreach (var pos in moveablePos)
+        {
+            double retreatValue = 4 * Mathf.Pow(1 - hpPercentage, 3) * (enemyNum * 1.5 + 1) / (Mathf.Sqrt(distanceToEnemy) + 0.2);
+            retreatValues.Add(pos, retreatValue);
+        }
+
+        //计算进攻
+        Dictionary<IUnit, double> attackValues = new();
+        foreach (var pos in attackablePos)
+        {
+            IUnit attackUnit = null;
+            if (MapManager.Instance.GetUnit(pos, MyEnum.UnitType.Army) != null)
+            {
+                attackUnit = MapManager.Instance.GetUnit(pos, MyEnum.UnitType.Army);
+                double attackValue = 2.5 * AIHelper.Instance.GetAttackValue(pos) * (0.4 + AIHelper.Instance.GetHPPercentage(unit));
+                attackValues.Add(attackUnit, attackValue);
+
+            }
+
+            if (MapManager.Instance.GetUnit(pos, MyEnum.UnitType.City) != null)
+            {
+                attackUnit = MapManager.Instance.GetUnit(pos, MyEnum.UnitType.City);
+                double attackValue = 2.5 * AIHelper.Instance.GetAttackValue(pos) * (0.4 + AIHelper.Instance.GetHPPercentage(unit));
+                attackValues.Add(attackUnit, attackValue);
+            }
+        }
 
     }
 
@@ -51,28 +100,31 @@ public class AIPlayer
         //UpdateVisited();
     }
 
-    private void DestroyUnit(Unit unit)
+    private void DestroyUnit(IUnit unit)
     {
         //UpdateViews();
 
     }
 
-    private void MoveUnit(Unit unit, Vector2Int coordPosition)
+    private void MoveUnit(IUnit unit, Vector2Int coordPosition)
     {
+
     }
 
-    private void MoveUnitOneStep(Unit unit, Vector2Int coordPosition)
+    private void MoveUnitOneStep(IUnit unit, Vector2Int coordPosition)
     {
         //UpdateViews();
         //UpdateVisited();
     }
 
-    private void AttackUnit(Unit unit, Unit target)
+    private void AttackUnit(IUnit unit, IUnit target)
     {
+        unit.Attack(target);
     }
 
     private void EndTurn()
     {
+        Debug.Log("AIPlayer EndTurn");
         AIManager.Instance.EndTurn();
     }
 
