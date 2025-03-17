@@ -23,6 +23,8 @@ public interface UnitManagerAPI
     //根据参数移除单位
     void RemoveUnit(IUnit unit);
 
+    List<IUnit> GetUnitList(MyEnum.TheOperator theOperator);//获取单位列表
+
 }
 
 // public interface UnitPoolHandler
@@ -59,6 +61,16 @@ public class UnitManager : UnitManagerAPI
     private Dictionary<MyEnum.TheOperator , List<Unit>> unitList;
 
     private UnitFactory unitFactory;
+
+    public List<IUnit> GetUnitList(MyEnum.TheOperator theOperator)
+    {
+        List<IUnit> list = new List<IUnit>();
+        foreach (var item in unitList[theOperator])
+        {
+            list.Add(item);
+        }
+        return list;
+    }
 
     //检查是否有未操作单位
     public bool CheckAllOperated(MyEnum.TheOperator theOperator)
