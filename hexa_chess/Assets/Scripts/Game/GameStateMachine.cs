@@ -28,7 +28,7 @@ public class GameStateMachine
     public int enemyCurrentHp;
     
     // public void Initializate(MyEnum.GameState startState)
-    public void Initializate()
+    public void Initialize()
     {
         // currentState = null;
         // ChangeState(startState);

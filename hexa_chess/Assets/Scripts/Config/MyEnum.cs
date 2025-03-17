@@ -69,10 +69,21 @@ public static class MyEnum
     /// </summary>
     public enum UnitType
     {
+        None,
+        Army,
+        City,
+    }
+    public enum ArmyType
+    {
+        None,
         Infantry,
         Artillery,
         Tank,
-        Base,
+        // Base,
+    }
+    public enum CityType
+    {
+        None,
     }
 
     public enum UnitStates
@@ -81,7 +92,7 @@ public static class MyEnum
         Disable,//不可操作
     }
 
-    public enum OprationBuff
+    public enum OperationBuff
     {
         Normal,//常态
         Station,//驻扎

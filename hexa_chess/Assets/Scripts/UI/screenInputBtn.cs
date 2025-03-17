@@ -9,7 +9,7 @@ public class ScreenInputBtn : IFguiCom
     private GButton screenInputBtn;
     public IFguiCom Create(GComponent parent)
     {
-        Debug.LogWarning("ScreenInputBtn Create");
+        // Debug.LogWarning("ScreenInputBtn Create");
         this.parent = parent;
         screenInputBtn =parent.GetChild("ScreenInputBtn").asButton;
         InitEvent();

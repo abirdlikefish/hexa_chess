@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Infantry : Unit
+public class Infantry : BaseArmy
 {
 
 }

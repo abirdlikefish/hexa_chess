@@ -1,43 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public interface UnitManagerAPI
 {
-    bool CheckAllOperated();//检查所有单位是否全部操作
+    bool CheckAllOperated(MyEnum.TheOperator theOperator);//检查所有单位是否全部操作
 
-    IUnit GetAbleUnit();//返回一个没有操作过的单位
+    IUnit GetAbleUnit(MyEnum.TheOperator theOperator);//返回一个没有操作过的单位
 
-    void RoundBeginOperation();//回合开始，对所有单位初始化
+    void RoundBeginOperation(MyEnum.TheOperator theOperator);//回合开始，对所有单位初始化
 
-    void RoundEndOperation();//回合结束，对所有单位的血量进行回复
+    void RoundEndOperation(MyEnum.TheOperator theOperator);//回合结束，对所有单位的血量进行回复
 
-    void ResetManager();//重置管理器设置
+    // void ResetUnitList();//重置管理器设置
 
     //创建新单位
-    void CreateNewUnit(Vector2Int crood,MyEnum.UnitType unitType);
+    void CreateNewUnit(MyEnum.TheOperator theOperator,Vector2Int coord,MyEnum.ArmyType armyType);
+    void CreateNewUnit(MyEnum.TheOperator theOperator,Vector2Int coord,MyEnum.CityType cityType);
 
     //根据参数移除单位
     void RemoveUnit(IUnit unit);
 
+    List<IUnit> GetUnitList(MyEnum.TheOperator theOperator);//获取单位列表
+
 }
 
-public interface UnitPoolHandler
-{
-    void Inpool(GameObject gameObject);//进池操作
-    GameObject OutPool(MyEnum.UnitType unitType);//出池操作
+// public interface UnitPoolHandler
+// {
+//     void InPool(GameObject gameObject);//进池操作
+//     GameObject OutPool(MyEnum.UnitType unitType);//出池操作
 
-    bool isEmptyPool();//检测是否为空池
-}
+//     bool isEmptyPool();//检测是否为空池
+// }
 
 public class UnitManager : UnitManagerAPI
 {
     private static UnitManager _instance;
     private UnitManager()
     {
-        manager = new Dictionary<MyEnum.UnitType, List<IUnit>>();
+        ResetUnitList();
         unitFactory = new UnitFactory();
+        DOTween.Init();
     }
 
     //单例访问模式
@@ -53,98 +58,124 @@ public class UnitManager : UnitManagerAPI
         }
     }
 
-    private Dictionary<MyEnum.UnitType,List<IUnit>> manager;
+    private Dictionary<MyEnum.TheOperator , List<Unit>> unitList;
 
     private UnitFactory unitFactory;
 
-    //检查是否有未操作单位
-    public bool CheckAllOperated()
+    public List<IUnit> GetUnitList(MyEnum.TheOperator theOperator)
     {
-        foreach(var i in manager)
+        List<IUnit> list = new List<IUnit>();
+        foreach (var item in unitList[theOperator])
         {
-            var temp = i.Value;
-            foreach(var item in temp)
-            {
-                
-                if( item.GetStates() == MyEnum.UnitStates.Able) 
-                    return true;
-            }
+            list.Add(item);
+        }
+        return list;
+    }
+
+    //检查是否有未操作单位
+    public bool CheckAllOperated(MyEnum.TheOperator theOperator)
+    {
+        foreach(var i in unitList[theOperator])
+        {
+            if( i.GetStates() == MyEnum.UnitStates.Able) 
+                return true;
         }
         return false;
     }
-
+    
     //获取一个没有被操作过的单位
-    public IUnit GetAbleUnit()
+    public IUnit GetAbleUnit(MyEnum.TheOperator theOperator)
     {
-        foreach(var i in manager)
+        foreach(var i in unitList[theOperator])
+        // foreach(var i in unitList)
         {
-            var temp = i.Value;
-            foreach(var item in temp)
-            {
-                
-                if( item.GetStates() == MyEnum.UnitStates.Able) 
-                    return item;
-            }
+            if( i.GetStates() == MyEnum.UnitStates.Able) 
+                return i;
         }
         return null;
     }
 
-    public void ResetManager()
+    public void ResetUnitList()
     {
-        manager.Clear();
-    }
-
-    public void RoundBeginOperation()
-    {
-        foreach (var type in manager)
+        unitList = new Dictionary<MyEnum.TheOperator, List<Unit>>();
+        // foreach (MyEnum.UnitType type in System.Enum.GetValues(typeof(MyEnum.UnitType)))
+        // {
+        //     unitList.Add(type,new List<Unit>());
+        // }
+        foreach (MyEnum.TheOperator type in System.Enum.GetValues(typeof(MyEnum.TheOperator)))
         {
-            foreach (var item in type.Value)
-            {
-                item.RoundBeginCheck();
-            }
+            unitList.Add(type,new List<Unit>());
         }
     }
 
-    public void RoundEndOperation()
+    public void RoundBeginOperation(MyEnum.TheOperator theOperator)
     {
-        foreach (var type in manager)
+        // Debug.LogWarning("回合开始操作");
+        foreach (Unit unit in unitList[theOperator])
         {
-            foreach (var item in type.Value)
+            unit.RoundBeginCheck();
+        }
+    }
+
+    public void RoundEndOperation(MyEnum.TheOperator theOperator)
+    {
+        foreach (var item in unitList[theOperator])
+        {
+            switch(item.GetOperationBuff())
             {
-                switch(item.GetOprationBuff())
-                {
-                    case MyEnum.OprationBuff.Rest: item.RecoverHp(2);
-                    break;
-                    case MyEnum.OprationBuff.Station: item.RecoverHp(1);
-                    break;
-                    default:
-                    break;
-                }
+            case MyEnum.OperationBuff.Rest: 
+                item.RecoverHp(2);
+            break;
+            case MyEnum.OperationBuff.Station: 
+                item.RecoverHp(1);
+            break;
+            default:
+            break;
             }
         }
     }
-    public void CreateNewUnit(Vector2Int crood,MyEnum.UnitType unitType)
+    public void CreateNewUnit(MyEnum.TheOperator theOperator , Vector2Int coord,MyEnum.ArmyType armyType)
     {
-        Debug.Log("加载一个单位");
+        // Debug.Log("加载一个单位");
+        Unit unit = unitFactory.LoadUnit(theOperator,coord,armyType);
         //单位加入管理器
-        manager[unitType].Add(unitFactory.LoadUnit(crood,unitType));
-        
+        unitList[theOperator].Add(unit);
+        // MapManager.Instance.AddUnit(coord,unit);   
+    }
+    public void CreateNewUnit(MyEnum.TheOperator theOperator , Vector2Int coord,MyEnum.CityType cityType)
+    {
+        // Debug.Log("加载一个单位");
+        Unit unit = unitFactory.LoadUnit(theOperator,coord,cityType);
+        //单位加入管理器
+        unitList[theOperator].Add(unit);
+        // MapManager.Instance.AddUnit(coord,unit);   
     }
 
-    public void RemoveUnit(IUnit unit)
+    public void RemoveUnit(IUnit midUnit)
     {
-        var item = manager[unit.GetUnitType()];
-        foreach (var i in item)
-        {
-            if( i == unit)
-            {
-                manager[unit.GetUnitType()].Remove(unit);
-                break;
-            }
-        }
-        //从地图中移除单位
-        MapManager.Instance.RemoveUnit(MapManager.Pos_To_Coord(unit.GetUnitPos()));
+        Unit unit = midUnit as Unit;
+        unitList[unit.TheOperator].Remove(unit);
+        unit.Dead();
         return;
+    }
+
+    public void EnterGrid(Unit unit)
+    {
+        Vector2Int coord = unit.Coord;
+        MapManager.Instance.AddUnit(coord,unit);
+        if(unit.HaveZOC)    MapManager.Instance.ChangeZOC(unit.TheOperator,coord,true);
+        unit.virtualArea =  MapManager.Instance.SetVirtualArea(unit.TheOperator,coord,unit.ViewRange);
+        // Debug.Log("enter grid");
+        // Debug.Log(unit.ViewRange);
+    }
+
+    public void ExitGrid(Unit unit)
+    {
+        Vector2Int coord = unit.Coord;
+        MapManager.Instance.RemoveUnit(coord , unit.UnitType);
+        if(unit.HaveZOC)    MapManager.Instance.ChangeZOC(unit.TheOperator,coord,false);
+        MapManager.Instance.CleanVirtualArea(unit.TheOperator,unit.virtualArea);
+        unit.virtualArea.Clear(); 
     }
 
 }
