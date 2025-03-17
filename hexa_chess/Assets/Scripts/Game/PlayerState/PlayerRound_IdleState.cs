@@ -17,7 +17,7 @@ public class PlayerRound_IdleState : PlayerRoundState
         playerStateMachine.selectedGrid = null;
         playerStateMachine.selectedUnit = null;
         MyEvent.OnGridClick_left += SelectGrid;
-        DefaultUnit = UnitManager.Instance.GetAbleUnit();
+        DefaultUnit = UnitManager.Instance.GetAbleUnit(MyEnum.TheOperator.Player);
     }
     
     public override void Exit()
@@ -46,10 +46,12 @@ public class PlayerRound_IdleState : PlayerRoundState
 
     private void PressSkipButton()
     {
-        if (UnitManager.Instance.GetAbleUnit() == null || UnitManager.Instance.CheckAllOperated() == false)//没有可操作单位或者所有单位都被操作过
+        if (UnitManager.Instance.GetAbleUnit(MyEnum.TheOperator.Player) == null)//没有可操作单位
         {
             GameStateMachine.Instance.ChangeState(MyEnum.GameState.EnemyRound);//到敌人回合
         }
+        /*DefaultUnit.
         //否则跳转到可以执行的单位
+        DefaultUnit = UnitManager.Instance.GetAbleUnit(MyEnum.TheOperator.Player);*/
     }
 }
