@@ -7,7 +7,7 @@ public class GridInfo : MonoBehaviour
     private static GameObject parentGo;
     private static Sprite fogSprite;
     private static Sprite uiSprite;
-    private IUnit unit;
+    private Dictionary<MyEnum.UnitType,IUnit> unitList;
     private Dictionary<MyEnum.GridSpriteLayer,SpriteRenderer> spriteLayer;
     private MyEnum.GridType gridType;
     private Vector2Int gridPosition;
@@ -78,9 +78,11 @@ public class GridInfo : MonoBehaviour
                 break;
             case MyEnum.GridState.Show:
                 spriteLayer[MyEnum.GridSpriteLayer.Base].enabled = true;
+                spriteLayer[MyEnum.GridSpriteLayer.Base].color = new Color(1,1,1,1);
                 break;
             case MyEnum.GridState.Hide:
-                spriteLayer[MyEnum.GridSpriteLayer.UI].enabled = true;
+                spriteLayer[MyEnum.GridSpriteLayer.Base].enabled = true;
+                spriteLayer[MyEnum.GridSpriteLayer.Base].color = new Color(0.3f,0.3f,0.3f,1);
                 break;
         }
     }
@@ -97,6 +99,12 @@ public class GridInfo : MonoBehaviour
         go.transform.SetParent(parentGo.transform);
         go.transform.position = MapManager.Coord_To_Pos(gridPosition);
         GridInfo gridInfo = go.AddComponent<GridInfo>();
+
+        gridInfo.unitList = new Dictionary<MyEnum.UnitType, IUnit>();
+        foreach (MyEnum.UnitType unitType in MyEnum.UnitType.GetValues(typeof(MyEnum.UnitType)))
+        {
+            gridInfo.unitList[unitType] = null;
+        }
         
         gridInfo.baseGrid = baseGrid;
         gridInfo.gridPosition = gridPosition;
@@ -150,29 +158,41 @@ public class GridInfo : MonoBehaviour
             spriteLayer[MyEnum.GridSpriteLayer.UI].color = MyConst.GridUIColor[state];
         }
     }
-    public bool RemoveUnit()
+    public bool RemoveUnit(MyEnum.UnitType unitType)
     {
-        if(unit == null)
-        {
-            return false;
-        }
-        unit = null;
+        unitList[unitType] = null;
+        // if(unit == null)
+        // {
+        //     return false;
+        // }
+        // unit = null;
         return true;
     }
-    public bool AddUnit(IUnit unit , MyEnum.TheOperator theOperator)
+    public bool AddUnit(IUnit unit)
     {
-        if(this.unit != null)
+        if(unitList[unit.UnitType] != null)
         {
+            Debug.LogError("AddUnit Error");
             return false;
         }
-        this.unit = unit;
+        // Debug.LogWarning("AddUnit " + unit.UnitType);
+        unitList[unit.UnitType] = unit;
+        // if(this.unit != null)
+        // {
+        //     return false;
+        // }
+        // this.unit = unit;
         return true;
     }
-    public IUnit GetUnit()
+    public IUnit GetUnit(MyEnum.UnitType unitType)
     {
-        return unit;
+        // if(unitList[unitType] == null)
+        // {
+        //     Debug.LogWarning("GetUnit Error " + unitType);
+        // }
+        return unitList[unitType];
     }
-    public bool ChangeControlArea(MyEnum.TheOperator theOperator , bool isAdd)
+    public bool ChangeZOC(MyEnum.TheOperator theOperator , bool isAdd)
     {
         foreach(MyEnum.TheOperator midOperator in MyEnum.TheOperator.GetValues(typeof(MyEnum.TheOperator)))
         {
@@ -188,7 +208,9 @@ public class GridInfo : MonoBehaviour
     }
     public float GetMoveCost(MyEnum.TheOperator theOperator)
     {
-        if(gridState[theOperator].currentState != MyEnum.GridState.Show || baseGrid.moveCost < 0 || (unit != null /* && unit.theOperator != theOperator*/))
+        if(gridState[theOperator].currentState != MyEnum.GridState.Show || baseGrid.moveCost < 0 
+        || (unitList[MyEnum.UnitType.Army] != null && unitList[MyEnum.UnitType.Army].TheOperator != theOperator)
+        || (unitList[MyEnum.UnitType.City] != null && unitList[MyEnum.UnitType.City].TheOperator != theOperator))
         {
             return -1;
         }

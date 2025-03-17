@@ -25,6 +25,8 @@ public class PlayerRound : GameState
         base.Enter();
         playerRoundStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
         MyEvent.OnClick_nextBtn += NextBtnClick;
+        UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Player , new Vector2Int(10, 10), MyEnum.ArmyType.Tank);
+        UnitManager.Instance.RoundBeginOperation(MyEnum.TheOperator.Player);
     }
 
     public override void Exit()

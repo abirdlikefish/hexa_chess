@@ -84,7 +84,7 @@ public class PlayView : IFguiView
 
     private void OpenUnitUI(IUnit unit)
     {
-        Debug.Log("OpenUnitUI");
+        // Debug.Log("OpenUnitUI");
         if(unit == null)
         {
             unitUIController.selectedPage = "Hide";
