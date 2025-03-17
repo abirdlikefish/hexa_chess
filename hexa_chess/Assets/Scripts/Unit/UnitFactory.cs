@@ -3,38 +3,54 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UnitFactory : MonoBehaviour
+public class UnitFactory
 {
-    private static UnitFactory _instance;
-
-    private UnitFactory()
+    UnitConfigListSO unitConfigListSO;
+    Dictionary<MyEnum.ArmyType , GameObject> armyPrefabList;
+    Dictionary<MyEnum.CityType , GameObject> cityPrefabList;
+    Dictionary<MyEnum.TheOperator , Dictionary<MyEnum.UnitType , Transform>> parentGO;
+    public UnitFactory()
     {
-
-    }
-    //单例访问模式
-    public static UnitFactory Instacne
-    {
-        get
+        unitConfigListSO = Resources.Load<UnitConfigListSO>("SO/UnitConfigListSO");
+        // unitPrefabList = new Dictionary<MyEnum.UnitType, GameObject>();
+        armyPrefabList = new Dictionary<MyEnum.ArmyType, GameObject>();
+        cityPrefabList = new Dictionary<MyEnum.CityType, GameObject>();
+        foreach (var unitConfig in unitConfigListSO.armyConfigList)
         {
-            if(_instance == null)
+            armyPrefabList.Add(unitConfig.armyType , Resources.Load<GameObject>(unitConfig.prefabPath));
+        }
+        foreach (var unitConfig in unitConfigListSO.cityConfigList)
+        {
+            cityPrefabList.Add(unitConfig.cityType , Resources.Load<GameObject>(unitConfig.prefabPath));
+        }
+        parentGO = new Dictionary<MyEnum.TheOperator , Dictionary<MyEnum.UnitType , Transform>>();
+        foreach (MyEnum.TheOperator theOperator in System.Enum.GetValues(typeof(MyEnum.TheOperator)))
+        {
+            parentGO.Add(theOperator , new Dictionary<MyEnum.UnitType , Transform>());
+            Transform midParent = new GameObject(theOperator.ToString() + " unit").transform;
+            foreach (MyEnum.UnitType unitType in System.Enum.GetValues(typeof(MyEnum.UnitType)))
             {
-                _instance = new UnitFactory();
+                GameObject unitGO = new GameObject(unitType.ToString());
+                unitGO.transform.parent = midParent;
+                parentGO[theOperator].Add(unitType, unitGO.transform);
             }
-            return _instance;
         }
     }
 
-    public static IUnitManagerOp LoadUnit(Transform transform,UnitType unitType)
+    public Unit LoadUnit(MyEnum.TheOperator theOperator , Vector2Int coord,MyEnum.ArmyType armyTypeType)
     {
-        //生成实例对象
-        GameObject gameObject = Instantiate((GameObject)Resources.Load("Unit"),transform);
-        UnitConfig config = (UnitConfig)Resources.Load("unitConfig");
-        gameObject.GetComponent<Unit>().UnitInitialize(config);
-        //地图坐标转换
-        Vector2 vector2 = new Vector2(transform.position.x,transform.position.y);
-        gameObject.GetComponent<Unit>().ReWritePosition(vector2);
-        //存入地图
-        MapManager.Instance.AddUnit(MapManager.Pos_To_Coord(vector2),gameObject.GetComponent<IUnit>());
-        return gameObject.GetComponent<IUnitManagerOp>();
+        Vector2 pos = MapManager.Coord_To_Pos(coord);
+        MyStruct.UnitConfig unitConfig = unitConfigListSO.GetUnitConfig(armyTypeType);
+        Unit unit = GameObject.Instantiate(armyPrefabList[armyTypeType] , parentGO[theOperator][MyEnum.UnitType.Army]).GetComponent<Unit>();
+        unit.Init(theOperator , unitConfig , coord);
+        return unit;
+    }
+    public Unit LoadUnit(MyEnum.TheOperator theOperator , Vector2Int coord,MyEnum.CityType cityType)
+    {
+        Vector2 pos = MapManager.Coord_To_Pos(coord);
+        MyStruct.UnitConfig unitConfig = unitConfigListSO.GetUnitConfig(cityType);
+        Unit unit = GameObject.Instantiate(cityPrefabList[cityType] , parentGO[theOperator][MyEnum.UnitType.City]).GetComponent<Unit>();
+        unit.Init(theOperator , unitConfig , coord);
+        return unit;
     }
 }

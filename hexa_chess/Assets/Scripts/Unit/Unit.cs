@@ -4,39 +4,71 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System.Linq;
-public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
+public class Unit : MonoBehaviour, IUnit
 {
+    protected MyEnum.UnitType unitType;
+    public MyEnum.UnitType UnitType => unitType;
     //单位配置文件
-    public UnitConfig unitConfig;
+    // public MyStruct.UnitConfig unitConfig;
+
     //单位当前状态
-    public UnitStates unitState;
+    public MyEnum.UnitStates unitState;
     //操作增益
-    public OprationBuff oprationBuff;
+    public MyEnum.OperationBuff operationBuff;
     //生命值
-    public int currentHp;
+    public int maxHp;
+    public int MaxHp { get { return maxHp; } }
+    private int currentHp;
+    public int CurrentHP {get {return currentHp;} set{currentHp = value;}}
 
-    public int currentAction;//当前行动力
+    protected float maxMoveForce;
+    private float moveForce;//当前行动力
+    public float MoveForce {get {return moveForce;} set{moveForce = value;}}
 
-    public bool friendUnit;//阵营归属
+    protected int atk;
+    public int Atk{get {return atk;}}
 
-    public Vector2 position;
+    protected int def;
+    public int Def{get {return def;}}
 
+    protected int attackRadius;
+    public int AttackRadius{get {return attackRadius;}}
 
+    protected int coin;
+    public int Coin{get {return coin;}}
 
-    public void UnitInitialize(UnitConfig iniConfig)
+    protected int occupation;
+    public int Occupation{get {return occupation;}}
+
+    protected MyEnum.TheOperator theOperator;//阵营归属
+    public MyEnum.TheOperator TheOperator => theOperator;
+    protected bool haveZOC;
+    public bool HaveZOC{get {return haveZOC;}set{haveZOC = value;}}
+    protected int viewRange;
+    public int ViewRange{get {return viewRange;}set{viewRange = value;}}
+    public List<Vector2Int> virtualArea{get;set;}
+    private Vector2Int coordPosition;
+    public Vector2Int Coord {get {return coordPosition;} set{coordPosition = value; transform.position = MapManager.Coord_To_Pos(value);}}
+    public void Init(MyEnum.TheOperator theOperator , MyStruct.UnitConfig config , Vector2Int coord)
     {
-        unitConfig = iniConfig;
-        unitState = UnitStates.Able;
-        DOTween.Init();
+        // unitConfig = iniConfig;
+        unitState = MyEnum.UnitStates.Able;
+        Coord = coord;
+        this.theOperator = theOperator;
+        InitConfig(config);
+        UnitManager.Instance.EnterGrid(this);
+    }
+    protected virtual void InitConfig(MyStruct.UnitConfig iniConfig)
+    {
+
     }
     public void Attack(IUnit other)
     {
-        if (unitState == UnitStates.Able)
+        if (unitState == MyEnum.UnitStates.Able)
         {
             //消耗当前所有行动力
-            ActionCheck(currentAction);
             Debug.Log("单位攻击指令执行！");
-            other.GetDamage(unitConfig.Attak);
+            other.GetDamage(Atk);
         }
         else
         {
@@ -47,11 +79,11 @@ public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
     public void GetDamage(int damage)
     {
         int finalDamage;
-        switch (oprationBuff)
+        switch (operationBuff)
         {
-            case OprationBuff.Rest: finalDamage = damage += 1;
+            case MyEnum.OperationBuff.Rest: finalDamage = damage += 1;
             break;
-            case OprationBuff.Station: finalDamage = damage - 2;
+            case MyEnum.OperationBuff.Station: finalDamage = damage - 2;
             break;
             default:    finalDamage = damage;
             break;
@@ -60,50 +92,19 @@ public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
         DestroyCheck();
     }
 
-    public void Move(List<Vector2Int> path,int cost)
-    {
-        if (unitState == UnitStates.Able)
-        {
-            IUnit temp = MapManager.Instance.GetUnit(MapManager.Pos_To_Coord(position));
-            Debug.Log("移动！");
-            Sequence sequence = DOTween.Sequence();
-            foreach (var point in path)
-            {
-                sequence.Append(
-                    transform.DOMove((Vector3)MapManager.Coord_To_Pos(point),
-                    unitConfig.movingSpeed));
-            }
-            sequence.OnPlay(() => {
-                unitState = UnitStates.Disable;
-                Debug.Log("单位移动中，不可操作");
-                MapManager.Instance.RemoveUnit(MapManager.Pos_To_Coord(position));
-            });
-            sequence.Play();
-            sequence.OnComplete(() => {
-                unitState = UnitStates.Able;
-                Debug.Log("移动动画完成");
-                MapManager.Instance.AddUnit(path.Last(),temp);
-            });
-                MyEvent.AnimaEnd();
-            ActionCheck(cost);
-
-        }
-        else
-        {
-            Debug.Log("单位不可操作！");
-        }
-    }
 
     public void Station()
     {
-        ActionCheck(currentAction);
-        oprationBuff = OprationBuff.Station;
+        moveForce = 0;
+        operationBuff = MyEnum.OperationBuff.Station;
+        unitState = MyEnum.UnitStates.Disable;
     }
 
     public void Rest()
     {
-        ActionCheck(currentAction);
-        oprationBuff = OprationBuff.Rest;
+        moveForce = 0;
+        operationBuff = MyEnum.OperationBuff.Rest;
+        unitState = MyEnum.UnitStates.Disable;
     }
 
     public void Dismiss()
@@ -114,19 +115,10 @@ public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
 
     public void Skip()
     {
-        ActionCheck(currentAction);
+        moveForce = 0;
+        unitState = MyEnum.UnitStates.Disable;
     }
 
-    //行动力检定，判断单位操作是否转入无法操作
-    private void ActionCheck(int ActionCost)
-    {
-        if (unitState == UnitStates.Able && currentAction != 0)
-        {
-            currentAction -= ActionCost;
-            if (currentAction < 0) currentAction = 0;
-        }
-        if (currentAction == 0) unitState = UnitStates.Disable;
-    }
 
     //摧毁检定
     private void DestroyCheck()
@@ -134,8 +126,7 @@ public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
         if (currentHp <= 0)
         {
             Debug.Log("单位被摧毁");
-            UnitManager.Instance.RemoveUnit(this,unitConfig.unitType);
-            Destroy(gameObject);
+            UnitManager.Instance.RemoveUnit(this);
         }
     }
 
@@ -149,8 +140,7 @@ public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
     private void RecycleUnit()
     {
         Debug.Log("回收单位！");
-        UnitManager.Instance.RemoveUnit(this,unitConfig.unitType);
-        Destroy(gameObject);
+        UnitManager.Instance.RemoveUnit(this);
         //todo:回收对象池
     }
 
@@ -159,40 +149,61 @@ public class Unit : MonoBehaviour, IUnit, IUnitManagerOp
         currentHp += hp;
     }
 
-    public UnitStates GetStates()
+    public MyEnum.UnitStates GetStates()
     {
         return unitState;
     }
 
-    public bool isFriendUnit()
-    {
-        return friendUnit;
-    }
+    // public MyEnum.TheOperator GetOperator()
+    // {
+    //     return theOperator;
+    // }
 
-    public void ReWritePosition(Vector2 vector2)
-    {
-        position = vector2;
-    }
+    // public void ReWriteCoord(Vector2Int coord)
+    // {
+    //     coordPosition = coord;
+    // }
 
-    public Vector2 GetUnitPos()
-    {
-        return position;
-    } 
+    // public Vector2Int GetUnitCoord()
+    // {
+    //     return coordPosition;
+    // } 
 
-    public int GetActionForce()
-    {
-        return currentAction;
-    }
+    // public float GetActionForce()
+    // {
+    //     return currentAction;
+    // }
 
     //回合结束检定，将单位转入可操作
     public void RoundBeginCheck()
     {
-        unitState = UnitStates.Able;
-        currentAction = unitConfig.Action;
+        unitState = MyEnum.UnitStates.Able;
+        moveForce = maxMoveForce;
     }
 
-    public OprationBuff GetOprationBuff()
+    public MyEnum.OperationBuff GetOperationBuff()
     {
-        return oprationBuff;
+        return operationBuff;
+    }
+
+    // public MyEnum.UnitType GetUnitType()
+    // {
+    //     return unitConfig.unitType;
+    // }
+
+    // public int GetUnitHp()
+    // {
+    //     return currentHp;
+    // }
+
+    // public MyStruct.UnitConfig GetUnitConfig()
+    // {
+    //     return unitConfig;
+    // }
+
+    public void Dead()
+    {
+        UnitManager.Instance.ExitGrid(this);
+        Destroy(this.gameObject);
     }
 }

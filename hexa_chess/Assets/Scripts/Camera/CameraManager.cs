@@ -35,7 +35,6 @@ public class CameraManager : MonoBehaviour , ICameraManager
     {
         // anchor.position += new Vector3(direction.x, 0, direction.y);
         anchor.position += direction;
-        Debug.Log("Camera Move: " + direction);
     }
     public void LookAttGrid(Vector2Int grid)
     {

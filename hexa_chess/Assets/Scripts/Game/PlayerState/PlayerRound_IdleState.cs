@@ -23,15 +23,17 @@ public class PlayerRound_IdleState : PlayerRoundState
     public override void Exit()
     {
         MyEvent.OnGridClick_left -= SelectGrid;
-        // throw new System.NotImplementedException();
     }
     
     public void SelectGrid(Vector2Int? coord)
     {
         if(coord == null)   return;
-        playerStateMachine.selectedUnit = MapManager.Instance.GetUnit(coord.Value);
-        if(playerStateMachine.selectedUnit == null || playerStateMachine.selectedUnit.isFriendUnit() == false)
+        playerStateMachine.selectedUnit = MapManager.Instance.GetUnit(coord.Value , MyEnum.UnitType.City) ?? MapManager.Instance.GetUnit(coord.Value , MyEnum.UnitType.Army);
+        // playerStateMachine.selectedUnit = MapManager.Instance.GetUnit(coord.Value , MyEnum.UnitType.Army);
+        // Debug.LogWarning("Selected Unit " + coord);
+        if(playerStateMachine.selectedUnit == null || playerStateMachine.selectedUnit.TheOperator != MyEnum.TheOperator.Player)
         {
+            Debug.LogWarning(playerStateMachine.selectedUnit == null);
             playerStateMachine.selectedUnit = null;
             return;
         }

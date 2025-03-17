@@ -84,7 +84,7 @@ public class PlayView : IFguiView
 
     private void OpenUnitUI(IUnit unit)
     {
-        Debug.Log("OpenUnitUI");
+        // Debug.Log("OpenUnitUI");
         if(unit == null)
         {
             unitUIController.selectedPage = "Hide";
@@ -106,7 +106,7 @@ public class PlayView : IFguiView
     {
         InputEvent inputEvent = (InputEvent)context.data;
         float delta = inputEvent.mouseWheelDelta;
-        Debug.Log("Mouse Wheel Delta: " + delta);
+        // Debug.Log("Mouse Wheel Delta: " + delta);
         MyEvent.CameraMove?.Invoke(new Vector3(0,0,delta));
     }
 

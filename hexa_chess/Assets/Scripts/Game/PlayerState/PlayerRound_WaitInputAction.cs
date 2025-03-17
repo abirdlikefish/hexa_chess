@@ -22,7 +22,8 @@ public class PlayerRound_WaitInputAction : PlayerRoundState
         MyEvent.OnGridClick_left += SelectGrid_left;
         MyEvent.OnGridClick_right += SelectGrid_right;
         MyEvent.OpenUnitUI?.Invoke(playerStateMachine.selectedUnit);
-MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Player, playerStateMachine.selectedGrid.Value, 5);
+        MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Player, playerStateMachine.selectedGrid.Value, playerStateMachine.selectedUnit.MoveForce);
+        // Debug.Log("unit moveForce:" + playerStateMachine.selectedUnit.MoveForce);
     }
     
     public override void Exit()
@@ -49,8 +50,8 @@ MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Player, playerStateMach
             Cancel();
             return;
         }
-        playerStateMachine.selectedUnit = MapManager.Instance.GetUnit(coord.Value);
-        if(playerStateMachine.selectedUnit == null || playerStateMachine.selectedUnit.isFriendUnit() == false)
+        playerStateMachine.selectedUnit = MapManager.Instance.GetUnit(coord.Value , MyEnum.UnitType.City) ?? MapManager.Instance.GetUnit(coord.Value , MyEnum.UnitType.Army);
+        if(playerStateMachine.selectedUnit == null || playerStateMachine.selectedUnit.TheOperator != MyEnum.TheOperator.Player)
         {
             Cancel();
             return;
@@ -72,25 +73,25 @@ MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Player, playerStateMach
             Cancel();
             return;
         }
-playerStateMachine.selectedUnit.Move(path , 5);
-    playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
+        (playerStateMachine.selectedUnit as IArmy).Move(path , moveCost);
+        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
     }
 
     private void SelectedDismiss()
     {
-        playerStateMachine.selectedUnit.Dismiss();
+        (playerStateMachine.selectedUnit as IArmy).Dismiss();
         playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
     }
 
     private void SelectedStation()
     {
-        playerStateMachine.selectedUnit.Station();
+        (playerStateMachine.selectedUnit as IArmy).Station();
         playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
     }
 
     private void SelectedRest()
     {
-        playerStateMachine.selectedUnit.Rest();
+        (playerStateMachine.selectedUnit as IArmy).Rest();
         playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
     }
     

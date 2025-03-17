@@ -65,22 +65,38 @@ public static class MyEnum
     }
 
     /// <summary>
-    /// 有三种单位：步兵，炮兵，坦克
+    /// 三种单位：步兵，炮兵，坦克
     /// </summary>
     public enum UnitType
     {
+        None,
+        Army,
+        City,
+    }
+    public enum ArmyType
+    {
+        None,
         Infantry,
         Artillery,
-        Tank
+        Tank,
+        // Base,
+    }
+    public enum CityType
+    {
+        None,
     }
 
     public enum UnitStates
     {
-        Action,//到自己的回合
-        Move,//移动
-        Attack,//攻击
-        Waiting,//到别人的回合
-        Die,//死了
+        Able,//可操作
+        Disable,//不可操作
+    }
+
+    public enum OperationBuff
+    {
+        Normal,//常态
+        Station,//驻扎
+        Rest,//休整
     }
 
     public enum PlayerRoundState

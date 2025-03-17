@@ -16,7 +16,7 @@ public class midGameManager : MonoBehaviour
         {
             if (coord.HasValue)
             {
-                MapManager.Instance.ChangeVirtualField(MyEnum.TheOperator.Player, coord.Value, true);
+                MapManager.Instance.ChangeOneVirtualField(MyEnum.TheOperator.Player, coord.Value, true);
             }
             else
             {

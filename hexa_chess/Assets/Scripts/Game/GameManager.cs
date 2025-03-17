@@ -35,26 +35,26 @@ class GameManager : MonoBehaviour
         }
 
         // gameStateMachine = new GameStateMachine();
-        gameStateMachine = GameStateMachine.Instance;
 
         InitializeAllValue();
+        gameStateMachine = GameStateMachine.Instance;
 
         MapManager.Init();
         UIManager.Init();
+
     }
 
 
     protected void Start()
     {
-        // gameStateMachine.BuildState();
-        // gameStateMachine.Initializate(MyEnum.GameState.PlayerRound);
-        gameStateMachine.Initializate();
+        MapManager.Instance.CreateMap(10);
+        UIManager.Instance.ShowView(MyEnum.UIView.PlayView);
+
+        gameStateMachine.Initialize();
         gameStateMachine.ChangeState(MyEnum.GameState.PlayerRound);
         gameStateMachine.SynchronousHp(PlayerHP, EnemyHP);
 
 
-        MapManager.Instance.CreateMap(10);
-        UIManager.Instance.ShowView(MyEnum.UIView.PlayView);
         // MyEvent.OnClick_testBtn += ChangeGameState;
     }
 
