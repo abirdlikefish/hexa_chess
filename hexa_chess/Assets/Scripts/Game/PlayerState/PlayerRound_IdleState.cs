@@ -3,6 +3,8 @@ using UnityEngine.UIElements;
 
 public class PlayerRound_IdleState : PlayerRoundState
 {
+
+    private IUnit DefaultUnit = null;//给一个默认选项
     public PlayerRound_IdleState(PlayerStateMachine _playerStateMachine, MyEnum.PlayerRoundState _playerState):base(_playerStateMachine, _playerState)
     {
     }
@@ -15,6 +17,7 @@ public class PlayerRound_IdleState : PlayerRoundState
         playerStateMachine.selectedGrid = null;
         playerStateMachine.selectedUnit = null;
         MyEvent.OnGridClick_left += SelectGrid;
+        DefaultUnit = UnitManager.Instance.GetAbleUnit();
     }
     
     public override void Exit()
@@ -37,5 +40,14 @@ public class PlayerRound_IdleState : PlayerRoundState
             playerStateMachine.selectedGrid = coord;
             playerStateMachine.ChangeState(MyEnum.PlayerRoundState.WaitInput_WhichAction);
         }
+    }
+
+    private void PressSkipButton()
+    {
+        if (UnitManager.Instance.GetAbleUnit() == null || UnitManager.Instance.CheckAllOperated() == false)//没有可操作单位或者所有单位都被操作过
+        {
+            GameStateMachine.Instance.ChangeState(MyEnum.GameState.EnemyRound);//到敌人回合
+        }
+        //否则跳转到可以执行的单位
     }
 }
