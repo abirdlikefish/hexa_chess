@@ -1,0 +1,124 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using static MyEnum;
+
+public class AIHelper
+{
+    internal static class AIEnum
+    {
+        public enum AttackValueType
+        {
+            Home,
+            Unit,
+            None
+        }
+    }
+
+    private static class AIConst
+    {
+        public static Dictionary<AIEnum.AttackValueType, int> AttackValues = new Dictionary<AIEnum.AttackValueType, int>
+        {
+            { AIEnum.AttackValueType.Home, 10 },
+            { AIEnum.AttackValueType.Unit, 5 },
+            { AIEnum.AttackValueType.None, 0 }
+        };
+
+
+    }
+
+
+    private static AIHelper instance;
+    public static AIHelper Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new AIHelper();
+            }
+            return instance;
+        }
+    }
+
+    private AIHelper()
+    {
+    }
+
+    public float GetAttackValue(Vector2Int pos)
+    {
+        MapManager.Instance.GetUnit(pos, UnitType.Army);
+        MapManager.Instance.GetUnit(pos, UnitType.City);
+        return 0;
+    }
+
+    public float GetHomeDistanceDelta()
+    {
+        float delta = 0;
+
+        return delta;
+    }
+
+    public float SafetyDelta()
+    {
+        float delta = 0;
+
+        return delta;
+    }
+
+    public float GetDamage(IUnit unit)
+    {
+        return unit.Atk;
+    }
+
+    public float GetHPPercentage(IUnit unit)
+    {
+        float delta = 0;
+        delta = (float)unit.CurrentHP / (float)unit.MaxHp;
+        return delta;
+    }
+
+    public float GetDistanceToEnemy(Vector2Int pos)
+    {
+        float res = 0;
+        List<Vector2Int> enemyPos = UnitManager.Instance.GetUnitList(MyEnum.TheOperator.Player).ConvertAll(x => x.Coord);
+        float minDistance = 1000;
+        foreach (var enemy in enemyPos)
+        {
+            float distance = MapManager.GetMinCost(enemy - pos);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+            }
+        }
+        res = minDistance;
+        return res == 1000 ? -1 : res;
+    }
+
+    // todo: implement this enemys
+    public float GetEnemyNumCanAttackPos(Vector2Int pos)
+    {
+        float res = 0;
+        List<IUnit> enemys = UnitManager.Instance.GetUnitList(MyEnum.TheOperator.Player);
+        foreach (var enemy in enemys)
+        {
+            if (MapManager.GetMinCost(enemy.Coord - pos) <= enemy.AttackRadius)
+            {
+                res++;
+            }
+        }
+        return res;
+    }
+
+    public List<Vector2Int> GetReachablePos(IUnit unit)
+    {
+        return MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Enemy, unit.Coord, unit.MoveForce);
+    }
+
+    internal List<Vector2Int> GetAttackablePos(IUnit unit)
+    {
+        return MapManager.Instance.SearchAttackArea(MyEnum.TheOperator.Enemy, unit.Coord, unit.AttackRadius);
+    }
+}
