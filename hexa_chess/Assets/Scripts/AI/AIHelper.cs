@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static MyEnum;
@@ -109,18 +110,9 @@ public class AIHelper
         return res == 1000 ? -1 : res;
     }
 
-    // todo: implement this enemys
     public float GetEnemyNumCanAttackPos(Vector2Int pos)
     {
-        float res = 0;
-        List<IUnit> enemys = UnitManager.Instance.GetUnitList(MyEnum.TheOperator.Player);
-        foreach (var enemy in enemys)
-        {
-            if (MapManager.GetMinCost(enemy.Coord - pos) <= enemy.AttackRadius)
-            {
-                res++;
-            }
-        }
+        float res = MapManager.Instance.GetWatchedCnt(MyEnum.TheOperator.Player,pos);
         return res;
     }
 
@@ -137,5 +129,10 @@ public class AIHelper
     internal List<Vector2Int> GetAttackablePos(IUnit unit)
     {
         return MapManager.Instance.SearchAttackArea(MyEnum.TheOperator.Enemy, unit.Coord, unit.AttackRadius);
+    }
+
+    internal List<Vector2Int> GetAttackablePos(IUnit unit, Vector2Int pos)
+    {
+        return MapManager.Instance.SearchAttackArea(MyEnum.TheOperator.Enemy, pos, unit.AttackRadius);
     }
 }

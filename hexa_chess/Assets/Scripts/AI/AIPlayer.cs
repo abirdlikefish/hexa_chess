@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static AIHelper.AIEnum;
@@ -82,6 +83,10 @@ public class AIPlayer
             IUnit armyUnit = MapManager.Instance.GetUnit(pos, MyEnum.UnitType.Army);
 
             attackUnit = cityUnit != null ? cityUnit : armyUnit;
+            if (attackUnit == null)
+            {
+                continue;
+            }
             double attackValue = 2.5 * AIHelper.Instance.GetAttackValue(pos) *
                 (0.4 + AIHelper.Instance.GetHPPercentage(attackUnit)) * (1.3 - 0.1 * enemyNum); ;
             attackValues.Add(attackUnit, attackValue);
@@ -105,15 +110,32 @@ public class AIPlayer
         List<Vector2Int> moveableCanRestOrAttackPos = AIHelper.Instance.GetReachablePos(unit, unit.MoveForce - 0.5f);
 
         // 移动攻击
-        Dictionary<Vector2Int, double> moveAttackValues = new();
+        Dictionary<Vector2Int, KeyValuePair<IUnit, double>> moveAttackValues = new();
         foreach (var pos in moveableCanRestOrAttackPos)
         {
+            List<Vector2Int> attackablePos2 = AIHelper.Instance.GetAttackablePos(unit, pos);
             homeDisDelta = AIHelper.Instance.GetHomeDistanceDelta(unit.Coord, pos);
-            var newEnemyNum = AIHelper.Instance.GetEnemyNumCanAttackPos(pos);
-            double attackValue = 2.5 * AIHelper.Instance.GetAttackValue(pos) *
-                (0.4 + AIHelper.Instance.GetHPPercentage(unit)) * (1.3 - 0.1 * newEnemyNum);
-            double moveAttackValue = attackValue + 0.3 * homeDisDelta;
-            moveAttackValues.Add(pos, moveAttackValue);
+            double maxMoveAttackValue = 0;
+            foreach (var attackPos in attackablePos2)
+            {
+                IUnit attackUnit = null;
+                IUnit cityUnit = MapManager.Instance.GetUnit(attackPos, MyEnum.UnitType.City);
+                IUnit armyUnit = MapManager.Instance.GetUnit(attackPos, MyEnum.UnitType.Army);
+
+                attackUnit = cityUnit != null ? cityUnit : armyUnit;
+                if (attackUnit == null)
+                {
+                    continue;
+                }
+                double attackValue = 2.5 * AIHelper.Instance.GetAttackValue(attackPos) *
+                    (0.4 + AIHelper.Instance.GetHPPercentage(attackUnit)) * (1.3 - 0.1 * enemyNum);
+                double moveAttackValue = attackValue + 0.3 * homeDisDelta;
+                if (moveAttackValue > maxMoveAttackValue)
+                {
+                    maxMoveAttackValue = moveAttackValue;
+                    moveAttackValues[pos] = new KeyValuePair<IUnit, double>(attackUnit, moveAttackValue);
+                }
+            }
         }
 
         //撤退休息
@@ -168,10 +190,11 @@ public class AIPlayer
         }
         foreach (var (k, v) in moveAttackValues)
         {
-            if (v > maxValue)
+            if (v.Value > maxValue)
             {
-                maxValue = v;
+                maxValue = v.Value;
                 targetPos = k;
+                targetUnit = v.Key;
                 aiAction = AIAction.MoveAttack;
             }
         }
@@ -185,6 +208,44 @@ public class AIPlayer
             }
         }
         Debug.Log($"AIPlayer CalculateOperation End:{aiAction}");
+        switch (aiAction)
+        {
+            case AIAction.Retreat:
+                MoveUnit(unit, targetPos);
+                break;
+            case AIAction.Attack:
+                AttackUnit(unit, targetUnit);
+                break;
+            case AIAction.Garrison:
+                GarrisonUnit(unit);
+                break;
+            case AIAction.Rest:
+                RestUnit(unit);
+                break;
+            case AIAction.Move:
+                MoveUnit(unit, targetPos);
+                break;
+            case AIAction.MoveAttack:
+                MoveUnit(unit, targetPos);
+                AttackUnit(unit, targetUnit);
+                break;
+            case AIAction.RetreatRest:
+                MoveUnit(unit, targetPos);
+                RestUnit(unit);
+                break;
+            case AIAction.None:
+                break;
+        }
+    }
+
+    private void RestUnit(IUnit unit)
+    {
+        (unit as IArmy)?.Rest();
+    }
+
+    private void GarrisonUnit(IUnit unit)
+    {
+        (unit as IArmy)?.Station();
     }
 
     private void CreateUnit(MyEnum.UnitType unitType, Vector2Int coordPosition)
@@ -201,14 +262,16 @@ public class AIPlayer
 
     private void MoveUnit(IUnit unit, Vector2Int coordPosition)
     {
-
+        MapManager.Instance.SearchMovableArea(unit.TheOperator, unit.Coord, unit.MoveForce);
+        var movePath = MapManager.Instance.GetMovePath(coordPosition, out var moveCost);
+        (unit as IArmy)?.Move(movePath, moveCost);
     }
 
-    private void MoveUnitOneStep(IUnit unit, Vector2Int coordPosition)
-    {
-        //UpdateViews();
-        //UpdateVisited();
-    }
+    //private void MoveUnitOneStep(IUnit unit, Vector2Int coordPosition)
+    //{
+    //    //UpdateViews();
+    //    //UpdateVisited();
+    //}
 
     private void AttackUnit(IUnit unit, IUnit target)
     {
@@ -257,8 +320,5 @@ public class AIPlayer
     //    }
     //    return views;
     //}
-
-
-
 
 }
