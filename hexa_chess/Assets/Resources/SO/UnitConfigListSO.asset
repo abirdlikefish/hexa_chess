@@ -17,42 +17,42 @@ MonoBehaviour:
     unitType: 1
     armyType: 3
     cityType: 0
-    MaxHp: 57
-    Action: 12.56
-    Atk: 53
-    Def: 45
-    AttackRadius: 24
-    viewRange: 4
+    MaxHp: 8
+    Action: 4
+    Atk: 3
+    Def: 0
+    AttackRadius: 1
+    viewRange: 3
     movingSpeed: 2.68
-    Coin: 64
-    Occupation: 42
+    Coin: 20
+    Occupation: 2
     HaveZOC: 1
   - prefabPath: Prefabs/Tank
     unitType: 1
     armyType: 2
     cityType: 0
-    MaxHp: 57
-    Action: 12.56
-    Atk: 53
-    Def: 45
-    AttackRadius: 24
+    MaxHp: 3
+    Action: 2
+    Atk: 3
+    Def: 0
+    AttackRadius: 2
     viewRange: 4
     movingSpeed: 2.68
-    Coin: 64
-    Occupation: 42
-    HaveZOC: 1
+    Coin: 10
+    Occupation: 1
+    HaveZOC: 0
   - prefabPath: Prefabs/Tank
     unitType: 1
-    armyType: 0
+    armyType: 1
     cityType: 0
-    MaxHp: 57
-    Action: 12.56
-    Atk: 53
-    Def: 45
-    AttackRadius: 24
-    viewRange: 4
+    MaxHp: 5
+    Action: 3
+    Atk: 2
+    Def: 0
+    AttackRadius: 1
+    viewRange: 3
     movingSpeed: 2.68
-    Coin: 64
-    Occupation: 42
-    HaveZOC: 1
+    Coin: 5
+    Occupation: 1
+    HaveZOC: 0
   cityConfigList: []
