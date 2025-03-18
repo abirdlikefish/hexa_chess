@@ -31,7 +31,7 @@ public static class MyEvent
     /// <summary>
     /// AI回合开始
     /// </summary>
-    public static Action OnEnemyRoundBegin;
+    public static Action<int> OnEnemyRoundBegin;
     /// <summary>
     /// AI回合结束
     /// </summary>
