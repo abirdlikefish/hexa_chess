@@ -13,6 +13,8 @@ class GameManager : MonoBehaviour
     /// </summary>
     private int roundsCounter;
 
+    public int CurrentRoundsCounter() => roundsCounter;
+
 
     [Header("Game Data")] [SerializeField] private int PlayerHP;
     [SerializeField] private int EnemyHP;
@@ -89,6 +91,8 @@ class GameManager : MonoBehaviour
     {
         roundsCounter++;
     }
+    
+    
 
     // public void ChangeGameState()
     // {
