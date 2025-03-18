@@ -9,7 +9,7 @@ public class BaseGrid
     {
         if (gridConfigSO == null)
         {
-            gridConfigSO = Resources.Load<GridConfigSO>("ScriptableObject/GridConfigSO");
+            gridConfigSO = Resources.Load<GridConfigSO>("SO/GridConfigSO");
         }
         return gridConfigSO.gridConfigDict[gridType];
     }

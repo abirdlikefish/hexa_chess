@@ -7,4 +7,6 @@ public interface IFguiCom
 {
     public IFguiCom Create(GComponent parent);
     public void Remove();
+    public void Show();
+    public void Hide();
 }

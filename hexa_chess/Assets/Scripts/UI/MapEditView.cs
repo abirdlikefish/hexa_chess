@@ -23,12 +23,12 @@ public class MapEditView : IFguiView
         InitEvent();
         return this;
     }
-    public void Show()
+    public void ShowView()
     {
         MyEvent.OnGridClick_left += SetSelectedCoord;
         GRoot.inst.AddChild(mapEditView);
     }
-    public void Hide()
+    public void HideView()
     {
         MyEvent.OnGridClick_left -= SetSelectedCoord;
         GRoot.inst.RemoveChild(mapEditView);

@@ -49,6 +49,7 @@ class GameManager : MonoBehaviour
     {
         MapManager.Instance.CreateMap(10);
         UIManager.Instance.ShowView(MyEnum.UIView.PlayView);
+        UIManager.Instance.ShowWin(MyEnum.UIWin.GridInfoWin, true);
 
         gameStateMachine.Initialize();
         gameStateMachine.ChangeState(MyEnum.GameState.PlayerRound);
