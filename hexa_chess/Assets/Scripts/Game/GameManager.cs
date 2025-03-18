@@ -7,12 +7,17 @@ class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
     public GameStateMachine gameStateMachine;
+    /// <summary>
+    /// 每回合回复的金币数量
+    /// </summary>
+    public int ReplyCost = 0;
+    private int CurrentCost;
 
     /// <summary>
     /// 记录回合数
     /// </summary>
     private int roundsCounter;
-
+    
     public int CurrentRoundsCounter() => roundsCounter;
 
 
@@ -27,6 +32,7 @@ class GameManager : MonoBehaviour
         PlayerHP = 10;
         EnemyHP = 10;
         roundsCounter = 0;
+        CurrentCost = 0;
     }
 
     private void Awake()

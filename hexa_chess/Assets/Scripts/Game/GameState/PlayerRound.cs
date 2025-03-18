@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class PlayerRound : GameState
 {
     public PlayerStateMachine playerRoundStateMachine;
+    public IUnit DefaultSelectedUnit = null;
 
     public PlayerRound(GameStateMachine _gameStateMachine, MyEnum.GameState _whichState) : base(_gameStateMachine,
         _whichState)
@@ -29,6 +30,8 @@ public class PlayerRound : GameState
         UnitManager.Instance.RoundBeginOperation(MyEnum.TheOperator.Player);
         MyEvent.OnPress += ShowGridInfoWin;
         MyEvent.OnPressEnd += CloseGridInfoWin;
+
+        DefaultSelectedUnit = UnitManager.Instance.GetAbleUnit(MyEnum.TheOperator.Player);
     }
 
     public override void Exit()
@@ -49,7 +52,18 @@ public class PlayerRound : GameState
     // }
     private void NextBtnClick()
     {
-        gameStateMachine.ChangeState(MyEnum.GameState.EnemyRound);
+        //todo:这里要执行Skip
+        // DefaultSelectedUnit?.Skip();
+        DefaultSelectedUnit = UnitManager.Instance.GetAbleUnit(MyEnum.TheOperator.Player);
+        if (DefaultSelectedUnit != null)
+        {
+            playerRoundStateMachine.selectedUnit = DefaultSelectedUnit;
+            playerRoundStateMachine.ChangeState(MyEnum.PlayerRoundState.WaitInput_WhichAction);
+        }
+        else
+        {
+            gameStateMachine.ChangeState(MyEnum.GameState.EnemyRound);
+        }
     }
     
     private void ShowGridInfoWin(Vector2Int coord)
