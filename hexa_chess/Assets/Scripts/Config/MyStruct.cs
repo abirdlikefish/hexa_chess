@@ -35,4 +35,14 @@ public class MyStruct
         public bool HaveZOC;
     }
 
+    [Serializable]
+    public struct GridConfig
+    {
+        public MyEnum.GridType gridType;
+        public float moveCost;
+        public int atkOffset;
+        public int defOffset;
+        public int height;
+    }
+
 }
