@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using static MyEnum;
 
@@ -13,6 +10,18 @@ public class AIHelper
         {
             Home,
             Unit,
+            None
+        }
+
+        public enum AIAction
+        {
+            Retreat,
+            Attack,
+            Garrison,
+            Rest,
+            Move,
+            MoveAttack,
+            RetreatRest,
             None
         }
     }
@@ -49,12 +58,15 @@ public class AIHelper
 
     public float GetAttackValue(Vector2Int pos)
     {
-        MapManager.Instance.GetUnit(pos, UnitType.Army);
-        MapManager.Instance.GetUnit(pos, UnitType.City);
-        return 0;
+        IUnit armyUnit = MapManager.Instance.GetUnit(pos, UnitType.Army);
+        IUnit cityUnit = MapManager.Instance.GetUnit(pos, UnitType.City);
+        return cityUnit != null ? AIConst.AttackValues[AIEnum.AttackValueType.Home] 
+            : (armyUnit != null ? AIConst.AttackValues[AIEnum.AttackValueType.Unit] 
+            : AIConst.AttackValues[AIEnum.AttackValueType.None]);
     }
 
-    public float GetHomeDistanceDelta()
+    // todo: implement this function
+    public float GetHomeDistanceDelta(Vector2Int coord, Vector2Int pos)
     {
         float delta = 0;
 
@@ -115,6 +127,11 @@ public class AIHelper
     public List<Vector2Int> GetReachablePos(IUnit unit)
     {
         return MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Enemy, unit.Coord, unit.MoveForce);
+    }
+
+    public List<Vector2Int> GetReachablePos(IUnit unit,float moveForce)
+    {
+        return MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Enemy, unit.Coord, moveForce);
     }
 
     internal List<Vector2Int> GetAttackablePos(IUnit unit)
