@@ -12,4 +12,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46a42667bfa8ebc48853b015454e2219, type: 3}
   m_Name: GridConfigSO
   m_EditorClassIdentifier: 
-  gridConfigs: []
+  gridConfigs:
+  - gridType: 7
+    moveCost: 20
+    atkOffset: 0
+    defOffset: 0
+    height: 10
+  - gridType: 6
+    moveCost: 2
+    atkOffset: 0
+    defOffset: 1
+    height: 0
+  - gridType: 5
+    moveCost: 1
+    atkOffset: 0
+    defOffset: -1
+    height: 0
+  - gridType: 4
+    moveCost: 1.5
+    atkOffset: 1
+    defOffset: 1
+    height: 0
+  - gridType: 3
+    moveCost: 0.5
+    atkOffset: 0
+    defOffset: 0
+    height: 0
+  - gridType: 2
+    moveCost: 2
+    atkOffset: 0
+    defOffset: -1
+    height: 0
+  - gridType: 1
+    moveCost: 1
+    atkOffset: 0
+    defOffset: 0
+    height: 0
