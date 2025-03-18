@@ -40,5 +40,6 @@ public class BaseGrid
         moveCost = gridConfig.moveCost;
         atkOffset = gridConfig.atkOffset;
         defOffset = gridConfig.defOffset;
+        height = gridConfig.height;
     }
 }

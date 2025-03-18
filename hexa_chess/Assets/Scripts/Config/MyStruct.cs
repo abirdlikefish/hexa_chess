@@ -42,6 +42,7 @@ public class MyStruct
         public float moveCost;
         public int atkOffset;
         public int defOffset;
+        public int height;
     }
 
 }
