@@ -30,8 +30,8 @@ public class GridInfo : MonoBehaviour
             watchedCnt = 0;
         }
         public MyEnum.GridState currentState;
-        public float atkOffset;
-        public float defOffset;
+        public int atkOffset;
+        public int defOffset;
         public float moveOffset;
         public int controlledCnt;
         private int watchedCnt;
@@ -220,11 +220,11 @@ public class GridInfo : MonoBehaviour
     {
         return baseGrid.height;
     }
-    public float GetAtkOffset(MyEnum.TheOperator theOperator)
+    public int GetAtkOffset(MyEnum.TheOperator theOperator)
     {
         return baseGrid.atkOffset + gridState[theOperator].atkOffset;
     }
-    public float GetDefOffset(MyEnum.TheOperator theOperator)
+    public int GetDefOffset(MyEnum.TheOperator theOperator)
     {
         return baseGrid.defOffset + gridState[theOperator].defOffset;
     }

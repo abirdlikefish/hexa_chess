@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class RoadGrid : BaseGrid
 {
+    // public override bool Init()
+    // {
+    //     gridType = MyEnum.GridType.Road;
+    //     gridPicture = Resources.Load<Sprite>(MyConst.GridPicturePath[gridType]);
+    //     moveCost = 0.5f;
+    //     atkOffset = 0.0f;
+    //     defOffset = 0.0f;
+    //     return true;
+    // }
     public override bool Init()
     {
-        gridType = MyEnum.GridType.Road;
-        gridPicture = Resources.Load<Sprite>(MyConst.GridPicturePath[gridType]);
-        moveCost = 0.5f;
-        atkOffset = 0.0f;
-        defOffset = 0.0f;
-        return true;
+        return Init(MyEnum.GridType.Road);
     }
 }

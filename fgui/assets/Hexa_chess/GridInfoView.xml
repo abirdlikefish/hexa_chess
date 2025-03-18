@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="800,600">
+  <displayList>
+    <text id="n1_8qxp" name="AtkOffsetTxt" xy="124,222" size="40,19" fontSize="12" text=""/>
+    <text id="n2_8qxp" name="DefOffsetTxt" xy="120,319" size="40,19" fontSize="12" text=""/>
+    <text id="n3_8qxp" name="MoveCostTxt" xy="99,394" size="40,19" fontSize="12" text=""/>
+  </displayList>
+</component>
