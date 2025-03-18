@@ -37,7 +37,7 @@ public class AIPlayer
     /// <summary>
     /// 回合行动
     /// </summary>
-    public void Turn()
+    public void Turn(int round)
     {
         Debug.Log("AIPlayer Turn");
         //CalculateOperation();
@@ -67,7 +67,9 @@ public class AIPlayer
         Dictionary<Vector2Int, double> retreatValues = new();
         foreach (var pos in moveablePos)
         {
-            double retreatValue = 4 * Mathf.Pow(1 - hpPercentage, 3) * (enemyNum * 1.5 + 1) / (Mathf.Sqrt(distanceToEnemy) + 0.2);
+            var newEnemyNum = AIHelper.Instance.GetEnemyNumCanAttackPos(pos);
+            double retreatValue = 4 * Mathf.Pow(1 - hpPercentage, 3) * (newEnemyNum * 1.5 + 1)
+                / (Mathf.Sqrt(distanceToEnemy) + 0.2);
             retreatValues.Add(pos, retreatValue);
         }
 
@@ -79,18 +81,35 @@ public class AIPlayer
             if (MapManager.Instance.GetUnit(pos, MyEnum.UnitType.Army) != null)
             {
                 attackUnit = MapManager.Instance.GetUnit(pos, MyEnum.UnitType.Army);
-                double attackValue = 2.5 * AIHelper.Instance.GetAttackValue(pos) * (0.4 + AIHelper.Instance.GetHPPercentage(unit));
+                double attackValue = 2.5 * AIHelper.Instance.GetAttackValue(pos) *
+                    (0.4 + AIHelper.Instance.GetHPPercentage(unit)) * (1.3 - 0.1 * enemyNum); ;
                 attackValues.Add(attackUnit, attackValue);
-
             }
 
             if (MapManager.Instance.GetUnit(pos, MyEnum.UnitType.City) != null)
             {
                 attackUnit = MapManager.Instance.GetUnit(pos, MyEnum.UnitType.City);
-                double attackValue = 2.5 * AIHelper.Instance.GetAttackValue(pos) * (0.4 + AIHelper.Instance.GetHPPercentage(unit));
+                double attackValue = 2.5 * AIHelper.Instance.GetAttackValue(pos) *
+                    (0.4 + AIHelper.Instance.GetHPPercentage(unit)) * (1.3 - 0.1 * enemyNum); ;
                 attackValues.Add(attackUnit, attackValue);
             }
         }
+
+        // 计算驻扎
+        double garrisionValue = (3 - hpPercentage) * (1 + 2 / (distanceToEnemy + 1));
+
+        // 计算休息
+        double restValue = (3 - 1.5 * hpPercentage) * (distanceToEnemy / 3.0 + 0.5);
+
+        //移动
+        Dictionary<Vector2Int, double> moveValues = new();
+        foreach (var pos in moveablePos)
+        {
+            var newEnemyNum = AIHelper.Instance.GetEnemyNumCanAttackPos(pos);
+            double moveValue = (0.5 + hpPercentage) * (1 + 0.3 * newEnemyNum) * 5;
+            moveValues.Add(pos, moveValue);
+        }
+
 
     }
 

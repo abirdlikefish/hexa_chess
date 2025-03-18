@@ -9,7 +9,7 @@ public interface IAIManager
     /// <summary>
     /// 轮到aiplayer行动
     /// </summary>
-    public void Action();
+    public void Action(int round);
 
     /// <summary>
     /// 结束回合
@@ -50,9 +50,9 @@ public class AIManager : MonoBehaviour,IAIManager
         return aiPlayer;
     }
 
-    public void Action()
+    public void Action(int round)
     {
-        aiPlayer.Turn();
+        aiPlayer.Turn(round);
     }
 
     public void EndTurn()
