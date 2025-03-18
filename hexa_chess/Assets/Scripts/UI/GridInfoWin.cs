@@ -16,6 +16,7 @@ public class GridInfoWin : Window , IFguiWin
         gridInfoTxt_atk = midCom.GetChild("AtkOffsetTxt").asTextField;
         gridInfoTxt_def = midCom.GetChild("DefOffsetTxt").asTextField;
         gridInfoTxt_moveCost = midCom.GetChild("MoveCostTxt").asTextField;
+        Debug.LogWarning("GridInfoWin OnInit");
         // this.Center();
         // this.modal = true;
     }
@@ -35,23 +36,18 @@ public class GridInfoWin : Window , IFguiWin
 
     private void ShowGridInfo(int atkOffset, int defOffset, float moveCost)
     {
+        Show();
         gridInfoTxt_atk.text = atkOffset.ToString();
         gridInfoTxt_def.text = defOffset.ToString();
         gridInfoTxt_moveCost.text = moveCost.ToString();
-        Show();
     }
-    // private void ShowGridInfo(MyEnum.TheOperator theOperator , Vector2Int coord)
-    // {
-    //     gridInfoTxt_atk.text = MapManager.Instance.GetAtkOffset(theOperator, coord).ToString();
-    //     gridInfoTxt_def.text = MapManager.Instance.GetDefOffset(theOperator, coord).ToString();
-    //     gridInfoTxt_moveCost.text = MapManager.Instance. GetMoveCost(theOperator, coord).ToString();
-    //     Show();
-    // }
 
     public void ShowWin()
     {
+        Debug.LogWarning("ShowWin");
         MyEvent.ShowGridInfoWin += ShowGridInfo;
         MyEvent.HideGridInfoWin += Hide;
+        MyEvent.ShowGridInfoWin += (a,b,c) => { Debug.LogWarning("ShowGridInfoWin"); };
     }
 
     public void HideWin()

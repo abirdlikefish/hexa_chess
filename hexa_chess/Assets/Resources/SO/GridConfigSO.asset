@@ -48,3 +48,8 @@ MonoBehaviour:
     atkOffset: 0
     defOffset: 0
     height: 0
+  - gridType: 0
+    moveCost: 1
+    atkOffset: 0
+    defOffset: 0
+    height: 0

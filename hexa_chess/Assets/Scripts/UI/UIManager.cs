@@ -37,6 +37,7 @@ public class UIManager
     }
     public void InitWin()
     {
+        // Debug.LogWarning("InitWin");
         uiWinList = new Dictionary<MyEnum.UIWin, IFguiWin>();
         uiWinList.Add(MyEnum.UIWin.GridInfoWin , new GridInfoWin());
     }

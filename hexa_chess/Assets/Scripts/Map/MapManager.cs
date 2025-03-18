@@ -16,6 +16,7 @@ public interface IMapManager
     public int GetAtkOffset(MyEnum.TheOperator theOperator , Vector2Int coord);
     public int GetDefOffset(MyEnum.TheOperator theOperator , Vector2Int coord);
     public float GetMoveCost(MyEnum.TheOperator theOperator , Vector2Int coord);
+    public int GetWatchedCnt(MyEnum.TheOperator theOperator , Vector2Int coord);
     public List<Vector2Int> SearchMovableArea(MyEnum.TheOperator theOperator , Vector2Int coord , float moveForce);
     /// <summary>
     /// 从后向前遍历 ， 终点非法则返回null
@@ -356,6 +357,7 @@ public class MapManager : IMapManager , IMapManager_edit
     public int GetAtkOffset(MyEnum.TheOperator theOperator , Vector2Int coord) => gridMap[coord.x, coord.y].GetAtkOffset(theOperator);
     public int GetDefOffset(MyEnum.TheOperator theOperator , Vector2Int coord) => gridMap[coord.x, coord.y].GetDefOffset(theOperator);
     public float GetMoveCost(MyEnum.TheOperator theOperator , Vector2Int coord) => gridMap[coord.x, coord.y].GetMoveCost(theOperator);
+    public int GetWatchedCnt(MyEnum.TheOperator theOperator , Vector2Int coord) => gridMap[coord.x, coord.y].GetWatchedCnt(theOperator);
     public void HighLightGrid(Vector2Int coord, bool isHighLight)
     {
         if(!IsInMap(coord))

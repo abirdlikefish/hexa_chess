@@ -110,8 +110,11 @@ public class ScreenInputBtn : IFguiCom
         {
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(beginScreenPos.x, beginScreenPos.y, -Camera.main.transform.position.z));
             Vector2Int coord = MapManager.Pos_To_Coord(worldPosition);
-            MyEvent.OnPress?.Invoke(coord);
-            isPressed = true;
+            if(MapManager.Instance.IsInMap(coord))
+            {
+                MyEvent.OnPress?.Invoke(coord);
+                isPressed = true;
+            }
         }
         else if(isPressed == true && isMoved == true)
         {
