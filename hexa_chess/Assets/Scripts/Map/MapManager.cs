@@ -25,6 +25,7 @@ public interface IMapManager
     public List<Vector2Int> SearchAttackArea(MyEnum.TheOperator theOperator , Vector2Int coord , float atkRange);
     public IUnit GetAttackedUnit(Vector2Int coord);
     public List<Vector2Int> SetVirtualArea(MyEnum.TheOperator theOperator , Vector2Int coord , int viewRange);
+    public List<Vector2Int> SetVirtualArea_noHeight(MyEnum.TheOperator theOperator , Vector2Int coord , int viewRange);
     public void CleanVirtualArea(MyEnum.TheOperator theOperator , List<Vector2Int> virtualGridList);
     public void CloseMapUI(MyEnum.TheOperator theOperator);
     // public void ChangeGrid(Vector2Int coord, MyEnum.GridType gridType);
@@ -628,6 +629,16 @@ public class MapManager : IMapManager , IMapManager_edit
                 if(gridMap[nextCoord.x, nextCoord.y].GetHeight() > gridMap[midCoord.x, midCoord.y].GetHeight()) continue;
                 searchQueue.Enqueue(nextCoord);
             }
+        }
+        return virtualGridList;
+    }
+    public List<Vector2Int> SetVirtualArea_noHeight(MyEnum.TheOperator theOperator , Vector2Int coord , int viewRange)
+    {
+        List<Vector2Int> virtualGridList = GetHexGridCoord(viewRange, coord);
+        foreach(Vector2Int midCoord in virtualGridList)
+        {
+            if(!IsInMap(midCoord)) continue;
+            gridMap[midCoord.x, midCoord.y].ChangeVirtualField(theOperator, true);
         }
         return virtualGridList;
     }
