@@ -5,6 +5,6 @@ using UnityEngine;
 public interface IFguiView
 {
     IFguiView Init();
-    void Show();
-    void Hide();
+    void ShowView();
+    void HideView();
 }

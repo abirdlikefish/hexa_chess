@@ -27,7 +27,17 @@ public class ScreenInputBtn : IFguiCom
         screenInputBtn.onRightClick.Add(TrySelectGrid_right);
         screenInputBtn.onTouchMove.Add(DragScreen);
         screenInputBtn.onTouchBegin.Add(TouchBegin);
-        // screenInputBtn.onTouchEnd.Add(OnTouchEnd);
+        screenInputBtn.onTouchEnd.Add(TouchEnd);
+        
+    }
+    public void Show()
+    {
+        MyEvent.UIUpdate += Update;
+    }
+
+    public void Hide()
+    {
+        MyEvent.UIUpdate -= Update;
     }
 
     private void TrySelectGrid(EventContext context)
@@ -62,7 +72,11 @@ public class ScreenInputBtn : IFguiCom
             MyEvent.OnGridClick_right?.Invoke(coord);
         }
     }
+    private Vector2 beginScreenPos;
     private Vector2 lastScreenPos;
+    private bool isMoved = false;
+    private bool isPressed = false;
+    private float pressTime = 0;
     private void DragScreen(EventContext context)
     {
         InputEvent inputEvent = context.inputEvent;
@@ -71,11 +85,38 @@ public class ScreenInputBtn : IFguiCom
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, -Camera.main.transform.position.z));
         MyEvent.DragScreen?.Invoke(worldPosition - lastDragPos);
         lastScreenPos = screenPosition;
+        if(Vector2.Distance(beginScreenPos , screenPosition) > 0.1f)
+        {
+            isMoved = true;
+        }
     }
     private void TouchBegin(EventContext context)
     {
         InputEvent inputEvent = context.inputEvent;
         Vector2 screenPosition = new Vector2(inputEvent.x, Screen.height - inputEvent.y);
         lastScreenPos = screenPosition;
+        beginScreenPos = screenPosition;
+        isMoved = false;
+        isPressed = false;
+        pressTime = Time.time;
+    }
+    private void TouchEnd(EventContext context)
+    {
+        isMoved = true;
+    }
+    private void Update()
+    {
+        if(isMoved == false && isPressed == false && Time.time - pressTime > 0.5f)
+        {
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(beginScreenPos.x, beginScreenPos.y, -Camera.main.transform.position.z));
+            Vector2Int coord = MapManager.Pos_To_Coord(worldPosition);
+            MyEvent.OnPress?.Invoke(coord);
+            isPressed = true;
+        }
+        else if(isPressed == true && isMoved == true)
+        {
+            MyEvent.OnPressEnd?.Invoke();
+            isPressed = false;
+        }
     }
 }
