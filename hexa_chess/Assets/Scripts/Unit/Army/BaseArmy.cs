@@ -64,11 +64,12 @@ public class BaseArmy : Unit , IArmy
     {
         if(armyInfoView_hp == null)
         {
-            GComponent armyInfoView = transform.Find("ArmyInfoView").GetComponent<UIPanel>().ui;
+            UIPanel uiPanel = transform.Find("ArmyInfoView").GetComponent<UIPanel>();
+            GComponent armyInfoView = uiPanel.ui;
             if(armyInfoView == null)
                 Debug.LogError("ArmyInfoView is null");
-            armyInfoView_hp = armyInfoView.GetChild("hp").asTextField;
-            armyInfoView_atk = armyInfoView.GetChild("atk").asTextField;
+            armyInfoView_hp = armyInfoView.GetChild("HpTxt").asTextField;
+            armyInfoView_atk = armyInfoView.GetChild("AtkTxt").asTextField;
         }
         armyInfoView_hp.text = CurrentHP.ToString();
         armyInfoView_atk.text = Atk.ToString();

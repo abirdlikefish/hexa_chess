@@ -56,6 +56,11 @@ public static class MyEnum
         PlayView,
         MapEditView,
     }
+    public enum UIWin
+    {
+        Empty,
+        GridInfoWin,
+    }
     public enum GameState
     {
         PlayerRound,

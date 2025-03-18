@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="800,600">
+  <displayList>
+    <text id="n1_8qxp" name="AtkOffsetTxt" xy="267,257" size="40,19" fontSize="12" text=""/>
+    <text id="n2_8qxp" name="DefOffsetTxt" xy="379,335" size="40,19" fontSize="12" text=""/>
+    <text id="n3_8qxp" name="MoveCostTxt" xy="421,253" size="40,19" fontSize="12" text=""/>
+    <image id="n4_8qxp" name="n4" src="ku3ub" fileName="Resources/Homura_stand0005.png" xy="329,201"/>
+  </displayList>
+</component>

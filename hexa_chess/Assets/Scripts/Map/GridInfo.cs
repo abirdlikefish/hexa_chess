@@ -228,4 +228,8 @@ public class GridInfo : MonoBehaviour
     {
         return baseGrid.defOffset + gridState[theOperator].defOffset;
     }
+    public int GetWatchedCnt(MyEnum.TheOperator theOperator)
+    {
+        return gridState[theOperator].WatchedCnt;
+    }
 }

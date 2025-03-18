@@ -27,6 +27,8 @@ public class PlayerRound : GameState
         MyEvent.OnClick_nextBtn += NextBtnClick;
         UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Player , new Vector2Int(10, 10), MyEnum.ArmyType.Tank);
         UnitManager.Instance.RoundBeginOperation(MyEnum.TheOperator.Player);
+        MyEvent.OnPress += ShowGridInfoWin;
+        MyEvent.OnPressEnd += CloseGridInfoWin;
     }
 
     public override void Exit()
@@ -37,6 +39,8 @@ public class PlayerRound : GameState
         MyEvent.OnClick_nextBtn -= NextBtnClick;
         GameManager.instance.IncreaseRoundsCounter();
         MyEvent.SetGlobalInfo(new Vector2(1,1) , new Vector2(1,1) , new Vector2(1,1));
+        MyEvent.OnPress -= ShowGridInfoWin;
+        MyEvent.OnPressEnd -= CloseGridInfoWin;
     }
 
     // public override void PressTestButton()
@@ -47,4 +51,17 @@ public class PlayerRound : GameState
     {
         gameStateMachine.ChangeState(MyEnum.GameState.EnemyRound);
     }
+    
+    private void ShowGridInfoWin(Vector2Int coord)
+    {
+        int atk = MapManager.Instance.GetAtkOffset(MyEnum.TheOperator.Player, coord);
+        int def = MapManager.Instance.GetDefOffset(MyEnum.TheOperator.Player, coord);
+        float moveCost = MapManager.Instance.GetMoveCost(MyEnum.TheOperator.Player, coord);
+        MyEvent.ShowGridInfoWin?.Invoke(atk, def, moveCost);
+    }
+    private void CloseGridInfoWin()
+    {
+        MyEvent.HideGridInfoWin?.Invoke();
+    }
+
 }

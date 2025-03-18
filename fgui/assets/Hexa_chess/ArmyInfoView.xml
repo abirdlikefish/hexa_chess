@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component size="1920,1080" pivot="0.5,0.5" anchor="true">
+<component size="100,100" pivot="0.5,0.5" anchor="true">
   <displayList>
-    <image id="n3_8qxp" name="n3" src="ku3ub" fileName="Resources/Homura_stand0005.png" xy="770,663" size="39,73"/>
-    <image id="n4_8qxp" name="n4" src="ku3ub" fileName="Resources/Homura_stand0005.png" xy="1052,678" size="31,64"/>
-    <text id="n1_8qxp" name="HpTxt" xy="1051,696" size="67,36" fontSize="12" text="aaaaaaaaa&#xA;"/>
-    <text id="n2_8qxp" name="AtkTxt" xy="769,691" size="116,36" fontSize="12" text="bbbbbbbbbbbbbb&#xA;"/>
+    <image id="n3_8qxp" name="n3" src="ku3ub" fileName="Resources/Homura_stand0005.png" xy="-30,129" size="39,73">
+      <relation target="n1_8qxp" sidePair="center-center%,middle-middle%"/>
+    </image>
+    <image id="n4_8qxp" name="n4" src="ku3ub" fileName="Resources/Homura_stand0005.png" xy="130,130" size="31,64">
+      <relation target="n2_8qxp" sidePair="center-center%,middle-middle%"/>
+    </image>
+    <text id="n1_8qxp" name="HpTxt" xy="-49,86" size="67,36" fontSize="12" text="aaaaaaaaa&#xA;">
+      <relation target="" sidePair="center-center%,middle-middle%"/>
+    </text>
+    <text id="n2_8qxp" name="AtkTxt" xy="65,90" size="116,36" fontSize="12" text="bbbbbbbbbbbbbb&#xA;">
+      <relation target="" sidePair="center-center%,middle-middle%"/>
+    </text>
   </displayList>
 </component>

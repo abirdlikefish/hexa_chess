@@ -3,8 +3,6 @@ using UnityEngine.UIElements;
 
 public class PlayerRound_IdleState : PlayerRoundState
 {
-
-    private IUnit DefaultUnit = null;//给一个默认选项
     public PlayerRound_IdleState(PlayerStateMachine _playerStateMachine, MyEnum.PlayerRoundState _playerState):base(_playerStateMachine, _playerState)
     {
     }
@@ -17,7 +15,6 @@ public class PlayerRound_IdleState : PlayerRoundState
         playerStateMachine.selectedGrid = null;
         playerStateMachine.selectedUnit = null;
         MyEvent.OnGridClick_left += SelectGrid;
-        DefaultUnit = UnitManager.Instance.GetAbleUnit(MyEnum.TheOperator.Player);
     }
     
     public override void Exit()
@@ -33,7 +30,7 @@ public class PlayerRound_IdleState : PlayerRoundState
         // Debug.LogWarning("Selected Unit " + coord);
         if(playerStateMachine.selectedUnit == null || playerStateMachine.selectedUnit.TheOperator != MyEnum.TheOperator.Player)
         {
-            Debug.LogWarning(playerStateMachine.selectedUnit == null);
+            // Debug.LogWarning(playerStateMachine.selectedUnit == null);
             playerStateMachine.selectedUnit = null;
             return;
         }
@@ -42,16 +39,5 @@ public class PlayerRound_IdleState : PlayerRoundState
             playerStateMachine.selectedGrid = coord;
             playerStateMachine.ChangeState(MyEnum.PlayerRoundState.WaitInput_WhichAction);
         }
-    }
-
-    private void PressSkipButton()
-    {
-        if (UnitManager.Instance.GetAbleUnit(MyEnum.TheOperator.Player) == null)//没有可操作单位
-        {
-            GameStateMachine.Instance.ChangeState(MyEnum.GameState.EnemyRound);//到敌人回合
-        }
-        /*DefaultUnit.
-        //否则跳转到可以执行的单位
-        DefaultUnit = UnitManager.Instance.GetAbleUnit(MyEnum.TheOperator.Player);*/
     }
 }

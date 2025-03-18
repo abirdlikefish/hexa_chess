@@ -15,6 +15,8 @@ public interface IMapManager
     public bool ChangeOneVirtualField( MyEnum.TheOperator theOperator , Vector2Int coord, bool isAdd);
     public int GetAtkOffset(MyEnum.TheOperator theOperator , Vector2Int coord);
     public int GetDefOffset(MyEnum.TheOperator theOperator , Vector2Int coord);
+    public float GetMoveCost(MyEnum.TheOperator theOperator , Vector2Int coord);
+    public int GetWatchedCnt(MyEnum.TheOperator theOperator , Vector2Int coord);
     public List<Vector2Int> SearchMovableArea(MyEnum.TheOperator theOperator , Vector2Int coord , float moveForce);
     /// <summary>
     /// 从后向前遍历 ， 终点非法则返回null
@@ -23,6 +25,7 @@ public interface IMapManager
     public List<Vector2Int> SearchAttackArea(MyEnum.TheOperator theOperator , Vector2Int coord , float atkRange);
     public IUnit GetAttackedUnit(Vector2Int coord);
     public List<Vector2Int> SetVirtualArea(MyEnum.TheOperator theOperator , Vector2Int coord , int viewRange);
+    public List<Vector2Int> SetVirtualArea_noHeight(MyEnum.TheOperator theOperator , Vector2Int coord , int viewRange);
     public void CleanVirtualArea(MyEnum.TheOperator theOperator , List<Vector2Int> virtualGridList);
     public void CloseMapUI(MyEnum.TheOperator theOperator);
     // public void ChangeGrid(Vector2Int coord, MyEnum.GridType gridType);
@@ -248,7 +251,6 @@ public class MapManager : IMapManager , IMapManager_edit
         ChangeGrid(coord, gridType);
         gridMap[coord.x, coord.y].ChangeVirtualField(MyEnum.TheOperator.Player, true);
     }
-        
     public void InitGridList()
     {
         gridList = new Dictionary<MyEnum.GridType, BaseGrid>();
@@ -355,9 +357,8 @@ public class MapManager : IMapManager , IMapManager_edit
     }
     public int GetAtkOffset(MyEnum.TheOperator theOperator , Vector2Int coord) => gridMap[coord.x, coord.y].GetAtkOffset(theOperator);
     public int GetDefOffset(MyEnum.TheOperator theOperator , Vector2Int coord) => gridMap[coord.x, coord.y].GetDefOffset(theOperator);
-    // {
-    //     return gridMap[coord.x, coord.y].GetAtkOffset(theOperator);
-    // }
+    public float GetMoveCost(MyEnum.TheOperator theOperator , Vector2Int coord) => gridMap[coord.x, coord.y].GetMoveCost(theOperator);
+    public int GetWatchedCnt(MyEnum.TheOperator theOperator , Vector2Int coord) => gridMap[coord.x, coord.y].GetWatchedCnt(theOperator);
     public void HighLightGrid(Vector2Int coord, bool isHighLight)
     {
         if(!IsInMap(coord))
@@ -628,6 +629,16 @@ public class MapManager : IMapManager , IMapManager_edit
                 if(gridMap[nextCoord.x, nextCoord.y].GetHeight() > gridMap[midCoord.x, midCoord.y].GetHeight()) continue;
                 searchQueue.Enqueue(nextCoord);
             }
+        }
+        return virtualGridList;
+    }
+    public List<Vector2Int> SetVirtualArea_noHeight(MyEnum.TheOperator theOperator , Vector2Int coord , int viewRange)
+    {
+        List<Vector2Int> virtualGridList = GetHexGridCoord(viewRange, coord);
+        foreach(Vector2Int midCoord in virtualGridList)
+        {
+            if(!IsInMap(midCoord)) continue;
+            gridMap[midCoord.x, midCoord.y].ChangeVirtualField(theOperator, true);
         }
         return virtualGridList;
     }
