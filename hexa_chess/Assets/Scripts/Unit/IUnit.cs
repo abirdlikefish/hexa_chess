@@ -14,6 +14,13 @@ public interface IUnit
 
     void RecoverHp(int hp);
 
+    void Station();
+
+    void Rest();
+
+    void Dismiss();
+
+    void Skip();
 
     /// <summary>
     /// 信息获取接口
