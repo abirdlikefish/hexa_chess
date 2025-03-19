@@ -6,6 +6,8 @@ using UnityEngine.UIElements;
 public class UnitFactory
 {
     UnitConfigListSO unitConfigListSO;
+
+    public UnitConfigListSO UnitConfigListSO { get{ return unitConfigListSO ;} }
     Dictionary<MyEnum.ArmyType , GameObject> armyPrefabList;
     Dictionary<MyEnum.CityType , GameObject> cityPrefabList;
     Dictionary<MyEnum.TheOperator , Dictionary<MyEnum.UnitType , Transform>> parentGO;
