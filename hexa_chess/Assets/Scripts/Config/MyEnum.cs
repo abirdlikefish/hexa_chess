@@ -89,6 +89,7 @@ public static class MyEnum
     public enum CityType
     {
         None,
+        Home,
     }
 
     public enum UnitStates
