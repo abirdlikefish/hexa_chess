@@ -4,9 +4,7 @@ using UnityEngine;
 
 public interface IUnit  
 {
-    /// <summary>
-    /// 单位玩家输入操作接口
-    /// </summary>
+
     MyEnum.UnitType UnitType{get;}
     void Attack(IUnit other);//传入攻击对象的脚本接口
 
@@ -14,18 +12,7 @@ public interface IUnit
 
     void RecoverHp(int hp);
 
-    void Station();
 
-    void Rest();
-
-    void Dismiss();
-
-    void Skip();
-
-    /// <summary>
-    /// 信息获取接口
-    /// </summary>
-    /// <returns></returns>
 
     
     //单位归属查询
@@ -55,8 +42,6 @@ public interface IUnit
     /// </summary>
     void RoundBeginCheck();
     MyEnum.UnitStates GetStates();
-    MyEnum.OperationBuff GetOperationBuff();
-    // MyEnum.UnitType GetUnitType();
 
     
 }

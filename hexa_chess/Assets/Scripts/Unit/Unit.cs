@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 using System.Linq;
 public class Unit : MonoBehaviour, IUnit
 {
@@ -16,9 +15,9 @@ public class Unit : MonoBehaviour, IUnit
     //操作增益
     public MyEnum.OperationBuff operationBuff;
     //生命值
-    public int maxHp;
+    protected int maxHp;
     public int MaxHp { get { return maxHp; } }
-    private int currentHp;
+    protected int currentHp;
     public virtual int CurrentHP {get {return currentHp;} set{currentHp = value;}}
 
     protected float maxMoveForce;
@@ -60,7 +59,7 @@ public class Unit : MonoBehaviour, IUnit
     }
     protected virtual void InitConfig(MyStruct.UnitConfig iniConfig)
     {
-
+        
     }
     public void Attack(IUnit other)
     {
@@ -76,7 +75,7 @@ public class Unit : MonoBehaviour, IUnit
         }
     }
 
-    public void GetDamage(int damage)
+    public virtual void GetDamage(int damage)
     {
         int finalDamage;
         switch (operationBuff)
@@ -109,8 +108,8 @@ public class Unit : MonoBehaviour, IUnit
 
     public void Dismiss()
     {
-        ReturnCost();
-        RecycleUnit();
+        UnitManager.Instance.ReceiveIncome(theOperator,coin);
+        UnitManager.Instance.RemoveUnit(this);
     }
 
     public void Skip()
@@ -125,23 +124,8 @@ public class Unit : MonoBehaviour, IUnit
     {
         if (CurrentHP <= 0)
         {
-            Debug.Log("单位被摧毁");
             UnitManager.Instance.RemoveUnit(this);
         }
-    }
-
-    //资源返还函数，如何返还存疑
-    private void ReturnCost()
-    {
-        Debug.Log("返还资源！");
-    }
-
-    //回收单位
-    private void RecycleUnit()
-    {
-        Debug.Log("回收单位！");
-        UnitManager.Instance.RemoveUnit(this);
-        //todo:回收对象池
     }
 
     public void RecoverHp(int hp)
@@ -154,25 +138,6 @@ public class Unit : MonoBehaviour, IUnit
         return unitState;
     }
 
-    // public MyEnum.TheOperator GetOperator()
-    // {
-    //     return theOperator;
-    // }
-
-    // public void ReWriteCoord(Vector2Int coord)
-    // {
-    //     coordPosition = coord;
-    // }
-
-    // public Vector2Int GetUnitCoord()
-    // {
-    //     return coordPosition;
-    // } 
-
-    // public float GetActionForce()
-    // {
-    //     return currentAction;
-    // }
 
     //回合结束检定，将单位转入可操作
     public void RoundBeginCheck()
@@ -180,26 +145,6 @@ public class Unit : MonoBehaviour, IUnit
         unitState = MyEnum.UnitStates.Able;
         moveForce = maxMoveForce;
     }
-
-    public MyEnum.OperationBuff GetOperationBuff()
-    {
-        return operationBuff;
-    }
-
-    // public MyEnum.UnitType GetUnitType()
-    // {
-    //     return unitConfig.unitType;
-    // }
-
-    // public int GetUnitHp()
-    // {
-    //     return currentHp;
-    // }
-
-    // public MyStruct.UnitConfig GetUnitConfig()
-    // {
-    //     return unitConfig;
-    // }
 
     public void Dead()
     {
