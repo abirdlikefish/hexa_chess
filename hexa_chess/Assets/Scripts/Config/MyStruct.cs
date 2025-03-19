@@ -33,6 +33,7 @@ public class MyStruct
         /// 能否生成控制区(ZOC)
         /// </summary>
         public bool HaveZOC;
+        public List<MyEnum.ArmyType> creatableArmy;
     }
 
     [Serializable]

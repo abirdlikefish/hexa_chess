@@ -17,8 +17,8 @@ public interface UnitManagerAPI
     // void ResetUnitList();//重置管理器设置
 
     //创建新单位
-    void CreateNewUnit(MyEnum.TheOperator theOperator,Vector2Int coord,MyEnum.ArmyType armyType);
-    void CreateNewUnit(MyEnum.TheOperator theOperator,Vector2Int coord,MyEnum.CityType cityType);
+    bool CreateNewUnit(MyEnum.TheOperator theOperator,Vector2Int coord,MyEnum.ArmyType armyType);
+    bool CreateNewUnit(MyEnum.TheOperator theOperator,Vector2Int coord,MyEnum.CityType cityType);
 
     //根据参数移除单位
     void RemoveUnit(IUnit unit);
@@ -57,9 +57,12 @@ public class UnitManager : UnitManagerAPI
             return _instance;
         }
     }
-
+    //单位表
     private Dictionary<MyEnum.TheOperator , List<Unit>> unitList;
-
+    //费
+    private Dictionary<MyEnum.TheOperator,int> currentCoin;
+    //人口
+    private Dictionary<MyEnum.TheOperator,int> currentPopulation;
     private UnitFactory unitFactory;
 
     public List<IUnit> GetUnitList(MyEnum.TheOperator theOperator)
@@ -71,7 +74,7 @@ public class UnitManager : UnitManagerAPI
         }
         return list;
     }
-
+ 
     //检查是否有未操作单位
     public bool CheckAllOperated(MyEnum.TheOperator theOperator)
     {
@@ -111,6 +114,7 @@ public class UnitManager : UnitManagerAPI
     public void RoundBeginOperation(MyEnum.TheOperator theOperator)
     {
         // Debug.LogWarning("回合开始操作");
+        currentCoin[theOperator] += GameManager.instance.ReplyCost;
         foreach (Unit unit in unitList[theOperator])
         {
             unit.RoundBeginCheck();
@@ -121,7 +125,7 @@ public class UnitManager : UnitManagerAPI
     {
         foreach (var item in unitList[theOperator])
         {
-            switch(item.GetOperationBuff())
+            switch(item.operationBuff)
             {
             case MyEnum.OperationBuff.Rest: 
                 item.RecoverHp(2);
@@ -134,27 +138,41 @@ public class UnitManager : UnitManagerAPI
             }
         }
     }
-    public void CreateNewUnit(MyEnum.TheOperator theOperator , Vector2Int coord,MyEnum.ArmyType armyType)
+    public bool CreateNewUnit(MyEnum.TheOperator theOperator , Vector2Int coord,MyEnum.ArmyType armyType)
     {
-        // Debug.Log("加载一个单位");
-        Unit unit = unitFactory.LoadUnit(theOperator,coord,armyType);
-        //单位加入管理器
-        unitList[theOperator].Add(unit);
-        // MapManager.Instance.AddUnit(coord,unit);   
+        MyStruct.UnitConfig unitConfig= unitFactory.UnitConfigListSO.GetUnitConfig(armyType);
+        if(CheckCoinConsumption(theOperator,unitConfig.Coin) && CheckPopulation(theOperator,unitConfig.Occupation) )
+            {
+                // Debug.Log("加载一个单位");
+                Unit unit = unitFactory.LoadUnit(theOperator,coord,armyType);
+                //单位加入管理器
+                unitList[theOperator].Add(unit);
+                currentPopulation[theOperator]++;
+                // MapManager.Instance.AddUnit(coord,unit);   
+                return true;
+            }
+        else    return false;
     }
-    public void CreateNewUnit(MyEnum.TheOperator theOperator , Vector2Int coord,MyEnum.CityType cityType)
+    public bool CreateNewUnit(MyEnum.TheOperator theOperator , Vector2Int coord,MyEnum.CityType cityType)
     {
-        // Debug.Log("加载一个单位");
-        Unit unit = unitFactory.LoadUnit(theOperator,coord,cityType);
-        //单位加入管理器
-        unitList[theOperator].Add(unit);
+        if(CheckCoinConsumption(theOperator,
+            unitFactory.UnitConfigListSO.GetUnitConfig(cityType).Coin) )
+            {
+                // Debug.Log("加载一个单位");
+                Unit unit = unitFactory.LoadUnit(theOperator,coord,cityType);
+                //单位加入管理器
+                unitList[theOperator].Add(unit);
+                return true;
+            }
         // MapManager.Instance.AddUnit(coord,unit);   
+        else return false;
     }
 
     public void RemoveUnit(IUnit midUnit)
     {
         Unit unit = midUnit as Unit;
         unitList[unit.TheOperator].Remove(unit);
+        if(unit.UnitType == MyEnum.UnitType.Army)   currentPopulation[unit.TheOperator]--;
         unit.Dead();
         return;
     }
@@ -178,5 +196,41 @@ public class UnitManager : UnitManagerAPI
         unit.virtualArea.Clear(); 
     }
 
+    //查费
+    public int GetCoin(MyEnum.TheOperator theOperator)
+    {
+        return currentCoin[theOperator];
+    }
+
+    public int GetPopulation(MyEnum.TheOperator theOperator)
+    {
+        return currentPopulation[theOperator];
+    }
+
+    private bool CheckCoinConsumption(MyEnum.TheOperator theOperator,int coin)
+    {
+        if(currentCoin[theOperator] >= coin)
+        {
+            currentCoin[theOperator] -= coin;
+            return true;
+        }
+        else    return false;
+
+    }
+
+    private bool CheckPopulation(MyEnum.TheOperator theOperator,int occupation)
+    {
+        if(currentPopulation[theOperator] + occupation <= GameManager.instance.maxUnitNumber)
+        {
+            currentPopulation[theOperator]++;
+            return true;
+        }
+        else return false;
+    }
+
+    public void ReceiveIncome(MyEnum.TheOperator theOperator,int coin)
+    {
+        currentCoin[theOperator] += coin;
+    }
 }
 

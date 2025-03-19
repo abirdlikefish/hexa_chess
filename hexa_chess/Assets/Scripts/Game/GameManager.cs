@@ -8,11 +8,23 @@ class GameManager : MonoBehaviour
     public GlobalSettingSO globalSettingSO;
     public static GameManager instance = null;
     public GameStateMachine gameStateMachine;
+    /// <summary>
+    /// 每回合回复的金币数量
+    /// </summary>
+    public int ReplyCost = 0;
+    private int CurrentCost;
 
     /// <summary>
     /// 记录回合数
     /// </summary>
     private int roundsCounter;
+
+    /// <summary>
+    /// 单位数量上限
+    /// </summary>
+    public int maxUnitNumber = 0;
+    
+    public int CurrentRoundsCounter() => roundsCounter;
 
 
     [Header("Game Data")] [SerializeField] private int PlayerHP;
@@ -27,6 +39,8 @@ class GameManager : MonoBehaviour
         EnemyHP = 10;
         roundsCounter = 0;
         globalSettingSO = Resources.Load<GlobalSettingSO>("SO/GlobalSettingSO");
+        CurrentCost = 0;
+        maxUnitNumber = 10;
     }
 
     private void Awake()
@@ -66,6 +80,7 @@ class GameManager : MonoBehaviour
     /// </summary>
     public bool JudgeShouldEndGame()
     {
+        //todo: 这边要改一下，要把Base的血量同步过来
         if (PlayerHP <= 0)
         {
             // gameStateMachine.ChangeState(gameStateMachine.GameLose);
@@ -92,6 +107,8 @@ class GameManager : MonoBehaviour
     {
         roundsCounter++;
     }
+    
+    
 
     // public void ChangeGameState()
     // {
