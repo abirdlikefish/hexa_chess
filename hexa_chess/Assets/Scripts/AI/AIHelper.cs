@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using static MyEnum;
 
@@ -13,6 +11,18 @@ public class AIHelper
         {
             Home,
             Unit,
+            None
+        }
+
+        public enum AIAction
+        {
+            Retreat,
+            Attack,
+            Garrison,
+            Rest,
+            Move,
+            MoveAttack,
+            RetreatRest,
             None
         }
     }
@@ -49,12 +59,15 @@ public class AIHelper
 
     public float GetAttackValue(Vector2Int pos)
     {
-        MapManager.Instance.GetUnit(pos, UnitType.Army);
-        MapManager.Instance.GetUnit(pos, UnitType.City);
-        return 0;
+        IUnit armyUnit = MapManager.Instance.GetUnit(pos, UnitType.Army);
+        IUnit cityUnit = MapManager.Instance.GetUnit(pos, UnitType.City);
+        return cityUnit != null ? AIConst.AttackValues[AIEnum.AttackValueType.Home] 
+            : (armyUnit != null ? AIConst.AttackValues[AIEnum.AttackValueType.Unit] 
+            : AIConst.AttackValues[AIEnum.AttackValueType.None]);
     }
 
-    public float GetHomeDistanceDelta()
+    // todo: implement this function
+    public float GetHomeDistanceDelta(Vector2Int coord, Vector2Int pos)
     {
         float delta = 0;
 
@@ -97,18 +110,9 @@ public class AIHelper
         return res == 1000 ? -1 : res;
     }
 
-    // todo: implement this enemys
     public float GetEnemyNumCanAttackPos(Vector2Int pos)
     {
-        float res = 0;
-        List<IUnit> enemys = UnitManager.Instance.GetUnitList(MyEnum.TheOperator.Player);
-        foreach (var enemy in enemys)
-        {
-            if (MapManager.GetMinCost(enemy.Coord - pos) <= enemy.AttackRadius)
-            {
-                res++;
-            }
-        }
+        float res = MapManager.Instance.GetWatchedCnt(MyEnum.TheOperator.Player,pos);
         return res;
     }
 
@@ -117,8 +121,18 @@ public class AIHelper
         return MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Enemy, unit.Coord, unit.MoveForce);
     }
 
+    public List<Vector2Int> GetReachablePos(IUnit unit,float moveForce)
+    {
+        return MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Enemy, unit.Coord, moveForce);
+    }
+
     internal List<Vector2Int> GetAttackablePos(IUnit unit)
     {
         return MapManager.Instance.SearchAttackArea(MyEnum.TheOperator.Enemy, unit.Coord, unit.AttackRadius);
+    }
+
+    internal List<Vector2Int> GetAttackablePos(IUnit unit, Vector2Int pos)
+    {
+        return MapManager.Instance.SearchAttackArea(MyEnum.TheOperator.Enemy, pos, unit.AttackRadius);
     }
 }
