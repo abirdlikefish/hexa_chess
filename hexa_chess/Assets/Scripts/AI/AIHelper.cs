@@ -66,11 +66,19 @@ public class AIHelper
             : AIConst.AttackValues[AIEnum.AttackValueType.None]);
     }
 
-    // todo: implement this function
     public float GetHomeDistanceDelta(Vector2Int coord, Vector2Int pos)
     {
         float delta = 0;
-
+        var res = UnitManager.Instance.GetCity(TheOperator.Enemy,CityType.Home);
+        if(res.Count == 0)
+        {
+            Debug.LogError("敌方没有城市");
+            return 0;
+        }
+        Vector2Int homePos = res[0].Coord;
+        float distance = MapManager.GetMinCost(homePos - coord);
+        float newDistance = MapManager.GetMinCost(homePos - pos);
+        delta = distance - newDistance;
         return delta;
     }
 

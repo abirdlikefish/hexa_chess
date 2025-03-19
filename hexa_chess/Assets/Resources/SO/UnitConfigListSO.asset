@@ -27,6 +27,7 @@ MonoBehaviour:
     Coin: 20
     Occupation: 2
     HaveZOC: 1
+    creatableArmy: 
   - prefabPath: Prefabs/Tank
     unitType: 1
     armyType: 2
@@ -41,6 +42,7 @@ MonoBehaviour:
     Coin: 10
     Occupation: 1
     HaveZOC: 0
+    creatableArmy: 
   - prefabPath: Prefabs/Tank
     unitType: 1
     armyType: 1
@@ -55,4 +57,20 @@ MonoBehaviour:
     Coin: 5
     Occupation: 1
     HaveZOC: 0
-  cityConfigList: []
+    creatableArmy: 
+  cityConfigList:
+  - prefabPath: Prefabs/Home
+    unitType: 2
+    armyType: 0
+    cityType: 1
+    MaxHp: 10
+    Action: 0
+    Atk: 0
+    Def: 0
+    AttackRadius: 0
+    viewRange: 0
+    movingSpeed: 0
+    Coin: 0
+    Occupation: 0
+    HaveZOC: 1
+    creatableArmy: 010000000200000003000000

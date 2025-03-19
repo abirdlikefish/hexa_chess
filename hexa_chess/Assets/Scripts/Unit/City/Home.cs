@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Infantry : BaseArmy
+public class Home : BaseCity
 {
 
 }

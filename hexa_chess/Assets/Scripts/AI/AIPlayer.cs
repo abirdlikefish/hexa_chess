@@ -40,13 +40,14 @@ public class AIPlayer
     /// </summary>
     public void Turn(int round)
     {
-        Debug.Log("AIPlayer Turn");
-        //CalculateOperation();
+        Debug.Log($"AIPlayer Turn: Round {round}");
+        CalculateOperation();
         EndTurn();
     }
 
     private void CalculateOperation()
     {
+        Debug.Log($"$AIPlayer CalculateOperation Start:{_units.Count}");
         foreach (var unit in _units)
         {
             CalculateOperation(unit);
@@ -55,6 +56,11 @@ public class AIPlayer
 
     private void CalculateOperation(IUnit unit)
     {
+        if (unit == null || unit is ICity)
+        {
+            return;
+        }
+
         float homeDisDelta = 0;
         float safetyDelta = AIHelper.Instance.SafetyDelta();
         float damage = AIHelper.Instance.GetDamage(unit);
