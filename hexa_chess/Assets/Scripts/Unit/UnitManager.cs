@@ -17,7 +17,7 @@ public interface UnitManagerAPI
     // void ResetUnitList();//重置管理器设置
 
     //创建新单位
-    void CreateNewUnit(MyEnum.TheOperator theOperator,Vector2Int coord,MyEnum.ArmyType armyType);
+    bool CreateNewUnit(MyEnum.TheOperator theOperator,Vector2Int coord,MyEnum.ArmyType armyType);
     void CreateNewUnit(MyEnum.TheOperator theOperator,Vector2Int coord,MyEnum.CityType cityType);
 
     //根据参数移除单位
@@ -137,15 +137,19 @@ public class UnitManager : UnitManagerAPI
             }
         }
     }
-    public void CreateNewUnit(MyEnum.TheOperator theOperator , Vector2Int coord,MyEnum.ArmyType armyType)
+    public bool CreateNewUnit(MyEnum.TheOperator theOperator , Vector2Int coord,MyEnum.ArmyType armyType)
     {
-        
-        // Debug.Log("加载一个单位");
-        Unit unit = unitFactory.LoadUnit(theOperator,coord,armyType);
-        //单位加入管理器
-        unitList[theOperator].Add(unit);
-        currentPopulation[theOperator]++;
-        // MapManager.Instance.AddUnit(coord,unit);   
+        if(currentPopulation[theOperator] + 1 <= GameManager.instance.maxUnitNumber)
+        {
+            // Debug.Log("加载一个单位");
+            Unit unit = unitFactory.LoadUnit(theOperator,coord,armyType);
+            //单位加入管理器
+            unitList[theOperator].Add(unit);
+            currentPopulation[theOperator]++;
+            // MapManager.Instance.AddUnit(coord,unit);   
+            return true;
+        }
+        else return false;
     }
     public void CreateNewUnit(MyEnum.TheOperator theOperator , Vector2Int coord,MyEnum.CityType cityType)
     {
