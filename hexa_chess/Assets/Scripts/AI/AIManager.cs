@@ -32,6 +32,7 @@ public class AIManager : MonoBehaviour,IAIManager
         if (instance == null)
         {
             instance = this;
+            OnInit();
         }
         else
             Debug.LogError("AIManager has been created");
