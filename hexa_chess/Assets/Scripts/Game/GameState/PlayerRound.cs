@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class PlayerRound : GameState
 {
     public PlayerStateMachine playerRoundStateMachine;
+    public IUnit DefaultSelectedUnit = null;
 
     public PlayerRound(GameStateMachine _gameStateMachine, MyEnum.GameState _whichState) : base(_gameStateMachine,
         _whichState)
@@ -27,6 +28,10 @@ public class PlayerRound : GameState
         MyEvent.OnClick_nextBtn += NextBtnClick;
         UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Player , new Vector2Int(10, 10), MyEnum.ArmyType.Tank);
         UnitManager.Instance.RoundBeginOperation(MyEnum.TheOperator.Player);
+        MyEvent.OnPress += ShowGridInfoWin;
+        MyEvent.OnPressEnd += CloseGridInfoWin;
+
+        DefaultSelectedUnit = UnitManager.Instance.GetAbleUnit(MyEnum.TheOperator.Player);
     }
 
     public override void Exit()
@@ -37,6 +42,8 @@ public class PlayerRound : GameState
         MyEvent.OnClick_nextBtn -= NextBtnClick;
         GameManager.instance.IncreaseRoundsCounter();
         MyEvent.SetGlobalInfo(new Vector2(1,1) , new Vector2(1,1) , new Vector2(1,1));
+        MyEvent.OnPress -= ShowGridInfoWin;
+        MyEvent.OnPressEnd -= CloseGridInfoWin;
     }
 
     // public override void PressTestButton()
@@ -45,6 +52,30 @@ public class PlayerRound : GameState
     // }
     private void NextBtnClick()
     {
-        gameStateMachine.ChangeState(MyEnum.GameState.EnemyRound);
+        //todo:这里要执行Skip
+        // DefaultSelectedUnit?.Skip();
+        DefaultSelectedUnit = UnitManager.Instance.GetAbleUnit(MyEnum.TheOperator.Player);
+        if (DefaultSelectedUnit != null)
+        {
+            playerRoundStateMachine.selectedUnit = DefaultSelectedUnit;
+            playerRoundStateMachine.ChangeState(MyEnum.PlayerRoundState.WaitInput_WhichAction);
+        }
+        else
+        {
+            gameStateMachine.ChangeState(MyEnum.GameState.EnemyRound);
+        }
     }
+    
+    private void ShowGridInfoWin(Vector2Int coord)
+    {
+        int atk = MapManager.Instance.GetAtkOffset(MyEnum.TheOperator.Player, coord);
+        int def = MapManager.Instance.GetDefOffset(MyEnum.TheOperator.Player, coord);
+        float moveCost = MapManager.Instance.GetMoveCost(MyEnum.TheOperator.Player, coord);
+        MyEvent.ShowGridInfoWin?.Invoke(atk, def, moveCost);
+    }
+    private void CloseGridInfoWin()
+    {
+        MyEvent.HideGridInfoWin?.Invoke();
+    }
+
 }

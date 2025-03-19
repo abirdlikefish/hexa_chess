@@ -5,6 +5,7 @@ using UnityEngine;
 
 public static class MyEvent
 {
+    public static Action UIUpdate;
     // ui -> game manager
     public static Action<Vector2Int?> OnGridClick_left;
     public static Action<Vector2Int?> OnGridClick_right;
@@ -15,10 +16,15 @@ public static class MyEvent
     public static Action OnClick_stationBtn;
     public static Action OnClick_dismissBtn;
     public static Action OnClick_skipBtn;
+
+    public static Action<Vector2Int> OnPress;
+    public static Action OnPressEnd;
     
     // game manager -> ui
     public static Action<IUnit> OpenUnitUI;
     public static Action<Vector2, Vector2, Vector2> SetGlobalInfo;
+    public static Action<int , int , float> ShowGridInfoWin;
+    public static Action HideGridInfoWin;
 
     public static Action<Vector3> CameraMove;
     public static Action<Vector3> DragScreen;
@@ -27,4 +33,13 @@ public static class MyEvent
     /// 当移动，攻击等的动画结束之后调用
     /// </summary>
     public static Action AnimaEnd;
+
+    /// <summary>
+    /// AI回合开始
+    /// </summary>
+    public static Action<int> OnEnemyRoundBegin;
+    /// <summary>
+    /// AI回合结束
+    /// </summary>
+    public static Action EnemyRoundEnd;
 }

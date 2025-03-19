@@ -17,18 +17,19 @@ public class Unit : MonoBehaviour, IUnit
     public MyEnum.OperationBuff operationBuff;
     //生命值
     public int maxHp;
+    public int MaxHp { get { return maxHp; } }
     private int currentHp;
-    public int CurrentHP {get {return currentHp;} set{currentHp = value;}}
+    public virtual int CurrentHP {get {return currentHp;} set{currentHp = value;}}
 
     protected float maxMoveForce;
     private float moveForce;//当前行动力
     public float MoveForce {get {return moveForce;} set{moveForce = value;}}
 
     protected int atk;
-    public int Atk{get {return atk;}}
+    public int Atk{get {return atk + MapManager.Instance.GetAtkOffset(TheOperator , Coord);}}
 
     protected int def;
-    public int Def{get {return def;}}
+    public int Def{get {return def + MapManager.Instance.GetDefOffset(TheOperator , Coord);}}
 
     protected int attackRadius;
     public int AttackRadius{get {return attackRadius;}}
@@ -47,7 +48,7 @@ public class Unit : MonoBehaviour, IUnit
     public int ViewRange{get {return viewRange;}set{viewRange = value;}}
     public List<Vector2Int> virtualArea{get;set;}
     private Vector2Int coordPosition;
-    public Vector2Int Coord {get {return coordPosition;} set{coordPosition = value; transform.position = MapManager.Coord_To_Pos(value);}}
+    public virtual Vector2Int Coord {get {return coordPosition;} set{coordPosition = value; transform.position = MapManager.Coord_To_Pos(value);}}
     public void Init(MyEnum.TheOperator theOperator , MyStruct.UnitConfig config , Vector2Int coord)
     {
         // unitConfig = iniConfig;
@@ -122,7 +123,7 @@ public class Unit : MonoBehaviour, IUnit
     //摧毁检定
     private void DestroyCheck()
     {
-        if (currentHp <= 0)
+        if (CurrentHP <= 0)
         {
             Debug.Log("单位被摧毁");
             UnitManager.Instance.RemoveUnit(this);
@@ -145,7 +146,7 @@ public class Unit : MonoBehaviour, IUnit
 
     public void RecoverHp(int hp)
     {
-        currentHp += hp;
+        CurrentHP += hp;
     }
 
     public MyEnum.UnitStates GetStates()

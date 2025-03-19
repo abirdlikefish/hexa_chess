@@ -34,19 +34,27 @@ public class PlayView : IFguiView
         InitEvent();
         return this;
     }
-    public void Show()
+    public void ShowView()
     {
         GRoot.inst.AddChild(playView);
         MyEvent.OpenUnitUI += OpenUnitUI;
         MyEvent.SetGlobalInfo += SetGlobalInfo;
         Stage.inst.onMouseWheel.Add(OnMouseWheel);
+        foreach (var item in fguiOtherComs)
+        {
+            item.Show();
+        }
     }
-    public void Hide()
+    public void HideView()
     {
         GRoot.inst.RemoveChild(playView);
         MyEvent.OpenUnitUI -= OpenUnitUI;
         MyEvent.SetGlobalInfo -= SetGlobalInfo;
         Stage.inst.onMouseWheel.Remove(OnMouseWheel);
+        foreach (var item in fguiOtherComs)
+        {
+            item.Hide();
+        }
     }
     private void InitComponent()
     {

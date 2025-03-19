@@ -25,6 +25,8 @@ public class UIManager
         GRoot.inst.SetContentScaleFactor(1920, 1080);
 
         instance.InitView();
+        instance.InitWin();
+         new GameObject("UIUpdate").AddComponent<UIUpdate>();
     }
     public void InitView()
     {
@@ -33,15 +35,43 @@ public class UIManager
         uiViewList.Add(MyEnum.UIView.MapEditView, new MapEditView().Init());
         currentView = MyEnum.UIView.Empty;
     }
+    public void InitWin()
+    {
+        // Debug.LogWarning("InitWin");
+        uiWinList = new Dictionary<MyEnum.UIWin, IFguiWin>();
+        uiWinList.Add(MyEnum.UIWin.GridInfoWin , new GridInfoWin());
+    }
     private Dictionary<MyEnum.UIView , IFguiView> uiViewList;
+    private Dictionary<MyEnum.UIWin , IFguiWin> uiWinList;
     private MyEnum.UIView currentView;
     public void ShowView(MyEnum.UIView uiView)
     {
         if(currentView == uiView) return;
         if (currentView != MyEnum.UIView.Empty)
         {
-            uiViewList[currentView].Hide();
+            uiViewList[currentView].HideView();
         }
-        uiViewList[uiView].Show();
+        uiViewList[uiView].ShowView();
+    }
+    public void ShowWin(MyEnum.UIWin uiWin , bool isShow)
+    {
+        if(isShow)
+        {
+            uiWinList[uiWin].ShowWin();
+        }
+        else
+        {
+            uiWinList[uiWin].HideWin();
+        }
+    }
+    
+}
+
+public class UIUpdate:MonoBehaviour
+{
+    // public Action UpdateAction;
+    void Update()
+    {
+        MyEvent.UIUpdate?.Invoke();
     }
 }

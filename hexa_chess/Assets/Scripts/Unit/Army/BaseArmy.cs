@@ -2,13 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using FairyGUI;
 
 public class BaseArmy : Unit , IArmy
 {
     private MyEnum.ArmyType armyType;
     public MyEnum.ArmyType ArmyType => armyType;
     private float movingSpeed;
-    public float MovingSpeed{get {return movingSpeed;}}
+    public float MovingSpeed{get {return movingSpeed;}}    
+    // public override Vector2Int Coord {get {return base.Coord;} set{coordPosition = value; transform.position = MapManager.Coord_To_Pos(value);}}
+    public override int CurrentHP {get {return base.CurrentHP;} set{base.CurrentHP = value;RefreshArmyInfoView();}}
+    public override Vector2Int Coord {get {return base.Coord;} set{base.Coord = value;RefreshArmyInfoView();}}
+   
+    protected GTextField armyInfoView_hp = null;
+    protected GTextField armyInfoView_atk = null;
     public void Move(List<Vector2Int> path,float cost)
     {
         if (unitState == MyEnum.UnitStates.Able)
@@ -51,6 +58,21 @@ public class BaseArmy : Unit , IArmy
         coin = iniConfig.Coin;
         occupation = iniConfig.Occupation;
         haveZOC = iniConfig.HaveZOC;
+    }
+
+    protected void RefreshArmyInfoView()
+    {
+        if(armyInfoView_hp == null)
+        {
+            UIPanel uiPanel = transform.Find("ArmyInfoView").GetComponent<UIPanel>();
+            GComponent armyInfoView = uiPanel.ui;
+            if(armyInfoView == null)
+                Debug.LogError("ArmyInfoView is null");
+            armyInfoView_hp = armyInfoView.GetChild("HpTxt").asTextField;
+            armyInfoView_atk = armyInfoView.GetChild("AtkTxt").asTextField;
+        }
+        armyInfoView_hp.text = CurrentHP.ToString();
+        armyInfoView_atk.text = Atk.ToString();
     }
     
 }

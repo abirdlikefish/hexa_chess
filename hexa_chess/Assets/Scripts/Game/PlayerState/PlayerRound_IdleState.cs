@@ -30,7 +30,7 @@ public class PlayerRound_IdleState : PlayerRoundState
         // Debug.LogWarning("Selected Unit " + coord);
         if(playerStateMachine.selectedUnit == null || playerStateMachine.selectedUnit.TheOperator != MyEnum.TheOperator.Player)
         {
-            Debug.LogWarning(playerStateMachine.selectedUnit == null);
+            // Debug.LogWarning(playerStateMachine.selectedUnit == null);
             playerStateMachine.selectedUnit = null;
             return;
         }
@@ -40,4 +40,5 @@ public class PlayerRound_IdleState : PlayerRoundState
             playerStateMachine.ChangeState(MyEnum.PlayerRoundState.WaitInput_WhichAction);
         }
     }
+    
 }

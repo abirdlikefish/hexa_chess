@@ -7,11 +7,23 @@ class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
     public GameStateMachine gameStateMachine;
+    /// <summary>
+    /// 每回合回复的金币数量
+    /// </summary>
+    public int ReplyCost = 0;
+    private int CurrentCost;
 
     /// <summary>
     /// 记录回合数
     /// </summary>
     private int roundsCounter;
+
+    /// <summary>
+    /// 单位数量上限
+    /// </summary>
+    public int maxUnitNumber = 0;
+    
+    public int CurrentRoundsCounter() => roundsCounter;
 
 
     [Header("Game Data")] [SerializeField] private int PlayerHP;
@@ -25,6 +37,8 @@ class GameManager : MonoBehaviour
         PlayerHP = 10;
         EnemyHP = 10;
         roundsCounter = 0;
+        CurrentCost = 0;
+        maxUnitNumber = 10;
     }
 
     private void Awake()
@@ -49,6 +63,7 @@ class GameManager : MonoBehaviour
     {
         MapManager.Instance.CreateMap(10);
         UIManager.Instance.ShowView(MyEnum.UIView.PlayView);
+        UIManager.Instance.ShowWin(MyEnum.UIWin.GridInfoWin, true);
 
         gameStateMachine.Initialize();
         gameStateMachine.ChangeState(MyEnum.GameState.PlayerRound);
@@ -89,6 +104,8 @@ class GameManager : MonoBehaviour
     {
         roundsCounter++;
     }
+    
+    
 
     // public void ChangeGameState()
     // {

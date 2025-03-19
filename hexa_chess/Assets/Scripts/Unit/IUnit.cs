@@ -36,15 +36,18 @@ public interface IUnit
     // float GetActionForce();
     Vector2Int Coord{get;}
     MyEnum.TheOperator TheOperator{get;}
+    int MaxHp { get; }
+    int Atk { get; }
     int CurrentHP{get;}
     float MoveForce{get;}
 
     // int GetUnitHp();
 
-    // MyStruct.UnitConfig GetUnitConfig();
+    //MyStruct.UnitConfig GetUnitConfig();
 
     bool HaveZOC{get;}
     int ViewRange{get;}
+    int AttackRadius { get; }
     List<Vector2Int> virtualArea{get;set;}
 
     /// <summary>
