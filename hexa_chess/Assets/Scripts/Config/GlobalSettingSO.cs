@@ -9,4 +9,6 @@ public class GlobalSettingSO : ScriptableObject
     public int mapSize;
     public float showGridInfoWin_preTime;
     public float showGridInfoWin_minMoveDis;
+    public int InitialCoin;
+    public int InitialPopulation;
 }

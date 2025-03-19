@@ -41,8 +41,21 @@ public class UnitManager : UnitManagerAPI
     private UnitManager()
     {
         ResetUnitList();
+        currentCoin = new Dictionary<MyEnum.TheOperator, int>();
+        currentPopulation = new Dictionary<MyEnum.TheOperator, int>();
+        maxPopulation = new Dictionary<MyEnum.TheOperator, int>();
         unitFactory = new UnitFactory();
         DOTween.Init();
+
+        InitUnitManager(MyEnum.TheOperator.Player);
+        InitUnitManager(MyEnum.TheOperator.Enemy);
+    }
+
+    public void InitUnitManager(MyEnum.TheOperator theOperator)
+    {
+        currentCoin.Add(theOperator,GameManager.instance.globalSettingSO.InitialCoin);
+        currentPopulation.Add(theOperator,0);
+        maxPopulation.Add(theOperator,GameManager.instance.globalSettingSO.InitialPopulation);
     }
 
     //单例访问模式
@@ -62,6 +75,7 @@ public class UnitManager : UnitManagerAPI
     //费
     private Dictionary<MyEnum.TheOperator,int> currentCoin;
     //人口
+    private Dictionary<MyEnum.TheOperator,int> maxPopulation;
     private Dictionary<MyEnum.TheOperator,int> currentPopulation;
     private UnitFactory unitFactory;
 
@@ -143,27 +157,27 @@ public class UnitManager : UnitManagerAPI
         MyStruct.UnitConfig unitConfig= unitFactory.UnitConfigListSO.GetUnitConfig(armyType);
         if(CheckCoinConsumption(theOperator,unitConfig.Coin) && CheckPopulation(theOperator,unitConfig.Occupation) )
             {
+                CostCoinAndPopulation(theOperator,unitConfig.Coin,unitConfig.Occupation);
                 // Debug.Log("加载一个单位");
                 Unit unit = unitFactory.LoadUnit(theOperator,coord,armyType);
                 //单位加入管理器
                 unitList[theOperator].Add(unit);
                 currentPopulation[theOperator]++;
-                // MapManager.Instance.AddUnit(coord,unit);   
+                // MapManager.Instance.AddUnit(coord,unit);
                 return true;
             }
         else    return false;
     }
     public bool CreateNewUnit(MyEnum.TheOperator theOperator , Vector2Int coord,MyEnum.CityType cityType)
     {
-        if(CheckCoinConsumption(theOperator,
-            unitFactory.UnitConfigListSO.GetUnitConfig(cityType).Coin) )
-            {
-                // Debug.Log("加载一个单位");
-                Unit unit = unitFactory.LoadUnit(theOperator,coord,cityType);
-                //单位加入管理器
-                unitList[theOperator].Add(unit);
-                return true;
-            }
+        if(CheckCoinConsumption(theOperator,unitFactory.UnitConfigListSO.GetUnitConfig(cityType).Coin) )
+        {
+            // Debug.Log("加载一个单位");
+            Unit unit = unitFactory.LoadUnit(theOperator,coord,cityType);
+            //单位加入管理器
+            unitList[theOperator].Add(unit);
+            return true;
+        }
         // MapManager.Instance.AddUnit(coord,unit);   
         else return false;
     }
@@ -211,23 +225,36 @@ public class UnitManager : UnitManagerAPI
     {
         if(currentCoin[theOperator] >= coin)
         {
-            currentCoin[theOperator] -= coin;
+            // currentCoin[theOperator] -= coin;
             return true;
         }
-        else    return false;
+        else
+        {
+            Debug.Log("金币不足");
+            return false;
+        }
 
     }
 
     private bool CheckPopulation(MyEnum.TheOperator theOperator,int occupation)
     {
-        if(currentPopulation[theOperator] + occupation <= GameManager.instance.maxUnitNumber)
+        if(currentPopulation[theOperator] + occupation <= maxPopulation[theOperator])
         {
-            currentPopulation[theOperator]++;
+            // currentPopulation[theOperator]+=occupation;
             return true;
         }
-        else return false;
+        else 
+        {
+            Debug.Log("人口不足");
+            return false;
+        }
     }
 
+    private void CostCoinAndPopulation(MyEnum.TheOperator theOperator,int coin , int occupation)
+    {
+        currentCoin[theOperator] -= coin;
+        currentPopulation[theOperator] += occupation;
+    }
     public void ReceiveIncome(MyEnum.TheOperator theOperator,int coin)
     {
         currentCoin[theOperator] += coin;
