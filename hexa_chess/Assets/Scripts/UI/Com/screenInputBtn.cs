@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ScreenInputBtn : IFguiCom
 {
+    private bool isShow = false;
     private GComponent parent;
     private GButton screenInputBtn;
     public IFguiCom Create(GComponent parent)
@@ -19,6 +20,10 @@ public class ScreenInputBtn : IFguiCom
     {
         screenInputBtn.onClick.Remove(TrySelectGrid);
         screenInputBtn.onRightClick.Remove(TrySelectGrid_right);
+        if(isShow)
+        {
+            Hide();
+        }
     }
 
     private void InitEvent()
@@ -28,15 +33,17 @@ public class ScreenInputBtn : IFguiCom
         screenInputBtn.onTouchMove.Add(DragScreen);
         screenInputBtn.onTouchBegin.Add(TouchBegin);
         screenInputBtn.onTouchEnd.Add(TouchEnd);
-        
     }
     public void Show()
     {
+        isShow = true;
         MyEvent.UIUpdate += Update;
     }
 
     public void Hide()
     {
+        if(!isShow) return;
+        isShow = false;
         MyEvent.UIUpdate -= Update;
     }
 
@@ -85,7 +92,7 @@ public class ScreenInputBtn : IFguiCom
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, -Camera.main.transform.position.z));
         MyEvent.DragScreen?.Invoke(worldPosition - lastDragPos);
         lastScreenPos = screenPosition;
-        if(Vector2.Distance(beginScreenPos , screenPosition) > 0.1f)
+        if(Vector2.Distance(beginScreenPos , screenPosition) > GameManager.instance.globalSettingSO.showGridInfoWin_minMoveDis)
         {
             isMoved = true;
         }
@@ -106,7 +113,7 @@ public class ScreenInputBtn : IFguiCom
     }
     private void Update()
     {
-        if(isMoved == false && isPressed == false && Time.time - pressTime > 0.5f)
+        if(isMoved == false && isPressed == false && Time.time - pressTime > GameManager.instance.globalSettingSO.showGridInfoWin_preTime)
         {
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(beginScreenPos.x, beginScreenPos.y, -Camera.main.transform.position.z));
             Vector2Int coord = MapManager.Pos_To_Coord(worldPosition);

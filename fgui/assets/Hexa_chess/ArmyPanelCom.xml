@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="447,405">
+  <displayList>
+    <loader id="n0_lr78" name="n0" xy="4,68" size="432,334" group="n12_lr78" url="ui://wcwip4ahlr78j" useResize="true" autoSize="true"/>
+    <text id="n1_lr78" name="AtkTxt" xy="112,141" size="48,52" group="n12_lr78" fontSize="12" autoSize="none" text=""/>
+    <text id="n2_lr78" name="HpTxt" xy="104,284" size="51,40" group="n12_lr78" fontSize="12" autoSize="none" text=""/>
+    <text id="n3_lr78" name="DefTxt" xy="106,194" size="43,41" group="n12_lr78" fontSize="12" autoSize="none" text="" input="true"/>
+    <text id="n4_lr78" name="MoveForceTxt" xy="98,329" size="47,45" group="n12_lr78" fontSize="12" autoSize="none" text="" input="true"/>
+    <component id="n5_lr78" name="AttackBtn" src="pdzn3" fileName="Btn.xml" xy="14,6" size="65,65" group="n12_lr78">
+      <relation target="n0_lr78" sidePair="left-left,bottom-top"/>
+      <Button icon="ui://wcwip4ahlr78g"/>
+    </component>
+    <component id="n6_lr78" name="StationBtn" src="pdzn3" fileName="Btn.xml" xy="99,6" size="65,65" group="n12_lr78">
+      <relation target="n5_lr78" sidePair="middle-middle,left-right"/>
+      <Button icon="ui://wcwip4ahlr78t"/>
+    </component>
+    <component id="n7_lr78" name="RestBtn" src="pdzn3" fileName="Btn.xml" xy="184,6" size="65,65" group="n12_lr78">
+      <relation target="n6_lr78" sidePair="middle-middle,left-right"/>
+      <Button icon="ui://wcwip4ahlr78q"/>
+    </component>
+    <component id="n8_lr78" name="DismissBtn" src="pdzn3" fileName="Btn.xml" xy="269,6" size="65,65" group="n12_lr78">
+      <relation target="n7_lr78" sidePair="middle-middle,left-right"/>
+      <Button icon="ui://wcwip4ahlr78i"/>
+    </component>
+    <component id="n9_lr78" name="SkipBtn" src="pdzn3" fileName="Btn.xml" xy="354,6" size="65,65" group="n12_lr78">
+      <relation target="n8_lr78" sidePair="middle-middle,left-right"/>
+      <Button icon="ui://wcwip4ahku3ub"/>
+    </component>
+    <image id="n10_lr78" name="n10" src="lr78h" fileName="Resources/Panel/攻击力.png" xy="48,153" group="n12_lr78"/>
+    <image id="n11_lr78" name="n11" src="lr78f" fileName="Resources/Panel/范围.png" xy="285,349" group="n12_lr78"/>
+    <group id="n12_lr78" name="UnitUI" xy="4,6" size="432,396" advanced="true"/>
+  </displayList>
+</component>

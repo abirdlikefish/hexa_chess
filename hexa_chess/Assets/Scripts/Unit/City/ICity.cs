@@ -4,4 +4,5 @@ using UnityEngine;
 
 public interface ICity : IUnit
 {
+    List<MyEnum.ArmyType> CreatableArmy { get; }
 }

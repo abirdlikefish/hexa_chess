@@ -16,7 +16,7 @@ public class GridInfoWin : Window , IFguiWin
         gridInfoTxt_atk = midCom.GetChild("AtkOffsetTxt").asTextField;
         gridInfoTxt_def = midCom.GetChild("DefOffsetTxt").asTextField;
         gridInfoTxt_moveCost = midCom.GetChild("MoveCostTxt").asTextField;
-        Debug.LogWarning("GridInfoWin OnInit");
+        // Debug.LogWarning("GridInfoWin OnInit");
         // this.Center();
         // this.modal = true;
     }
@@ -44,10 +44,10 @@ public class GridInfoWin : Window , IFguiWin
 
     public void ShowWin()
     {
-        Debug.LogWarning("ShowWin");
+        // Debug.LogWarning("ShowWin");
         MyEvent.ShowGridInfoWin += ShowGridInfo;
         MyEvent.HideGridInfoWin += Hide;
-        MyEvent.ShowGridInfoWin += (a,b,c) => { Debug.LogWarning("ShowGridInfoWin"); };
+        // MyEvent.ShowGridInfoWin += (a,b,c) => { Debug.LogWarning("ShowGridInfoWin"); };
     }
 
     public void HideWin()

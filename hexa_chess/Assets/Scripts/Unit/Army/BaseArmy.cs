@@ -36,6 +36,7 @@ public class BaseArmy : Unit , IArmy
                 MyEvent.AnimaEnd?.Invoke();
             });
             MoveForce -= cost;
+            
         }
         else
         {
