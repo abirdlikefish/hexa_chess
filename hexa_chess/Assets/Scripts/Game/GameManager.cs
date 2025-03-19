@@ -5,6 +5,7 @@ using UnityEngine;
 
 class GameManager : MonoBehaviour
 {
+    public GlobalSettingSO globalSettingSO;
     public static GameManager instance = null;
     public GameStateMachine gameStateMachine;
 
@@ -25,6 +26,7 @@ class GameManager : MonoBehaviour
         PlayerHP = 10;
         EnemyHP = 10;
         roundsCounter = 0;
+        globalSettingSO = Resources.Load<GlobalSettingSO>("SO/GlobalSettingSO");
     }
 
     private void Awake()
@@ -47,7 +49,7 @@ class GameManager : MonoBehaviour
 
     protected void Start()
     {
-        MapManager.Instance.CreateMap(10);
+        MapManager.Instance.CreateMap(GameManager.instance.globalSettingSO.mapSize);
         UIManager.Instance.ShowView(MyEnum.UIView.PlayView);
         UIManager.Instance.ShowWin(MyEnum.UIWin.GridInfoWin, true);
 

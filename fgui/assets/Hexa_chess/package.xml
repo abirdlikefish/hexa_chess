@@ -16,6 +16,24 @@
     <component id="9llvc" name="Btn_4.xml" path="/"/>
     <component id="8qxpd" name="ArmyInfoView.xml" path="/" exported="true"/>
     <component id="8qxpe" name="GridInfoWin.xml" path="/" exported="true"/>
+    <image id="lr78f" name="范围.png" path="/Resources/Panel/"/>
+    <image id="lr78g" name="攻击.png" path="/Resources/Panel/"/>
+    <image id="lr78h" name="攻击力.png" path="/Resources/Panel/"/>
+    <image id="lr78i" name="解散.png" path="/Resources/Panel/"/>
+    <image id="lr78j" name="面板背景.png" path="/Resources/Panel/"/>
+    <image id="lr78k" name="文字-攻击.png" path="/Resources/Panel/"/>
+    <image id="lr78l" name="文字-解散.png" path="/Resources/Panel/"/>
+    <image id="lr78m" name="文字-休息.png" path="/Resources/Panel/"/>
+    <image id="lr78n" name="文字-驻扎.png" path="/Resources/Panel/"/>
+    <image id="lr78o" name="行动力-无.png" path="/Resources/Panel/"/>
+    <image id="lr78p" name="行动力-有.png" path="/Resources/Panel/"/>
+    <image id="lr78q" name="休息.png" path="/Resources/Panel/"/>
+    <image id="lr78r" name="血条-无.png" path="/Resources/Panel/"/>
+    <image id="lr78s" name="血条-有.png" path="/Resources/Panel/"/>
+    <image id="lr78t" name="驻扎.png" path="/Resources/Panel/"/>
+    <image id="lr78u" name="背景.png" path="/Resources/"/>
+    <font id="lr78v" name="Uranus_Pixel_11Px.ttf" path="/Resources/" renderMode="" samplePointSize="16"/>
+    <component id="lr78w" name="ArmyPanelCom.xml" path="/" exported="true"/>
   </resources>
   <publish name=""/>
 </packageDescription>

@@ -169,6 +169,7 @@ public class MapManager : IMapManager , IMapManager_edit
         {
             gridMap[coord.x, coord.y] = GridInfo.CreateGrid(gridList[mapSO.GetGridType(coord.x,coord.y)], new Vector2Int(coord.x, coord.y));
         }
+        CameraManager.Instance.Init(Coord_To_Pos(new Vector2Int(mapSize - 1 , mapSize - 1)));
         // for (int x = 0; x < mapSize * 2 - 1; x++)
         // {
         //     for (int y = 0; y < mapSize * 2 - 1; y++)

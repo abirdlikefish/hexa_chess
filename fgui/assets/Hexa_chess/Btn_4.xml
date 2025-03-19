@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component size="64,114" extention="Button">
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="2"/>
+<component size="100,100" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
   <displayList>
-    <loader id="n2_9llv" name="Cover" xy="-104,78" size="50,50">
+    <loader id="n2_9llv" name="Up" xy="0,0" size="100,100" align="center" vAlign="middle" fill="scaleMatchHeight">
       <gearDisplay controller="button" pages="0"/>
+      <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </loader>
-    <loader id="n3_9llv" name="Content" xy="-5,113" size="50,50">
-      <gearDisplay controller="button" pages="1,2,3"/>
+    <loader id="n3_9llv" name="Down" xy="0,0" size="100,100">
+      <gearDisplay controller="button" pages="1"/>
+      <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
+    </loader>
+    <loader id="n4_lr78" name="Over" xy="0,0" size="100,100">
+      <gearDisplay controller="button" pages="2"/>
+      <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
+    </loader>
+    <loader id="n5_lr78" name="SelectedOver" xy="0,0" size="100,100">
+      <gearDisplay controller="button" pages="3"/>
+      <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </loader>
   </displayList>
   <Button/>
