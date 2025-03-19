@@ -9,12 +9,15 @@ public class PlayerRound_SelectedBase : PlayerRoundState
     public override void Enter()
     {
         base.Enter();
-        
+        MyEvent.OnClick_GenerateBtn += CreateUnit;
+        MyEvent.OnClick_skipBtn += PressSkip;
     }
 
     public override void Exit()
     {
         base.Exit();
+        MyEvent.OnClick_GenerateBtn -= CreateUnit;
+        MyEvent.OnClick_skipBtn -= PressSkip;
     }
 
     private void CreateUnit()
