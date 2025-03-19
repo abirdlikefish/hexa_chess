@@ -68,6 +68,7 @@ public class Unit : MonoBehaviour, IUnit
             //消耗当前所有行动力
             Debug.Log("单位攻击指令执行！");
             other.GetDamage(Atk);
+            MyEvent.AnimaEnd?.Invoke();
         }
         else
         {

@@ -78,6 +78,7 @@ class GameManager : MonoBehaviour
     /// </summary>
     public bool JudgeShouldEndGame()
     {
+        //todo: 这边要改一下，要把Base的血量同步过来
         if (PlayerHP <= 0)
         {
             // gameStateMachine.ChangeState(gameStateMachine.GameLose);
