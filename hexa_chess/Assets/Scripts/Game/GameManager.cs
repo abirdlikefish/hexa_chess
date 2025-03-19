@@ -17,6 +17,11 @@ class GameManager : MonoBehaviour
     /// 记录回合数
     /// </summary>
     private int roundsCounter;
+
+    /// <summary>
+    /// 单位数量上限
+    /// </summary>
+    public int maxUnitNumber = 0;
     
     public int CurrentRoundsCounter() => roundsCounter;
 
@@ -33,6 +38,7 @@ class GameManager : MonoBehaviour
         EnemyHP = 10;
         roundsCounter = 0;
         CurrentCost = 0;
+        maxUnitNumber = 10;
     }
 
     private void Awake()
