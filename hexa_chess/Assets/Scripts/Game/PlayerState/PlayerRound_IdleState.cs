@@ -37,7 +37,14 @@ public class PlayerRound_IdleState : PlayerRoundState
         else
         {
             playerStateMachine.selectedGrid = coord;
-            playerStateMachine.ChangeState(MyEnum.PlayerRoundState.WaitInput_WhichAction);
+            if (playerStateMachine.selectedUnit.UnitType == MyEnum.UnitType.City)
+            {
+                playerStateMachine.ChangeState(MyEnum.PlayerRoundState.SelectedBase);
+            }
+            else
+            {
+                playerStateMachine.ChangeState(MyEnum.PlayerRoundState.WaitInput_WhichAction);
+            }
         }
     }
     

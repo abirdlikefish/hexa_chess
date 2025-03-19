@@ -16,6 +16,7 @@ public static class MyEvent
     public static Action OnClick_stationBtn;
     public static Action OnClick_dismissBtn;
     public static Action OnClick_skipBtn;
+    public static Action OnClick_GenerateBtn;//生成单元的按钮
 
     public static Action<Vector2Int> OnPress;
     public static Action OnPressEnd;
