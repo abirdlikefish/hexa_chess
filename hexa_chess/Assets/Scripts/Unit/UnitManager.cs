@@ -125,7 +125,7 @@ public class UnitManager : UnitManagerAPI
     {
         foreach (var item in unitList[theOperator])
         {
-            switch(item.GetOperationBuff())
+            switch(item.operationBuff)
             {
             case MyEnum.OperationBuff.Rest: 
                 item.RecoverHp(2);
@@ -140,8 +140,8 @@ public class UnitManager : UnitManagerAPI
     }
     public bool CreateNewUnit(MyEnum.TheOperator theOperator , Vector2Int coord,MyEnum.ArmyType armyType)
     {
-        if(CheckCoinConsumption(theOperator,
-            unitFactory.UnitConfigListSO.GetUnitConfig(armyType).Coin) && CheckPopulation(theOperator) )
+        MyStruct.UnitConfig unitConfig= unitFactory.UnitConfigListSO.GetUnitConfig(armyType);
+        if(CheckCoinConsumption(theOperator,unitConfig.Coin) && CheckPopulation(theOperator,unitConfig.Occupation) )
             {
                 // Debug.Log("加载一个单位");
                 Unit unit = unitFactory.LoadUnit(theOperator,coord,armyType);
@@ -218,9 +218,9 @@ public class UnitManager : UnitManagerAPI
 
     }
 
-    private bool CheckPopulation(MyEnum.TheOperator theOperator)
+    private bool CheckPopulation(MyEnum.TheOperator theOperator,int occupation)
     {
-        if(currentPopulation[theOperator] + 1 <= GameManager.instance.maxUnitNumber)
+        if(currentPopulation[theOperator] + occupation <= GameManager.instance.maxUnitNumber)
         {
             currentPopulation[theOperator]++;
             return true;
@@ -228,6 +228,9 @@ public class UnitManager : UnitManagerAPI
         else return false;
     }
 
-
+    public void ReceiveIncome(MyEnum.TheOperator theOperator,int coin)
+    {
+        currentCoin[theOperator] += coin;
+    }
 }
 
