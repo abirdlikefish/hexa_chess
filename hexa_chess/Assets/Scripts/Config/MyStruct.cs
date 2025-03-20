@@ -34,6 +34,7 @@ public class MyStruct
         /// </summary>
         public bool HaveZOC;
         public List<MyEnum.ArmyType> creatableArmy;
+        public int createArmyRange;
     }
 
     [Serializable]
