@@ -29,6 +29,8 @@ public static class MyEvent
 
     public static Action<Vector3> CameraMove;
     public static Action<Vector3> DragScreen;
+
+    public static Func<MyEnum.ArmyType> GetSelectedArmy;
     
     /// <summary>
     /// 当移动，攻击等的动画结束之后调用

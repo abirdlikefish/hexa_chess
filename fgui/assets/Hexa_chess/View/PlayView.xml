@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="1920,1080" designImage="ui://wcwip4ahlr7814">
+  <controller name="UnitUIController" pages="0,Hide,1,ShowArmy,2,ShowCity" selected="1"/>
+  <displayList>
+    <component id="n0_rznp" name="ScreenInputBtn" src="rznp1" fileName="Com/ScreenInputBtn.xml" xy="0,-2" size="1920,1080">
+      <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
+    </component>
+    <component id="n1_iudv" name="TestBtn" src="pdzn3" fileName="Com/Btn.xml" xy="78,548" size="242,59">
+      <Button icon="ui://wcwip4ahiudva"/>
+    </component>
+    <component id="n2_ku3u" name="NextBtn" src="pdzn3" fileName="Com/Btn.xml" xy="1622,924" size="306,149">
+      <relation target="" sidePair="right-right,bottom-bottom"/>
+      <Button icon="ui://wcwip4ahlr7815"/>
+    </component>
+    <text id="n21_lr78" name="MoneyTxt" xy="136,13" size="161,66" group="n24_lr78" font="ui://wcwip4ahlr78v" fontSize="50" color="#ffffff" align="center" vAlign="middle" text="100+10">
+      <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
+    </text>
+    <text id="n22_lr78" name="UnitCntTxt" xy="443,12" size="100,66" group="n24_lr78" font="ui://wcwip4ahlr78v" fontSize="50" color="#ffffff" align="center" vAlign="middle" text="5/10">
+      <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
+    </text>
+    <text id="n23_lr78" name="RoundTxt" xy="1749,7" size="75,66" group="n24_lr78" font="ui://wcwip4ahlr78v" fontSize="50" color="#ffffff" align="center" vAlign="middle" text="1/8">
+      <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
+    </text>
+    <group id="n24_lr78" name="GlobalInfo" xy="136,7" size="1688,72"/>
+    <component id="n36_lr78" name="CreateArmyCom" src="lr78z" fileName="Com/CreateArmyCom.xml" xy="1002,948">
+      <gearDisplay controller="UnitUIController" pages="1,2"/>
+    </component>
+    <component id="n40_sgdj" name="n40" src="lr78w" fileName="Com/ArmyPanelCom.xml" xy="-12,743">
+      <gearDisplay controller="UnitUIController" pages="1"/>
+    </component>
+  </displayList>
+</component>

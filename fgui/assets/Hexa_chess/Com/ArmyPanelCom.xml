@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="459,361" designImage="ui://wcwip4ahlr7814" designImageOffsetX="13" designImageOffsetY="-742" designImageAlpha="0">
+  <displayList>
+    <loader id="n0_lr78" name="n0" xy="0,0" size="459,361" url="ui://wcwip4ahlr7819" autoSize="true">
+      <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
+    </loader>
+    <component id="n5_lr78" name="AttackBtn" src="pdzn3" fileName="Com/Btn.xml" xy="167,-92" size="65,65">
+      <relation target="n0_lr78" sidePair="left-left,bottom-top"/>
+      <Button icon="ui://wcwip4ahlr7817"/>
+    </component>
+    <component id="n6_lr78" name="StationBtn" src="pdzn3" fileName="Com/Btn.xml" xy="231,-92" size="65,65">
+      <relation target="n0_lr78" sidePair="left-left,top-bottom"/>
+      <Button icon="ui://wcwip4ahlr781e"/>
+    </component>
+    <component id="n7_lr78" name="RestBtn" src="pdzn3" fileName="Com/Btn.xml" xy="300,-92" size="65,65">
+      <relation target="n0_lr78" sidePair="left-left,top-bottom"/>
+      <Button icon="ui://wcwip4ahlr781d"/>
+    </component>
+    <component id="n8_lr78" name="DismissBtn" src="pdzn3" fileName="Com/Btn.xml" xy="367,-92" size="65,65">
+      <relation target="n0_lr78" sidePair="left-left,top-bottom"/>
+      <Button icon="ui://wcwip4ahlr7818"/>
+    </component>
+    <component id="n9_lr78" name="SkipBtn" src="pdzn3" fileName="Com/Btn.xml" xy="452,-91" size="65,65">
+      <Button icon="ui://wcwip4ahku3ub"/>
+    </component>
+    <text id="n1_lr78" name="AtkTxt" xy="255,192" size="27,55" group="n18_lr78" font="ui://wcwip4ahlr78v" fontSize="41" color="#ffd799" align="center" vAlign="middle" text="4">
+      <relation target="n16_lr78" sidePair="width-width%,height-height%,middle-middle%,left-right"/>
+    </text>
+    <image id="n10_lr78" name="n10" src="lr78h" fileName="Resources/Panel/攻击力.png" xy="40,203" size="33,33" group="n18_lr78">
+      <relation target="n0_lr78" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
+    </image>
+    <text id="n16_lr78" name="n16" xy="87,194" size="115,50" group="n18_lr78" font="ui://wcwip4ahlr78v" fontSize="37" color="#ffffff" align="center" vAlign="middle" text="攻击力">
+      <relation target="n10_lr78" sidePair="middle-middle%,left-right"/>
+    </text>
+    <group id="n18_lr78" name="n18" xy="40,192" size="242,55"/>
+    <text id="n13_lr78" name="AtkRangeTxt" xy="255,241" size="24,55" group="n19_lr78" font="ui://wcwip4ahlr78v" fontSize="41" color="#ffd799" align="center" vAlign="middle" text="5">
+      <relation target="n17_lr78" sidePair="width-width%,height-height%,middle-middle%,left-right"/>
+    </text>
+    <image id="n11_lr78" name="n11" src="lr78f" fileName="Resources/Panel/范围.png" xy="40,251" size="33,34" group="n19_lr78">
+      <relation target="n0_lr78" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
+    </image>
+    <text id="n17_lr78" name="n17" xy="87,243" size="152,50" group="n19_lr78" font="ui://wcwip4ahlr78v" fontSize="37" color="#ffffff" align="center" vAlign="middle" text="攻击范围">
+      <relation target="n11_lr78" sidePair="middle-middle%,left-right"/>
+    </text>
+    <group id="n19_lr78" name="n19" xy="40,241" size="239,55"/>
+    <text id="n21_lr78" name="n21" xy="88,144" size="115,50" group="n26_lr78" font="ui://wcwip4ahlr78v" fontSize="37" color="#ffffff" align="center" vAlign="middle" text="行动力"/>
+    <text id="n24_lr78" name="MoveForceTxt" xy="256,141" size="27,55" group="n26_lr78" font="ui://wcwip4ahlr78v" fontSize="41" color="#ffd799" align="center" vAlign="middle" text="4">
+      <relation target="n21_lr78" sidePair="width-width%,height-height%,left-right"/>
+    </text>
+    <group id="n26_lr78" name="n26" xy="88,141" size="195,55"/>
+    <text id="n25_lr78" name="HpTxt" xy="256,90" size="27,55" group="n27_lr78" font="ui://wcwip4ahlr78v" fontSize="41" color="#ffd799" align="center" vAlign="middle" text="4"/>
+    <text id="n22_lr78" name="n22" xy="88,93" size="115,50" group="n27_lr78" font="ui://wcwip4ahlr78v" fontSize="37" color="#ffffff" align="center" vAlign="middle" text="生命值"/>
+    <group id="n27_lr78" name="n27" xy="88,90" size="195,55"/>
+    <image id="n29_lr78" name="n29" src="lr7816" fileName="Resources/Panel/单位2.png" xy="12,-119" size="167,135">
+      <relation target="n0_lr78" sidePair="width-width%,height-height%,left-left,bottom-top"/>
+    </image>
+    <loader id="n31_lr78" name="n31" xy="59,-82" size="64,48" url="ui://wcwip4ahlr781a" fill="scale">
+      <relation target="n29_lr78" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
+    </loader>
+    <text id="n32_lr78" name="n32" xy="167,-37" size="56,36" font="ui://wcwip4ahlr78v" fontSize="26" color="#ffd799" align="center" text="攻击">
+      <relation target="n5_lr78" sidePair="center-center%,top-bottom"/>
+    </text>
+    <text id="n33_lr78" name="n33" xy="231,-37" size="56,36" font="ui://wcwip4ahlr78v" fontSize="26" color="#ffd799" align="center" text="驻扎">
+      <relation target="n6_lr78" sidePair="center-center%,top-bottom"/>
+    </text>
+    <text id="n34_lr78" name="n34" xy="300,-37" size="56,36" font="ui://wcwip4ahlr78v" fontSize="26" color="#ffd799" align="center" text="休息">
+      <relation target="n7_lr78" sidePair="center-center%,top-bottom"/>
+    </text>
+    <text id="n35_lr78" name="n35" xy="367,-37" size="56,36" font="ui://wcwip4ahlr78v" fontSize="26" color="#ffd799" align="center" text="解散">
+      <relation target="n8_lr78" sidePair="center-center%,top-bottom"/>
+    </text>
+  </displayList>
+</component>

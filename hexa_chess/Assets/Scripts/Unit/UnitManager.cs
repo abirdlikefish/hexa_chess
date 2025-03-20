@@ -88,7 +88,7 @@ public class UnitManager : UnitManagerAPI
         }
         return list;
     }
- 
+
     //检查是否有未操作单位
     public bool CheckAllOperated(MyEnum.TheOperator theOperator)
     {

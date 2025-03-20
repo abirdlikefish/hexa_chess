@@ -17,6 +17,7 @@ public class ArmyPanelCom : IFguiCom
     GTextField atkTxt;
     GTextField hpTxt;
     GTextField moveForceTxt;
+    GTextField atkRangeTxt;
     
     public IFguiCom Create(GComponent parent)
     {
@@ -32,6 +33,7 @@ public class ArmyPanelCom : IFguiCom
         atkTxt = armyPanelCom.GetChild("AtkTxt").asTextField;
         hpTxt = armyPanelCom.GetChild("HpTxt").asTextField;
         moveForceTxt = armyPanelCom.GetChild("MoveForceTxt").asTextField;
+        atkRangeTxt = armyPanelCom.GetChild("AtkRangeTxt").asTextField;
 
         InitEvent();
         return this;
@@ -72,6 +74,7 @@ public class ArmyPanelCom : IFguiCom
             atkTxt.text = (unit as IArmy).Atk.ToString();
             hpTxt.text = (unit as IArmy).CurrentHP.ToString();
             moveForceTxt.text = (unit as IArmy).MoveForce.ToString();
+            atkRangeTxt.text = (unit as IArmy).AttackRadius.ToString();
         }
     }
 }

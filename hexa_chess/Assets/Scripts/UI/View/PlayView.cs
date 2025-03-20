@@ -64,7 +64,8 @@ public class PlayView : IFguiView
         fguiOtherComs = new List<IFguiCom>
         {
             new ScreenInputBtn().Create(playView),
-            new ArmyPanelCom().Create(playView)
+            new ArmyPanelCom().Create(playView),
+            new CreateArmyCom().Create(playView),
         };
 
     }

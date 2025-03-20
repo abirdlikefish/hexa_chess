@@ -41,10 +41,25 @@ public static class MyConst
             { MyEnum.GridSpriteLayer.Fog, "Grid_fog" },
             { MyEnum.GridSpriteLayer.UI, "Grid_ui" }
         };
-
+        ArmyUIIconPath = new Dictionary<MyEnum.ArmyType, string>
+        {
+            { MyEnum.ArmyType.None, "Sprite/ArmyIcon/None" },
+            { MyEnum.ArmyType.Artillery, "Sprite/ArmyIcon/Artillery" },
+            { MyEnum.ArmyType.Infantry, "Sprite/ArmyIcon/Infantry" },
+            { MyEnum.ArmyType.Tank, "Sprite/ArmyIcon/Tank" }
+        };
+        ArmyUIIconPath_small = new Dictionary<MyEnum.ArmyType, string>
+        {
+            { MyEnum.ArmyType.None, "Sprite/ArmyIcon/None_small" },
+            { MyEnum.ArmyType.Artillery, "Sprite/ArmyIcon/Artillery_small" },
+            { MyEnum.ArmyType.Infantry, "Sprite/ArmyIcon/Infantry_small" },
+            { MyEnum.ArmyType.Tank, "Sprite/ArmyIcon/Tank_small" }
+        };
     }
     public static float GridSize;
     public static Dictionary<MyEnum.GridType , string> GridPicturePath;
+    public static Dictionary<MyEnum.ArmyType , string> ArmyUIIconPath;
+    public static Dictionary<MyEnum.ArmyType , string> ArmyUIIconPath_small;
     public static Dictionary<MyEnum.MoveDirection, Vector2Int> MoveStep;
     public static Dictionary<MyEnum.GridUIState, Color> GridUIColor;
     public static Dictionary<MyEnum.GridSpriteLayer, string> GridSpriteSortingLayer;
