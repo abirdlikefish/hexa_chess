@@ -11,4 +11,5 @@ public class GlobalSettingSO : ScriptableObject
     public float showGridInfoWin_minMoveDis;
     public int InitialCoin;
     public int InitialPopulation;
+    public int Income;
 }

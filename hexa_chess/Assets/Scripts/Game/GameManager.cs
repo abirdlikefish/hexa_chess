@@ -11,7 +11,6 @@ class GameManager : MonoBehaviour
     /// <summary>
     /// 每回合回复的金币数量
     /// </summary>
-    public int ReplyCost = 0;
     private int CurrentCost;
 
     /// <summary>
@@ -107,6 +106,9 @@ class GameManager : MonoBehaviour
     {
         roundsCounter++;
         Debug.Log($"roundsCounter:{roundsCounter}");
+        MyEvent.SetGlobalInfo(new Vector2(UnitManager.Instance.GetCoin(MyEnum.TheOperator.Player),GameManager.instance.globalSettingSO.Income) , 
+                                new Vector2(UnitManager.Instance.GetPopulation(MyEnum.TheOperator.Player),GameManager.instance.globalSettingSO.InitialPopulation) , 
+                                new Vector2(GameManager.instance.CurrentRoundsCounter(),100));
     }
     
     

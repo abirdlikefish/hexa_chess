@@ -131,7 +131,7 @@ public class UnitManager : UnitManagerAPI
     public void RoundBeginOperation(MyEnum.TheOperator theOperator)
     {
         // Debug.LogWarning("回合开始操作");
-        currentCoin[theOperator] += GameManager.instance.ReplyCost;
+        currentCoin[theOperator] += GameManager.instance.globalSettingSO.Income;
         foreach (Unit unit in unitList[theOperator])
         {
             unit.RoundBeginCheck();
@@ -263,10 +263,18 @@ public class UnitManager : UnitManagerAPI
     {
         currentCoin[theOperator] -= coin;
         currentPopulation[theOperator] += occupation;
+        if(theOperator == MyEnum.TheOperator.Player)
+            MyEvent.SetGlobalInfo(new Vector2(currentCoin[theOperator], GameManager.instance.globalSettingSO.Income),
+                new Vector2(currentPopulation[theOperator], GameManager.instance.globalSettingSO.InitialPopulation),
+                new Vector2(GameManager.instance.CurrentRoundsCounter(), 100));
     }
     public void ReceiveIncome(MyEnum.TheOperator theOperator, int coin)
     {
         currentCoin[theOperator] += coin;
+        if(theOperator == MyEnum.TheOperator.Player)
+            MyEvent.SetGlobalInfo(new Vector2(currentCoin[theOperator], GameManager.instance.globalSettingSO.Income),
+                new Vector2(currentPopulation[theOperator], GameManager.instance.globalSettingSO.InitialPopulation),
+                new Vector2(GameManager.instance.CurrentRoundsCounter(), 100));
     }
 
     public List<ICity> GetCity(MyEnum.TheOperator theOperator, MyEnum.CityType cityType)
