@@ -48,7 +48,7 @@ public class PlayerRound : GameState
         playerRoundStateMachine.Exit();
         MyEvent.OnClick_nextBtn -= NextBtnClick;
         //GameManager.instance.IncreaseRoundsCounter();
-        MyEvent.SetGlobalInfo(new Vector2(1,1) , new Vector2(1,1) , new Vector2(1,1));
+        MyEvent.SetGlobalInfo(new Vector2(UnitManager.Instance.GetCoin(MyEnum.TheOperator.Player),1) , new Vector2(UnitManager.Instance.GetPopulation(MyEnum.TheOperator.Player),GameManager.instance.globalSettingSO.InitialPopulation) , new Vector2(GameManager.instance.CurrentRoundsCounter(),100));
         MyEvent.OnPress -= ShowGridInfoWin;
         MyEvent.OnPressEnd -= CloseGridInfoWin;
     }

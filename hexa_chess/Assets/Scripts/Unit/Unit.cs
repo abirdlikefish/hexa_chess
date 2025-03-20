@@ -98,13 +98,13 @@ public class Unit : MonoBehaviour, IUnit
     IEnumerator Tmp_DamageAnimation()
     {
         yield return new WaitForSeconds(0.3f);
-        DestroyCheck();
         MyEvent.AnimaEnd?.Invoke();
+        DestroyCheck();
     }
 
 
     //摧毁检定
-    private void DestroyCheck()
+    protected virtual void DestroyCheck()
     {
         if (CurrentHP <= 0)
         {
