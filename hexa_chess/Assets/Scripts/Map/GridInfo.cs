@@ -170,9 +170,10 @@ public class GridInfo : MonoBehaviour
     }
     public bool AddUnit(IUnit unit)
     {
-        if(unitList[unit.UnitType] != null)
+        Debug.LogWarning("AddUnit " + unit.UnitType);
+        if (unitList[unit.UnitType] != null)
         {
-            Debug.LogError("AddUnit Error");
+            Debug.LogError($"AddUnit Error:{unit.UnitType}");
             return false;
         }
         // Debug.LogWarning("AddUnit " + unit.UnitType);

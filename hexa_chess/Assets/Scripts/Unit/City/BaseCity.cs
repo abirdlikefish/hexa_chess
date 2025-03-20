@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static MyEnum;
 
 public class BaseCity : Unit , ICity
 {
@@ -16,6 +17,16 @@ public class BaseCity : Unit , ICity
 
     protected override void InitConfig(MyStruct.UnitConfig iniConfig)
     {
+        atk = iniConfig.Atk;
+        def = iniConfig.Def;
+        attackRadius = iniConfig.AttackRadius;
+        viewRange = iniConfig.viewRange;
+        coin = iniConfig.Coin;
+        occupation = iniConfig.Occupation;
+        haveZOC = iniConfig.HaveZOC;
+
+        unitType = MyEnum.UnitType.City;
+        cityType = iniConfig.cityType;
         maxHp = iniConfig.MaxHp;
         currentHp = maxHp;
         creatableArmy = iniConfig.creatableArmy;

@@ -26,8 +26,11 @@ public class PlayerRound : GameState
         base.Enter();
 
         if(GameManager.instance.CurrentRoundsCounter() == 0)
+        {
+            UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Player, new Vector2Int(5, 4), MyEnum.CityType.Home);
             gameStateMachine.ChangeState(MyEnum.GameState.EnemyRound);
-
+            return;
+        }
         playerRoundStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
         MyEvent.OnClick_nextBtn += NextBtnClick;
         //UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Player , new Vector2Int(5, 5), MyEnum.ArmyType.Tank);
@@ -44,7 +47,7 @@ public class PlayerRound : GameState
         // MapManager.Instance.CloseMapUI(MyEnum.TheOperator.Player);
         playerRoundStateMachine.Exit();
         MyEvent.OnClick_nextBtn -= NextBtnClick;
-        GameManager.instance.IncreaseRoundsCounter();
+        //GameManager.instance.IncreaseRoundsCounter();
         MyEvent.SetGlobalInfo(new Vector2(1,1) , new Vector2(1,1) , new Vector2(1,1));
         MyEvent.OnPress -= ShowGridInfoWin;
         MyEvent.OnPressEnd -= CloseGridInfoWin;

@@ -202,7 +202,10 @@ public class UnitManager : UnitManagerAPI
         if(unit.UnitType == MyEnum.UnitType.Army)
             unit.virtualArea = MapManager.Instance.SetVirtualArea(unit.TheOperator, coord, unit.ViewRange);
         else
+        {
             unit.virtualArea = MapManager.Instance.SetVirtualArea_noHeight(unit.TheOperator, coord, unit.ViewRange);
+            Debug.Log($"enter grid:{unit.UnitType} {unit.ViewRange}");
+        }
         // Debug.Log("enter grid");
         // Debug.Log(unit.ViewRange);
     }

@@ -49,14 +49,14 @@ class GameManager : MonoBehaviour
         {
             instance = this;
         }
-
+        MapManager.Init();
+        UIManager.Init();
         // gameStateMachine = new GameStateMachine();
 
         InitializeAllValue();
         gameStateMachine = GameStateMachine.Instance;
 
-        MapManager.Init();
-        UIManager.Init();
+
 
     }
 

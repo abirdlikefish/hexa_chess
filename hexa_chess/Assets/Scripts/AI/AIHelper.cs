@@ -69,10 +69,10 @@ public class AIHelper
     public float GetHomeDistanceDelta(Vector2Int coord, Vector2Int pos)
     {
         float delta = 0;
-        var res = UnitManager.Instance.GetCity(TheOperator.Enemy,CityType.Home);
+        var res = UnitManager.Instance.GetCity(TheOperator.Player,CityType.Home);
         if(res.Count == 0)
         {
-            Debug.LogError("敌方没有城市");
+            Debug.LogError("鏁屾柟娌℃湁鍩庡競");
             return 0;
         }
         Vector2Int homePos = res[0].Coord;
