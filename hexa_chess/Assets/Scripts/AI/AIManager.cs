@@ -40,7 +40,8 @@ public class AIManager : MonoBehaviour,IAIManager
 
     public void OnInit()
     {
-        aiPlayer = new AIPlayer();
+        var ai = Resources.Load<AICreateUnitSO>("SO/AICreateUnitSO");
+        aiPlayer = new AIPlayer(ai);
         aiPlayer.OnInit();
 
         MyEvent.OnEnemyRoundBegin += Action;

@@ -10,11 +10,16 @@ public class BaseCity : Unit , ICity
 
 
     public List<MyEnum.ArmyType> CreatableArmy { get{ return creatableArmy; } }
+
+    private int createArmyRange;
+    public int CreateArmyRange => createArmyRange;
+
     protected override void InitConfig(MyStruct.UnitConfig iniConfig)
     {
         maxHp = iniConfig.MaxHp;
         currentHp = maxHp;
         creatableArmy = iniConfig.creatableArmy;
+        createArmyRange = iniConfig.createArmyRange;
         base.InitConfig(iniConfig);
     }
 
