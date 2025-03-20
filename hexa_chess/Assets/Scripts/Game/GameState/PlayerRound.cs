@@ -24,9 +24,13 @@ public class PlayerRound : GameState
     public override void Enter()
     {
         base.Enter();
+
+        if(GameManager.instance.CurrentRoundsCounter() == 0)
+            gameStateMachine.ChangeState(MyEnum.GameState.EnemyRound);
+
         playerRoundStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
         MyEvent.OnClick_nextBtn += NextBtnClick;
-        UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Player , new Vector2Int(10, 10), MyEnum.ArmyType.Tank);
+        //UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Player , new Vector2Int(5, 5), MyEnum.ArmyType.Tank);
         UnitManager.Instance.RoundBeginOperation(MyEnum.TheOperator.Player);
         MyEvent.OnPress += ShowGridInfoWin;
         MyEvent.OnPressEnd += CloseGridInfoWin;
