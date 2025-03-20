@@ -19,8 +19,9 @@ public class EnemyRound : GameState
     public override void Exit()
     {
         base.Exit();
+        GameManager.instance.IncreaseRoundsCounter();
     }
-    
+
     public override void PressTestButton()
     {
         // gameStateMachine.ChangeState(gameStateMachine.EnemyRound);
