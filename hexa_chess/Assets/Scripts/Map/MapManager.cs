@@ -418,8 +418,11 @@ public class MapManager : IMapManager , IMapManager_edit
             Vector2Int midCoord = new Vector2Int((int)mid.y, (int)mid.z);
             if(midCost != searchMovableAreaGridInfoMap[midCoord.x, midCoord.y].moveCost) continue;
             // if(midCost > moveForce) continue;
-            gridMap[midCoord.x, midCoord.y].ChangeUIState(theOperator , MyEnum.GridUIState.Legal);
-            movableGridList.Add(midCoord);
+            if(gridMap[midCoord.x, midCoord.y].GetUnit(MyEnum.UnitType.Army) != null)
+            {
+                gridMap[midCoord.x, midCoord.y].ChangeUIState(theOperator , MyEnum.GridUIState.Legal);
+                movableGridList.Add(midCoord);
+            }
             foreach(MyEnum.MoveDirection moveDirection in MyEnum.MoveDirection.GetValues(typeof(MyEnum.MoveDirection)))
             {
                 Vector2Int nextCoord = midCoord + MyConst.MoveStep[moveDirection];
@@ -428,6 +431,16 @@ public class MapManager : IMapManager , IMapManager_edit
                 if(nextCost > moveForce)  continue;
                 if(gridMap[nextCoord.x, nextCoord.y].GetMoveCost(theOperator) < 0 || 
                     gridMap[nextCoord.x, nextCoord.y].GetHeight() > gridMap[midCoord.x, midCoord.y].GetHeight())
+                {
+                    gridMap[nextCoord.x, nextCoord.y].ChangeUIState(theOperator , MyEnum.GridUIState.Illegal);
+                    continue;
+                }
+                if(gridMap[nextCoord.x, nextCoord.y].GetUnit(MyEnum.UnitType.Army) != null && gridMap[nextCoord.x, nextCoord.y].GetUnit(MyEnum.UnitType.Army).TheOperator != theOperator)
+                {
+                    gridMap[nextCoord.x, nextCoord.y].ChangeUIState(theOperator , MyEnum.GridUIState.Illegal);
+                    continue;
+                }
+                if(gridMap[nextCoord.x, nextCoord.y].GetUnit(MyEnum.UnitType.City) != null && gridMap[nextCoord.x, nextCoord.y].GetUnit(MyEnum.UnitType.City).TheOperator != theOperator)
                 {
                     gridMap[nextCoord.x, nextCoord.y].ChangeUIState(theOperator , MyEnum.GridUIState.Illegal);
                     continue;
