@@ -9,6 +9,8 @@ public class UnitFactory
 
     public UnitConfigListSO UnitConfigListSO { get{ return unitConfigListSO ;} }
     Dictionary<MyEnum.ArmyType , GameObject> armyPrefabList;
+    Dictionary<MyEnum.ArmyType , Dictionary<MyEnum.TheOperator , Sprite>> armySpriteList;
+    Dictionary<MyEnum.CityType , Dictionary<MyEnum.TheOperator , Sprite>> citySpriteList;
     Dictionary<MyEnum.CityType , GameObject> cityPrefabList;
     Dictionary<MyEnum.ArmyType , int> armyCntList;
     Dictionary<MyEnum.CityType , int> cityCntList;
@@ -38,6 +40,26 @@ public class UnitFactory
             cityCntList.Add(cityType , 0);
         }
 
+        armySpriteList = new Dictionary<MyEnum.ArmyType , Dictionary<MyEnum.TheOperator , Sprite>>();
+        foreach (MyEnum.ArmyType armyType in System.Enum.GetValues(typeof(MyEnum.ArmyType)))
+        {
+            armySpriteList.Add(armyType , new Dictionary<MyEnum.TheOperator , Sprite>());
+            foreach (MyEnum.TheOperator theOperator in System.Enum.GetValues(typeof(MyEnum.TheOperator)))
+            {
+                armySpriteList[armyType].Add(theOperator , Resources.Load<Sprite>("Sprite/Unit/" + armyType.ToString() + "_" + theOperator.ToString()));
+            }
+        }
+
+        citySpriteList = new Dictionary<MyEnum.CityType , Dictionary<MyEnum.TheOperator , Sprite>>();
+        foreach (MyEnum.CityType cityType in System.Enum.GetValues(typeof(MyEnum.CityType)))
+        {
+            citySpriteList.Add(cityType , new Dictionary<MyEnum.TheOperator , Sprite>());
+            foreach (MyEnum.TheOperator theOperator in System.Enum.GetValues(typeof(MyEnum.TheOperator)))
+            {
+                citySpriteList[cityType].Add(theOperator , Resources.Load<Sprite>("Sprite/Unit/" + cityType.ToString() + "_" + theOperator.ToString()));
+            }
+        }
+
 
 
         parentGO = new Dictionary<MyEnum.TheOperator , Dictionary<MyEnum.UnitType , Transform>>();
@@ -62,6 +84,7 @@ public class UnitFactory
         unit.Init(theOperator , unitConfig , coord);
         armyCntList[armyTypeType]++;
         unit.UnitName = MyConst.ArmyName[armyTypeType] + armyCntList[armyTypeType].ToString();
+        // unit.transform.GetComponent<SpriteRenderer>().sprite = armySpriteList[armyTypeType][theOperator];
         return unit;
     }
     public Unit LoadUnit(MyEnum.TheOperator theOperator , Vector2Int coord,MyEnum.CityType cityType)
@@ -72,6 +95,7 @@ public class UnitFactory
         unit.Init(theOperator , unitConfig , coord);
         cityCntList[cityType]++;
         unit.UnitName = MyConst.CityName[cityType] + cityCntList[cityType].ToString();
+        // unit.transform.GetComponent<SpriteRenderer>().sprite = citySpriteList[cityType][theOperator];
         return unit;
     }
 }

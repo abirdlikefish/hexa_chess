@@ -28,7 +28,7 @@ public class BaseCity : Unit , ICity
         unitType = MyEnum.UnitType.City;
         cityType = iniConfig.cityType;
         maxHp = iniConfig.MaxHp;
-        currentHp = maxHp;
+        CurrentHP = maxHp;
         creatableArmy = iniConfig.creatableArmy;
         createArmyRange = iniConfig.createArmyRange;
         base.InitConfig(iniConfig);
