@@ -25,3 +25,51 @@ MonoBehaviour:
     cityType: 0
     count: 1
     createPos: {x: 15, y: 2}
+  - round: 2
+    unitType: 1
+    armyType: 2
+    cityType: 0
+    count: 1
+    createPos: {x: 15, y: 3}
+  - round: 3
+    unitType: 1
+    armyType: 3
+    cityType: 0
+    count: 1
+    createPos: {x: 15, y: 4}
+  - round: 4
+    unitType: 1
+    armyType: 1
+    cityType: 0
+    count: 1
+    createPos: {x: 15, y: 4}
+  - round: 5
+    unitType: 1
+    armyType: 2
+    cityType: 0
+    count: 1
+    createPos: {x: 15, y: 4}
+  - round: 6
+    unitType: 1
+    armyType: 3
+    cityType: 0
+    count: 1
+    createPos: {x: 15, y: 4}
+  - round: 7
+    unitType: 1
+    armyType: 1
+    cityType: 0
+    count: 1
+    createPos: {x: 15, y: 4}
+  - round: 8
+    unitType: 1
+    armyType: 2
+    cityType: 0
+    count: 1
+    createPos: {x: 15, y: 4}
+  - round: 9
+    unitType: 1
+    armyType: 3
+    cityType: 0
+    count: 1
+    createPos: {x: 15, y: 4}
