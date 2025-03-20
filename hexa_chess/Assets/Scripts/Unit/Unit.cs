@@ -91,34 +91,15 @@ public class Unit : MonoBehaviour, IUnit
             break;
         }
         currentHp -= finalDamage;
+        StartCoroutine(Tmp_DamageAnimation());
+        // DestroyCheck();
+    }
+
+    IEnumerator Tmp_DamageAnimation()
+    {
+        yield return new WaitForSeconds(0.3f);
         DestroyCheck();
-    }
-
-
-    public void Station()
-    {
-        moveForce = 0;
-        operationBuff = MyEnum.OperationBuff.Station;
-        unitState = MyEnum.UnitStates.Disable;
-    }
-
-    public void Rest()
-    {
-        moveForce = 0;
-        operationBuff = MyEnum.OperationBuff.Rest;
-        unitState = MyEnum.UnitStates.Disable;
-    }
-
-    public void Dismiss()
-    {
-        UnitManager.Instance.ReceiveIncome(theOperator,coin);
-        UnitManager.Instance.RemoveUnit(this);
-    }
-
-    public void Skip()
-    {
-        moveForce = 0;
-        unitState = MyEnum.UnitStates.Disable;
+        MyEvent.AnimaEnd?.Invoke();
     }
 
 

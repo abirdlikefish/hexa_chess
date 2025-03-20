@@ -17,6 +17,7 @@ public class PlayerRound_SelectedBase : PlayerRoundState
         MyEvent.OnClick_skipBtn += PressSkip;
         MyEvent.OnGridClick_left += SelectGrid;
         MyEvent.SelectArmyToCreate += SelectArmyToCreate;
+        MyEvent.OpenUnitUI?.Invoke(playerStateMachine.selectedUnit);
         // MapManager.Instance.SearchCreateArmyArea(MyEnum.TheOperator.Player , playerStateMachine.selectedGrid.Value, (playerStateMachine.selectedUnit as ICity));
 MapManager.Instance.SearchCreateArmyArea(MyEnum.TheOperator.Player , playerStateMachine.selectedGrid.Value, 5);
     }
@@ -28,6 +29,7 @@ MapManager.Instance.SearchCreateArmyArea(MyEnum.TheOperator.Player , playerState
         MyEvent.OnClick_skipBtn -= PressSkip;
         MyEvent.OnGridClick_left -= SelectGrid;
         MyEvent.SelectArmyToCreate -= SelectArmyToCreate;
+        MyEvent.OpenUnitUI?.Invoke(null);
         MapManager.Instance.CloseMapUI(MyEnum.TheOperator.Player);
     }
 
@@ -57,7 +59,8 @@ MapManager.Instance.SearchCreateArmyArea(MyEnum.TheOperator.Player , playerState
         }
         // if(selectedType == MyEnum.ArmyType.None) return;
         UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Player, selectedUnit.Value, selectedType);
-        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
+        // playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
+        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
     }
 
     private void SelectArmyToCreate(MyEnum.ArmyType armyType)

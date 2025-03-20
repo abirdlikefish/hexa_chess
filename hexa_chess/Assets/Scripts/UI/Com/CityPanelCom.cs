@@ -6,7 +6,7 @@ using UnityEngine;
 public class CityPanelCom : IFguiCom
 {
     private GComponent parent;
-    private GComponent armyPanelCom;
+    private GComponent cityPanelCom;
     private bool isShow = false;
     
     // GButton attackBtn;
@@ -20,27 +20,27 @@ public class CityPanelCom : IFguiCom
     // GTextField atkRangeTxt;
     GTextField CityNameTxt;
     GTextField DescribeTxt;
-    // GLoader ArmyIconLoader;
+    // GLoader CityIconLoader;
     
     public IFguiCom Create(GComponent parent)
     {
         // Debug.LogWarning("ScreenInputBtn Create");
         this.parent = parent;
-        armyPanelCom =parent.GetChild("CityPanelCom").asCom;
+        cityPanelCom =parent.GetChild("CityPanelCom").asCom;
 
-        // attackBtn = armyPanelCom.GetChild("AttackBtn").asButton;
-        // restBtn = armyPanelCom.GetChild("RestBtn").asButton;
-        // stationBtn = armyPanelCom.GetChild("StationBtn").asButton;
-        // dismissBtn = armyPanelCom.GetChild("DismissBtn").asButton;
-        // skipBtn = armyPanelCom.GetChild("SkipBtn").asButton;
-        // atkTxt = armyPanelCom.GetChild("AtkTxt").asTextField;
-        hpTxt = armyPanelCom.GetChild("HpTxt").asTextField;
-        // moveForceTxt = armyPanelCom.GetChild("MoveForceTxt").asTextField;
-        // atkRangeTxt = armyPanelCom.GetChild("AtkRangeTxt").asTextField;
-        CityNameTxt = armyPanelCom.GetChild("CityNameTxt").asTextField;
-        // ArmyIconLoader = armyPanelCom.GetChild("ArmyIcon").asLoader;
+        // attackBtn = cityPanelCom.GetChild("AttackBtn").asButton;
+        // restBtn = cityPanelCom.GetChild("RestBtn").asButton;
+        // stationBtn = cityPanelCom.GetChild("StationBtn").asButton;
+        // dismissBtn = cityPanelCom.GetChild("DismissBtn").asButton;
+        // skipBtn = cityPanelCom.GetChild("SkipBtn").asButton;
+        // atkTxt = cityPanelCom.GetChild("AtkTxt").asTextField;
+        hpTxt = cityPanelCom.GetChild("HpTxt").asTextField;
+        // moveForceTxt = cityPanelCom.GetChild("MoveForceTxt").asTextField;
+        // atkRangeTxt = cityPanelCom.GetChild("AtkRangeTxt").asTextField;
+        CityNameTxt = cityPanelCom.GetChild("CityNameTxt").asTextField;
+        // CityIconLoader = cityPanelCom.GetChild("CityIcon").asLoader;
 
-        DescribeTxt = armyPanelCom.GetChild("DescribeTxt").asTextField;
+        DescribeTxt = cityPanelCom.GetChild("DescribeTxt").asTextField;
 
         InitEvent();
         return this;
@@ -78,13 +78,13 @@ public class CityPanelCom : IFguiCom
     {        
         if(unit != null && unit.UnitType == MyEnum.UnitType.City)
         {
-            // atkTxt.text = (unit as IArmy).Atk.ToString();
-            hpTxt.text = (unit as IArmy).CurrentHP.ToString();
-            // moveForceTxt.text = (unit as IArmy).MoveForce.ToString();
-            // atkRangeTxt.text = (unit as IArmy).AttackRadius.ToString();
-            CityNameTxt.text = (unit as IArmy).UnitName;
-            // ArmyNameTxt.text = "TestName";
-            // ArmyIconLoader.url = MyConst.ArmyUIIconPath_small[(unit as IArmy).ArmyType];
+            // atkTxt.text = (unit as ICity).Atk.ToString();
+            hpTxt.text = (unit as ICity).CurrentHP.ToString();
+            // moveForceTxt.text = (unit as ICity).MoveForce.ToString();
+            // atkRangeTxt.text = (unit as ICity).AttackRadius.ToString();
+            CityNameTxt.text = (unit as ICity).UnitName;
+            // CityNameTxt.text = "TestName";
+            // CityIconLoader.url = MyConst.CityUIIconPath_small[(unit as ICity).CityType];
             DescribeTxt.text = "大本营被摧毁时，游戏失败。你的单位只能生成在大本营周围。";
         }
     }

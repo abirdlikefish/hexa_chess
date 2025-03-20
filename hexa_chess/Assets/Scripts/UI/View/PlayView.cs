@@ -91,6 +91,7 @@ public class PlayView : IFguiView
         else if(unit.UnitType == MyEnum.UnitType.City)
         {
             unitUIController.selectedPage = "ShowCity";
+            // Debug.LogWarning("Open City Panel");
         }
         else
         {

@@ -36,6 +36,7 @@ public class ScreenInputBtn : IFguiCom
     }
     public void Show()
     {
+        isMoved = true;
         isShow = true;
         MyEvent.UIUpdate += Update;
     }

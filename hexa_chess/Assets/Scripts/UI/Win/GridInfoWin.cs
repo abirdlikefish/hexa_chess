@@ -36,6 +36,7 @@ public class GridInfoWin : Window , IFguiWin
 
     private void ShowGridInfo(int atkOffset, int defOffset, float moveCost)
     {
+        // Debug.LogWarning("ShowGridInfo");
         Show();
         gridInfoTxt_atk.text = atkOffset.ToString();
         gridInfoTxt_def.text = defOffset.ToString();

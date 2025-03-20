@@ -75,5 +75,47 @@ public class BaseArmy : Unit , IArmy
         armyInfoView_hp.text = CurrentHP.ToString();
         armyInfoView_atk.text = Atk.ToString();
     }
+
+    public void Station()
+    {
+        MoveForce = 0;
+        operationBuff = MyEnum.OperationBuff.Station;
+        unitState = MyEnum.UnitStates.Disable;
+        StartCoroutine(Tmp_ArmyAnimation());
+    }
+
+    public void Rest()
+    {
+        MoveForce = 0;
+        operationBuff = MyEnum.OperationBuff.Rest;
+        unitState = MyEnum.UnitStates.Disable;
+        StartCoroutine(Tmp_ArmyAnimation());
+    }
+
+    public void Dismiss()
+    {
+        StartCoroutine(Tmp_ArmyAnimation_Dismiss());
+    }
+
+    public void Skip()
+    {
+        MoveForce = 0;
+        unitState = MyEnum.UnitStates.Disable;
+        // StartCoroutine(Tmp_ArmyAnimation());
+    }
+
+    IEnumerator Tmp_ArmyAnimation()
+    {
+        yield return new WaitForSeconds(0.3f);
+        MyEvent.AnimaEnd?.Invoke();
+    }
+    IEnumerator Tmp_ArmyAnimation_Dismiss()
+    {
+        yield return new WaitForSeconds(0.3f);
+        MyEvent.AnimaEnd?.Invoke();
+        UnitManager.Instance.ReceiveIncome(theOperator,coin);
+        UnitManager.Instance.RemoveUnit(this);
+    }
+
     
 }

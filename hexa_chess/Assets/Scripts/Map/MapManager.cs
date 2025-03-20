@@ -671,11 +671,13 @@ public class MapManager : IMapManager , IMapManager_edit
     }
     public List<Vector2Int> SetVirtualArea_noHeight(MyEnum.TheOperator theOperator , Vector2Int coord , int viewRange)
     {
-        List<Vector2Int> virtualGridList = GetHexGridCoord(viewRange + 1, coord);
-        foreach(Vector2Int midCoord in virtualGridList)
+        List<Vector2Int> midGridList = GetHexGridCoord(viewRange + 1, coord);
+        List<Vector2Int> virtualGridList = new List<Vector2Int>();
+        foreach(Vector2Int midCoord in midGridList)
         {
             if(!IsInMap(midCoord)) continue;
             gridMap[midCoord.x, midCoord.y].ChangeVirtualField(theOperator, true);
+            virtualGridList.Add(midCoord);
         }
         return virtualGridList;
     }
