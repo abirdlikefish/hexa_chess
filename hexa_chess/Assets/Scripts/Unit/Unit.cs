@@ -90,7 +90,7 @@ public class Unit : MonoBehaviour, IUnit
             default:    finalDamage = damage;
             break;
         }
-        currentHp -= finalDamage;
+        CurrentHP -= finalDamage;
         StartCoroutine(Tmp_DamageAnimation());
         // DestroyCheck();
     }
