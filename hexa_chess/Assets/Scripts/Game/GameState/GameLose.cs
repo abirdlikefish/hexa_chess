@@ -7,6 +7,7 @@ public class GameLose : GameState
     public override void Enter()
     {
         base.Enter();
+        MyEvent.OnGameEnd?.Invoke(MyEnum.TheOperator.Enemy);
     }
 
     public override void Exit()

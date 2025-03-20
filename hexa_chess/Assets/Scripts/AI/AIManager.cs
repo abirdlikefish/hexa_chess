@@ -54,7 +54,7 @@ public class AIManager : MonoBehaviour,IAIManager
 
     public void Action(int round)
     {
-        aiPlayer.Turn(round);
+        StartCoroutine(aiPlayer.Turn(round));
     }
 
     public void EndTurn()

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static AIHelper.AIEnum;
@@ -38,11 +39,11 @@ public class AIPlayer
     /// <summary>
     /// 回合行动
     /// </summary>
-    public void Turn(int round)
+    public IEnumerator Turn(int round)
     {
         Debug.Log($"AIPlayer Turn: Round {round}");
         CreateUnit(round);
-        CalculateOperation();
+        yield return CalculateOperation();
         EndTurn();
     }
 
@@ -60,28 +61,42 @@ public class AIPlayer
                 }
                 else
                 {
+                    List<ICity> homes = UnitManager.Instance.GetCity(MyEnum.TheOperator.Enemy, MyEnum.CityType.Home);
+                    ICity home;
+                    if (homes.Count == 0)
+                    {
+                        Debug.LogError("敌方没有城市");
+                        return;
+                    }
+                    home = homes[0];
+                    var list = MapManager.Instance.SearchCreateArmyArea(MyEnum.TheOperator.Enemy, home.Coord, home.CreateArmyRange);
+                    if(list.Count == 0)
+                    {
+                        Debug.LogError("无法创建部队");
+                        return;
+                    }
                     var army = UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Enemy,
-                        aiCreateUnit.createPos, aiCreateUnit.armyType);
-                    Debug.Log($"AIPlayer CreateArmy: {army} {aiCreateUnit.armyType}");
+                        list[0], aiCreateUnit.armyType);
+                    Debug.Log($"AIPlayer CreateArmy: {army} {aiCreateUnit.armyType} {list[0]}");
                 }
             }
         }
     }
 
-    private void CalculateOperation()
+    private IEnumerator CalculateOperation()
     {
         Debug.Log($"AIPlayer CalculateOperation Start:{_units.Count}");
         foreach (var unit in _units)
         {
-            CalculateOperation(unit);
+            yield return CalculateOperation(unit);
         }
     }
 
-    private void CalculateOperation(IUnit unit)
+    private IEnumerator CalculateOperation(IUnit unit)
     {
         if (unit == null || unit is ICity)
         {
-            return;
+            yield return null;
         }
 
         float homeDisDelta = 0;
@@ -267,6 +282,8 @@ public class AIPlayer
             case AIAction.None:
                 break;
         }
+        yield return new WaitForSeconds(2.0f);
+
     }
 
     private void RestUnit(IUnit unit)
