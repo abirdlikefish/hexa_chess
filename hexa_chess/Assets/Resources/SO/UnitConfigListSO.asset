@@ -28,6 +28,7 @@ MonoBehaviour:
     Occupation: 2
     HaveZOC: 1
     creatableArmy: 
+    createArmyRange: 0
   - prefabPath: Prefabs/Tank
     unitType: 1
     armyType: 2
@@ -43,6 +44,7 @@ MonoBehaviour:
     Occupation: 1
     HaveZOC: 0
     creatableArmy: 
+    createArmyRange: 0
   - prefabPath: Prefabs/Tank
     unitType: 1
     armyType: 1
@@ -58,6 +60,7 @@ MonoBehaviour:
     Occupation: 1
     HaveZOC: 0
     creatableArmy: 
+    createArmyRange: 0
   cityConfigList:
   - prefabPath: Prefabs/Home
     unitType: 2
@@ -74,3 +77,4 @@ MonoBehaviour:
     Occupation: 0
     HaveZOC: 1
     creatableArmy: 010000000200000003000000
+    createArmyRange: 2

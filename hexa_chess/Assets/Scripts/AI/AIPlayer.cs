@@ -14,7 +14,7 @@ public class AIPlayer
     ///// 视野范围
     ///// </summary>
     //private HashSet<Vector2Int> _inviews;
-
+    private AICreateUnitSO aiCreateUnitSO;
     private List<IUnit> _units
     {
         get
@@ -23,11 +23,11 @@ public class AIPlayer
         }
     }
 
-    public AIPlayer()
+    public AIPlayer(AICreateUnitSO aiCreateUnitSO)
     {
         //_visited = new HashSet<Vector2Int>();
         //_inviews = new HashSet<Vector2Int>();
-
+        this.aiCreateUnitSO = aiCreateUnitSO;
     }
 
     public void OnInit()
@@ -41,13 +41,36 @@ public class AIPlayer
     public void Turn(int round)
     {
         Debug.Log($"AIPlayer Turn: Round {round}");
+        CreateUnit(round);
         CalculateOperation();
         EndTurn();
     }
 
+    private void CreateUnit(int round)
+    {
+        foreach (var aiCreateUnit in aiCreateUnitSO.aiCreateUnits)
+        {
+            if (aiCreateUnit.round == round)
+            {
+                if (aiCreateUnit.unitType == MyEnum.UnitType.City)
+                {
+                    var city = UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Enemy,
+                        aiCreateUnit.createPos, aiCreateUnit.cityType);
+                    Debug.Log($"AIPlayer CreateCity: {city} {aiCreateUnit.cityType}");
+                }
+                else
+                {
+                    var army = UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Enemy, 
+                        aiCreateUnit.createPos, aiCreateUnit.armyType);
+                    Debug.Log($"AIPlayer CreateArmy: {army} {aiCreateUnit.armyType}");
+                }
+            }
+        }
+    }
+
     private void CalculateOperation()
     {
-        Debug.Log($"$AIPlayer CalculateOperation Start:{_units.Count}");
+        Debug.Log($"AIPlayer CalculateOperation Start:{_units.Count}");
         foreach (var unit in _units)
         {
             CalculateOperation(unit);
