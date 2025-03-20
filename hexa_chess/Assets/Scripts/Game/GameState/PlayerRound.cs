@@ -37,6 +37,7 @@ public class PlayerRound : GameState
         UnitManager.Instance.RoundBeginOperation(MyEnum.TheOperator.Player);
         MyEvent.OnPress += ShowGridInfoWin;
         MyEvent.OnPressEnd += CloseGridInfoWin;
+        MyEvent.EnterPlayerRound?.Invoke(true);
 
         DefaultSelectedUnit = UnitManager.Instance.GetAbleUnit(MyEnum.TheOperator.Player);
     }
@@ -50,6 +51,7 @@ public class PlayerRound : GameState
         //GameManager.instance.IncreaseRoundsCounter();
         MyEvent.OnPress -= ShowGridInfoWin;
         MyEvent.OnPressEnd -= CloseGridInfoWin;
+        MyEvent.EnterPlayerRound?.Invoke(false);
     }
 
     // public override void PressTestButton()

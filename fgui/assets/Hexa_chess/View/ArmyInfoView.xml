@@ -7,7 +7,6 @@
     <image id="n6_sgdj" name="n6" src="sgdj1k" fileName="Resources/Panel/图标-血.png" xy="81,81" size="20,26" aspect="true">
       <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </image>
-    <image id="n7_sgdj" name="n7" src="lr781a" fileName="Resources/Panel/图标-步兵.png" xy="21,20"/>
     <text id="n2_8qxp" name="AtkTxt" xy="21,69" size="20,45" font="ui://wcwip4ahlr78v" fontSize="33" color="#ffcc33" align="center" vAlign="middle" text="5">
       <relation target="n5_sgdj" sidePair="width-width%,height-height%,middle-middle%,left-right"/>
     </text>

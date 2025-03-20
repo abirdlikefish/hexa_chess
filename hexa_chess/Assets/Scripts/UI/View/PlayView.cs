@@ -18,6 +18,7 @@ public class PlayView : IFguiView
     GTextField roundTxt;
 
     Controller unitUIController;
+    Controller roundController;
 
     List<IFguiCom> fguiOtherComs;
     public IFguiView Init()
@@ -33,6 +34,7 @@ public class PlayView : IFguiView
         GRoot.inst.AddChild(playView);
         MyEvent.OpenUnitUI += OpenUnitUI;
         MyEvent.SetGlobalInfo += SetGlobalInfo;
+        MyEvent.EnterPlayerRound += EnterPlayerRound;
         Stage.inst.onMouseWheel.Add(OnMouseWheel);
         foreach (var item in fguiOtherComs)
         {
@@ -46,6 +48,7 @@ public class PlayView : IFguiView
         GRoot.inst.RemoveChild(playView);
         MyEvent.OpenUnitUI -= OpenUnitUI;
         MyEvent.SetGlobalInfo -= SetGlobalInfo;
+        MyEvent.EnterPlayerRound -= EnterPlayerRound;
         Stage.inst.onMouseWheel.Remove(OnMouseWheel);
         foreach (var item in fguiOtherComs)
         {
@@ -60,6 +63,7 @@ public class PlayView : IFguiView
         unitCntTxt = playView.GetChild("UnitCntTxt").asTextField;
         roundTxt = playView.GetChild("RoundTxt").asTextField;
         unitUIController = playView.GetController("UnitUIController");
+        roundController = playView.GetController("RoundController");
 
         fguiOtherComs = new List<IFguiCom>
         {
@@ -110,7 +114,18 @@ public class PlayView : IFguiView
         InputEvent inputEvent = (InputEvent)context.data;
         float delta = inputEvent.mouseWheelDelta;
         // Debug.Log("Mouse Wheel Delta: " + delta);
-        MyEvent.CameraMove?.Invoke(new Vector3(0,0,delta));
+        MyEvent.CameraMove?.Invoke(new Vector3(0,0,-delta));
+    }
+    private void EnterPlayerRound(bool isPlayerRound)
+    {
+        if(isPlayerRound)
+        {
+            roundController.selectedPage = "PlayerRound";
+        }
+        else
+        {
+            roundController.selectedPage = "EnemyRound";
+        }
     }
 
 }
