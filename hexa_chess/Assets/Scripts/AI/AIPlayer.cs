@@ -60,7 +60,7 @@ public class AIPlayer
                 }
                 else
                 {
-                    var army = UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Enemy, 
+                    var army = UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Enemy,
                         aiCreateUnit.createPos, aiCreateUnit.armyType);
                     Debug.Log($"AIPlayer CreateArmy: {army} {aiCreateUnit.armyType}");
                 }
@@ -131,9 +131,11 @@ public class AIPlayer
         Dictionary<Vector2Int, double> moveValues = new();
         foreach (var pos in moveablePos)
         {
+            homeDisDelta = AIHelper.Instance.GetHomeDistanceDelta(unit.Coord, pos);
             var newEnemyNum = AIHelper.Instance.GetEnemyNumCanAttackPos(pos);
-            double moveValue = (0.5 + hpPercentage) * (1 + 0.3 * newEnemyNum) * 5;
+            double moveValue = (0.5 + hpPercentage) * (1 + 0.3 * newEnemyNum) * 5 + (1 + 2 * homeDisDelta);
             moveValues.Add(pos, moveValue);
+            Debug.Log($"AIPlayer CalculateOperation MoveValues:{pos} {moveValue}");
         }
 
         List<Vector2Int> moveableCanRestOrAttackPos = AIHelper.Instance.GetReachablePos(unit, unit.MoveForce - 0.5f);
@@ -291,8 +293,16 @@ public class AIPlayer
 
     private void MoveUnit(IUnit unit, Vector2Int coordPosition)
     {
-        MapManager.Instance.SearchMovableArea(unit.TheOperator, unit.Coord, unit.MoveForce);
+        Debug.Log($"AIPlayer MoveUnit: {unit.Coord} {coordPosition} {unit.MoveForce}");
+        var mid = MapManager.Instance.SearchMovableArea(unit.TheOperator, unit.Coord, unit.MoveForce);
+        Debug.LogWarning("AIPlayer MoveUnit: " + mid.Count + mid.Contains(coordPosition));
+
         var movePath = MapManager.Instance.GetMovePath(coordPosition, out var moveCost);
+        if (movePath == null)
+        {
+            Debug.Log("AIPlayer MoveUnit: movePath is null");
+            return;
+        }
         (unit as IArmy)?.Move(movePath, moveCost);
     }
 

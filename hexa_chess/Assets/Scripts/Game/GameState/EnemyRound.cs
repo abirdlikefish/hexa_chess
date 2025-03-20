@@ -13,12 +13,14 @@ public class EnemyRound : GameState
     {
         base.Enter();
         MyEvent.EnemyRoundEnd += EnemyRoundEnd;
+        UnitManager.Instance.RoundBeginOperation(MyEnum.TheOperator.Enemy);
         AIManager.Instance.Action(GameManager.instance.CurrentRoundsCounter());
     }
 
     public override void Exit()
     {
         base.Exit();
+        MyEvent.EnemyRoundEnd -= EnemyRoundEnd;
         GameManager.instance.IncreaseRoundsCounter();
     }
 

@@ -529,6 +529,7 @@ public class MapManager : IMapManager , IMapManager_edit
     {
         if(!IsInMap(endCoord) || gridMap[endCoord.x, endCoord.y].currentUIState != MyEnum.GridUIState.Legal)
         {
+            Debug.LogError($"GetMovePath: Out of Map or Illegal {IsInMap(endCoord)} {gridMap[endCoord.x, endCoord.y].currentUIState}");
             moveCost = -1;
             return null;
         }
