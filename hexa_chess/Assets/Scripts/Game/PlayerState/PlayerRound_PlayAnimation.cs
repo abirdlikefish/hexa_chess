@@ -22,6 +22,6 @@ public class PlayerRound_PlayAnimation : PlayerRoundState
     {
         GameManager.instance.JudgeShouldEndGame();
         playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
-        // Debug.Log("animation state end");
+        Debug.LogWarning("animation state end");
     }
 }
