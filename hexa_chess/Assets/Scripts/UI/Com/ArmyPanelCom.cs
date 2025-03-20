@@ -79,8 +79,8 @@ public class ArmyPanelCom : IFguiCom
             hpTxt.text = (unit as IArmy).CurrentHP.ToString();
             moveForceTxt.text = (unit as IArmy).MoveForce.ToString();
             atkRangeTxt.text = (unit as IArmy).AttackRadius.ToString();
-            // ArmyNameTxt.text = (unit as IArmy).ArmyName;
-            ArmyNameTxt.text = "TestName";
+            ArmyNameTxt.text = (unit as IArmy).UnitName;
+            // ArmyNameTxt.text = "TestName";
             ArmyIconLoader.url = MyConst.ArmyUIIconPath_small[(unit as IArmy).ArmyType];
         }
     }

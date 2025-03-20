@@ -65,6 +65,7 @@ public class PlayView : IFguiView
         {
             new ScreenInputBtn().Create(playView),
             new ArmyPanelCom().Create(playView),
+            new CityPanelCom().Create(playView),
             new CreateArmyCom().Create(playView),
         };
 

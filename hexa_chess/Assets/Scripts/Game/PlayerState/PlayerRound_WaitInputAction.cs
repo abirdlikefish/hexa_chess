@@ -21,6 +21,7 @@ public class PlayerRound_WaitInputAction : PlayerRoundState
         //左键取消选中
         MyEvent.OnGridClick_left += SelectGrid_left;
         MyEvent.OnGridClick_right += SelectGrid_right;
+        MyEvent.OnClick_skipBtn += PressSkip;
         MyEvent.OpenUnitUI?.Invoke(playerStateMachine.selectedUnit);
         MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Player, playerStateMachine.selectedGrid.Value, playerStateMachine.selectedUnit.MoveForce);
         // Debug.Log("unit moveForce:" + playerStateMachine.selectedUnit.MoveForce);
@@ -33,6 +34,7 @@ public class PlayerRound_WaitInputAction : PlayerRoundState
         MyEvent.OnClick_dismissBtn -= SelectedDismiss;
         MyEvent.OnGridClick_right -= SelectGrid_right;
         MyEvent.OnGridClick_left -= SelectGrid_left;
+        MyEvent.OnClick_skipBtn -= PressSkip;
         MyEvent.OpenUnitUI?.Invoke(null);
         MapManager.Instance.CloseMapUI(MyEnum.TheOperator.Player);
         base.Exit();
@@ -93,6 +95,21 @@ public class PlayerRound_WaitInputAction : PlayerRoundState
     {
         (playerStateMachine.selectedUnit as IArmy).Rest();
         playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
+    }
+
+    private void PressSkip()
+    {
+        (playerStateMachine.selectedUnit as IArmy ).Skip();
+        playerStateMachine.selectedUnit = UnitManager.Instance.GetAbleUnit(MyEnum.TheOperator.Player);
+        if (playerStateMachine.selectedUnit == null)
+        {
+            playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
+        }
+        else
+        {
+            playerStateMachine.selectedGrid = playerStateMachine.selectedUnit.Coord;
+            playerStateMachine.ChangeState(MyEnum.PlayerRoundState.WaitInput_WhichAction);
+        }
     }
     
 }

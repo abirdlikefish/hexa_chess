@@ -30,6 +30,4 @@ public class PlayerRoundState
     public virtual void Update()
     {
     }
-
-    
 }

@@ -61,17 +61,22 @@ public class PlayerRound : GameState
     {
         //todo:这里要执行Skip
         // DefaultSelectedUnit?.Skip();
-        //DefaultSelectedUnit = UnitManager.Instance.GetAbleUnit(MyEnum.TheOperator.Player);
-        //if (DefaultSelectedUnit != null)
-        //{
-        //    playerRoundStateMachine.selectedUnit = DefaultSelectedUnit;
-        //    playerRoundStateMachine.selectedGrid = playerRoundStateMachine.selectedUnit.Coord;
-        //    playerRoundStateMachine.ChangeState(MyEnum.PlayerRoundState.WaitInput_WhichAction);
-        //}
-        //else
-        //{
-        //    gameStateMachine.ChangeState(MyEnum.GameState.EnemyRound);
-        //}
+        /*if (playerRoundStateMachine.selectedUnit != null)
+        {
+            MyEvent.OnClick_skipBtn?.Invoke();
+            return;
+        }
+        DefaultSelectedUnit = UnitManager.Instance.GetAbleUnit(MyEnum.TheOperator.Player);
+        if (DefaultSelectedUnit != null)
+        {
+            playerRoundStateMachine.selectedUnit = DefaultSelectedUnit;
+            playerRoundStateMachine.selectedGrid = DefaultSelectedUnit.Coord;
+            playerRoundStateMachine.ChangeState(MyEnum.PlayerRoundState.WaitInput_WhichAction);
+        }
+        else
+        {
+            gameStateMachine.ChangeState(MyEnum.GameState.EnemyRound);
+        }*/
         gameStateMachine.ChangeState(MyEnum.GameState.EnemyRound);
     }
     

@@ -407,6 +407,7 @@ public class MapManager : IMapManager , IMapManager_edit
         }
         OpenMapUI(theOperator);
         GridHeap searchQueue = new GridHeap();
+        searchMovableAreaGridInfoMap = new SearchMovableAreaGridInfo[mapSize * 2 - 1, mapSize * 2 - 1];
         searchMovableAreaGridInfoMap[coord.x, coord.y].SetGrid(coord, 0 , gridMap[coord.x , coord.y].GetHeight(), MyEnum.MoveDirection.Up);
         searchQueue.Add(new Vector3(0, coord.x, coord.y));
         List<Vector2Int> movableGridList = new List<Vector2Int>();
@@ -417,6 +418,7 @@ public class MapManager : IMapManager , IMapManager_edit
             Vector2Int midCoord = new Vector2Int((int)mid.y, (int)mid.z);
             if(midCost != searchMovableAreaGridInfoMap[midCoord.x, midCoord.y].moveCost) continue;
             // if(midCost > moveForce) continue;
+            gridMap[midCoord.x, midCoord.y].ChangeUIState(theOperator , MyEnum.GridUIState.Legal);
             movableGridList.Add(midCoord);
             foreach(MyEnum.MoveDirection moveDirection in MyEnum.MoveDirection.GetValues(typeof(MyEnum.MoveDirection)))
             {
@@ -670,7 +672,7 @@ public class MapManager : IMapManager , IMapManager_edit
     }
     public List<Vector2Int> SetVirtualArea_noHeight(MyEnum.TheOperator theOperator , Vector2Int coord , int viewRange)
     {
-        List<Vector2Int> virtualGridList = GetHexGridCoord(viewRange, coord);
+        List<Vector2Int> virtualGridList = GetHexGridCoord(viewRange + 1, coord);
         foreach(Vector2Int midCoord in virtualGridList)
         {
             if(!IsInMap(midCoord)) continue;

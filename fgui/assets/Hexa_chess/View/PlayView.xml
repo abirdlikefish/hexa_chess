@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="1920,1080" designImage="ui://wcwip4ahlr7814" designImageAlpha="0">
-  <controller name="UnitUIController" pages="0,Hide,1,ShowArmy,2,ShowCity" selected="0"/>
+  <controller name="UnitUIController" pages="0,Hide,1,ShowArmy,2,ShowCity" selected="1"/>
   <displayList>
     <component id="n0_rznp" name="ScreenInputBtn" src="rznp1" fileName="Com/ScreenInputBtn.xml" xy="0,-2" size="1920,1080">
       <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
@@ -32,10 +32,13 @@
     </text>
     <group id="n24_lr78" name="GlobalInfo" xy="0,0" size="1920,89"/>
     <component id="n36_lr78" name="CreateArmyCom" src="lr78z" fileName="Com/CreateArmyCom.xml" xy="1002,948">
-      <gearDisplay controller="UnitUIController" pages="1,2"/>
+      <gearDisplay controller="UnitUIController" pages="2"/>
     </component>
     <component id="n40_sgdj" name="ArmyPanelCom" src="lr78w" fileName="Com/ArmyPanelCom.xml" xy="-12,743">
       <gearDisplay controller="UnitUIController" pages="1"/>
+    </component>
+    <component id="n47_sgdj" name="CityPanelCom" src="sgdj1o" fileName="Com/CityPanelCom.xml" xy="-12,743">
+      <gearDisplay controller="UnitUIController" pages="2"/>
     </component>
   </displayList>
 </component>
