@@ -71,7 +71,7 @@ public class CreateArmyCom : IFguiCom
     }
     void OpenUnitUI(IUnit unit)
     {
-        if(unit != null && unit.UnitType == MyEnum.UnitType.Army)
+        if(unit != null && unit.UnitType == MyEnum.UnitType.City)
         {
             SelectArmy(null);
         }

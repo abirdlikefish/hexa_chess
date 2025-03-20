@@ -27,6 +27,7 @@ public static class MyEvent
     public static Action<Vector2, Vector2, Vector2> SetGlobalInfo;
     public static Action<int , int , float> ShowGridInfoWin;
     public static Action HideGridInfoWin;
+    public static Action<bool> EnterPlayerRound;
 
     public static Action<Vector3> CameraMove;
     public static Action<Vector3> DragScreen;

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="1920,1080" designImage="ui://wcwip4ahlr7814" designImageAlpha="0">
-  <controller name="UnitUIController" pages="0,Hide,1,ShowArmy,2,ShowCity" selected="1"/>
+  <controller name="UnitUIController" pages="0,Hide,1,ShowArmy,2,ShowCity" selected="0"/>
+  <controller name="RoundController" pages="0,PlayerRound,1,EnemyRound,2,EndRound" selected="0"/>
   <displayList>
     <component id="n0_rznp" name="ScreenInputBtn" src="rznp1" fileName="Com/ScreenInputBtn.xml" xy="0,-2" size="1920,1080">
       <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </component>
     <component id="n2_ku3u" name="NextBtn" src="pdzn3" fileName="Com/Btn.xml" xy="1622,924" size="306,149">
+      <gearDisplay controller="RoundController" pages="0"/>
       <relation target="" sidePair="right-right,bottom-bottom"/>
       <Button icon="ui://wcwip4ahlr7815"/>
     </component>
