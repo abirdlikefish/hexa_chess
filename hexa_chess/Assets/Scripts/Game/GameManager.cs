@@ -106,6 +106,7 @@ class GameManager : MonoBehaviour
     public void IncreaseRoundsCounter()
     {
         roundsCounter++;
+        Debug.Log($"roundsCounter:{roundsCounter}");
     }
     
     

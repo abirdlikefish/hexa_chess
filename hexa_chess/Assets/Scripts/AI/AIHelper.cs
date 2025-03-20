@@ -126,6 +126,7 @@ public class AIHelper
 
     public List<Vector2Int> GetReachablePos(IUnit unit)
     {
+        Debug.Log($"GetReachablePos:{unit.Coord} {unit.MoveForce}");
         return MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Enemy, unit.Coord, unit.MoveForce);
     }
 

@@ -21,6 +21,7 @@ public class BaseArmy : Unit , IArmy
         if (unitState == MyEnum.UnitStates.Able)
         {
             Sequence sequence = DOTween.Sequence();
+            Debug.Log($"Path Count:{path?.Count}");
             for(int i = path.Count - 2; i >= 0; i--)
             {
                 sequence.Append(transform.DOMove((Vector3)MapManager.Coord_To_Pos(path[i]),1.0f/MovingSpeed).SetEase(Ease.Linear));
