@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component size="231,153" designImage="ui://wcwip4ahsgdj1n" designImageAlpha="100">
+<component size="231,153" designImage="ui://wcwip4ahsgdj1n" designImageAlpha="0">
   <displayList>
     <image id="n7_sgdj" name="n7" src="sgdj1g" fileName="Resources/Grid/弹窗2.png" xy="0,0"/>
     <text id="n8_sgdj" name="n8" xy="18,15" size="124,34" font="ui://wcwip4ahlr78v" fontSize="24" color="#ffffff" text="行动力消耗">

@@ -56,6 +56,7 @@
     <image id="sgdj1l" name="图标-行动力.png" path="/Resources/Panel/"/>
     <image id="sgdj1m" name="跳过键.png" path="/Resources/Panel/"/>
     <image id="sgdj1n" name="背景1.png" path="/Resources/"/>
+    <component id="sgdj1o" name="CityPanelCom.xml" path="/Com/"/>
   </resources>
   <publish name=""/>
 </packageDescription>
