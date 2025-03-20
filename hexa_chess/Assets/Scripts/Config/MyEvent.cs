@@ -46,4 +46,9 @@ public static class MyEvent
     /// AI回合结束
     /// </summary>
     public static Action EnemyRoundEnd;
+
+    /// <summary>
+    /// 游戏结束
+    /// </summary>
+    public static Action<MyEnum.TheOperator> OnGameEnd;
 }
