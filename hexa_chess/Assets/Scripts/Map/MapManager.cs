@@ -23,6 +23,8 @@ public interface IMapManager
     /// </summary>
     public List<Vector2Int> GetMovePath(Vector2Int endCoord , out float moveCost);
     public List<Vector2Int> SearchAttackArea(MyEnum.TheOperator theOperator , Vector2Int coord , float atkRange);
+    public List<Vector2Int> SearchCreateArmyArea(MyEnum.TheOperator theOperator , Vector2Int coord , int createRange);
+    public Vector2Int? GetCreateArmyArea(Vector2Int coord);
     public IUnit GetAttackedUnit(Vector2Int coord);
     public List<Vector2Int> SetVirtualArea(MyEnum.TheOperator theOperator , Vector2Int coord , int viewRange);
     public List<Vector2Int> SetVirtualArea_noHeight(MyEnum.TheOperator theOperator , Vector2Int coord , int viewRange);
@@ -586,6 +588,37 @@ public class MapManager : IMapManager , IMapManager_edit
         }
         return attackGridList;
     }
+    public List<Vector2Int> SearchCreateArmyArea(MyEnum.TheOperator theOperator , Vector2Int coord , int createRange)
+    {
+        OpenMapUI(theOperator);
+        List<Vector2Int> midGridList = GetHexGridCoord(createRange, coord);
+        List<Vector2Int> createArmyGridList = new List<Vector2Int>();
+        foreach(Vector2Int midCoord in midGridList)
+        {
+            if(!IsInMap(midCoord)) continue;
+            if(gridMap[midCoord.x, midCoord.y].GetUnit(MyEnum.UnitType.Army) != null)   continue;
+            if(gridMap[midCoord.x, midCoord.y].GetUnit(MyEnum.UnitType.City) != null)   continue;
+            if(gridMap[midCoord.x, midCoord.y].GetHeight() > 0) continue;
+            gridMap[midCoord.x, midCoord.y].ChangeUIState(theOperator, MyEnum.GridUIState.Legal);
+            createArmyGridList.Add(midCoord);
+        }
+        return createArmyGridList;
+    }
+
+    public Vector2Int? GetCreateArmyArea(Vector2Int coord)
+    {
+        if(!IsInMap(coord))
+        {
+            Debug.LogError("GetCreateArmyArea: Out of Map");
+            return null;
+        }
+        if(gridMap[coord.x, coord.y].currentUIState != MyEnum.GridUIState.Legal)
+        {
+            return null;
+        }
+        return coord;
+    }
+        
     public IUnit GetAttackedUnit(Vector2Int coord)
     {
         if(!IsInMap(coord))

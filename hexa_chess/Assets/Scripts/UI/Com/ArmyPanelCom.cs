@@ -18,6 +18,8 @@ public class ArmyPanelCom : IFguiCom
     GTextField hpTxt;
     GTextField moveForceTxt;
     GTextField atkRangeTxt;
+    GTextField ArmyNameTxt;
+    GLoader ArmyIconLoader;
     
     public IFguiCom Create(GComponent parent)
     {
@@ -34,6 +36,8 @@ public class ArmyPanelCom : IFguiCom
         hpTxt = armyPanelCom.GetChild("HpTxt").asTextField;
         moveForceTxt = armyPanelCom.GetChild("MoveForceTxt").asTextField;
         atkRangeTxt = armyPanelCom.GetChild("AtkRangeTxt").asTextField;
+        ArmyNameTxt = armyPanelCom.GetChild("ArmyNameTxt").asTextField;
+        ArmyIconLoader = armyPanelCom.GetChild("ArmyIcon").asLoader;
 
         InitEvent();
         return this;
@@ -75,6 +79,9 @@ public class ArmyPanelCom : IFguiCom
             hpTxt.text = (unit as IArmy).CurrentHP.ToString();
             moveForceTxt.text = (unit as IArmy).MoveForce.ToString();
             atkRangeTxt.text = (unit as IArmy).AttackRadius.ToString();
+            // ArmyNameTxt.text = (unit as IArmy).ArmyName;
+            ArmyNameTxt.text = "TestName";
+            ArmyIconLoader.url = MyConst.ArmyUIIconPath_small[(unit as IArmy).ArmyType];
         }
     }
 }

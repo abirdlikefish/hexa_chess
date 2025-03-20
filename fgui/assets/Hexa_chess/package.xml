@@ -11,7 +11,6 @@
     <image id="pdzn7" name="丘.png" path="/Resources/Grid/"/>
     <image id="pdzn8" name="山.png" path="/Resources/Grid/"/>
     <image id="pdzn9" name="洼.png" path="/Resources/Grid/"/>
-    <image id="iudva" name="testbutton.png" path="/Resources/"/>
     <image id="ku3ub" name="Homura_stand0005.png" path="/Resources/"/>
     <component id="9llvc" name="Btn_4.xml" path="/Com/"/>
     <component id="8qxpd" name="ArmyInfoView.xml" path="/View/" exported="true"/>
@@ -48,6 +47,15 @@
     <image id="lr781c" name="图标-坦克.png" path="/Resources/Panel/"/>
     <image id="lr781d" name="休息1.png" path="/Resources/Panel/"/>
     <image id="lr781e" name="驻扎1.png" path="/Resources/Panel/"/>
+    <image id="sgdj1f" name="弹窗1.png" path="/Resources/Army/"/>
+    <image id="sgdj1g" name="弹窗2.png" path="/Resources/Grid/"/>
+    <image id="sgdj1h" name="状态栏-拆分.png" path="/Resources/"/>
+    <image id="sgdj1i" name="金币.png" path="/Resources/"/>
+    <image id="sgdj1j" name="单位上限.png" path="/Resources/"/>
+    <image id="sgdj1k" name="图标-血.png" path="/Resources/Panel/"/>
+    <image id="sgdj1l" name="图标-行动力.png" path="/Resources/Panel/"/>
+    <image id="sgdj1m" name="跳过键.png" path="/Resources/Panel/"/>
+    <image id="sgdj1n" name="背景1.png" path="/Resources/"/>
   </resources>
   <publish name=""/>
 </packageDescription>

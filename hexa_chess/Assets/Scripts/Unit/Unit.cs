@@ -5,6 +5,8 @@ using UnityEngine;
 using System.Linq;
 public class Unit : MonoBehaviour, IUnit
 {
+    private string unitName;
+    public string UnitName{get {return unitName;} set{unitName = value;}}
     protected MyEnum.UnitType unitType;
     public MyEnum.UnitType UnitType => unitType;
     //单位配置文件

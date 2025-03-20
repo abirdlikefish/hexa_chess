@@ -8,28 +8,27 @@ public class PlayerRound_SelectedBase : PlayerRoundState
     {
     }
 
-    public MyEnum.ArmyType selectedType;
+    private MyEnum.ArmyType selectedType;
 
     public override void Enter()
     {
         base.Enter();
-        MyEvent.OnClick_GenerateBtn += CreateUnit;
+        // MyEvent.OnClick_GenerateBtn += CreateUnit;
         MyEvent.OnClick_skipBtn += PressSkip;
+        MyEvent.OnGridClick_left += SelectGrid;
+        MyEvent.SelectArmyToCreate += SelectArmyToCreate;
+        // MapManager.Instance.SearchCreateArmyArea(MyEnum.TheOperator.Player , playerStateMachine.selectedGrid.Value, (playerStateMachine.selectedUnit as ICity));
+MapManager.Instance.SearchCreateArmyArea(MyEnum.TheOperator.Player , playerStateMachine.selectedGrid.Value, 5);
     }
 
     public override void Exit()
     {
         base.Exit();
-        MyEvent.OnClick_GenerateBtn -= CreateUnit;
+        // MyEvent.OnClick_GenerateBtn -= CreateUnit;
         MyEvent.OnClick_skipBtn -= PressSkip;
-    }
-
-    private void CreateUnit(MyEnum.ArmyType armyType)
-    {
-        Vector2Int? createGrid = playerStateMachine.selectedGrid;
-        MyEnum.MoveDirection randomDir= (MyEnum.MoveDirection)Random.Range(0, 6);
-        createGrid = createGrid ?? createGrid.Value + MyConst.MoveStep[randomDir];
-        UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Player,createGrid.Value, armyType);
+        MyEvent.OnGridClick_left -= SelectGrid;
+        MyEvent.SelectArmyToCreate -= SelectArmyToCreate;
+        MapManager.Instance.CloseMapUI(MyEnum.TheOperator.Player);
     }
 
     private void PressSkip()
@@ -45,5 +44,24 @@ public class PlayerRound_SelectedBase : PlayerRoundState
             playerStateMachine.selectedGrid = ableUnit.Coord;
             playerStateMachine.ChangeState(MyEnum.PlayerRoundState.WaitInput_WhichAction);
         }
+    }
+
+    public void SelectGrid(Vector2Int? coord)
+    {        
+        if (coord == null) return;
+        Vector2Int? selectedUnit = MapManager.Instance.GetCreateArmyArea(coord.Value);
+        if (selectedUnit == null)
+        {
+            Cancel();
+            return;
+        }
+        UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Player, selectedUnit.Value, selectedType);
+        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
+    }
+
+    private void SelectArmyToCreate(MyEnum.ArmyType armyType)
+    {
+        selectedType = armyType;
+        if(selectedType == MyEnum.ArmyType.None) return;
     }
 }

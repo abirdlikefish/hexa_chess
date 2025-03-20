@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component size="1920,1080" designImage="ui://wcwip4ahlr7814">
-  <controller name="UnitUIController" pages="0,Hide,1,ShowArmy,2,ShowCity" selected="1"/>
+<component size="1920,1080" designImage="ui://wcwip4ahlr7814" designImageAlpha="0">
+  <controller name="UnitUIController" pages="0,Hide,1,ShowArmy,2,ShowCity" selected="0"/>
   <displayList>
     <component id="n0_rznp" name="ScreenInputBtn" src="rznp1" fileName="Com/ScreenInputBtn.xml" xy="0,-2" size="1920,1080">
       <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
-    </component>
-    <component id="n1_iudv" name="TestBtn" src="pdzn3" fileName="Com/Btn.xml" xy="78,548" size="242,59">
-      <Button icon="ui://wcwip4ahiudva"/>
     </component>
     <component id="n2_ku3u" name="NextBtn" src="pdzn3" fileName="Com/Btn.xml" xy="1622,924" size="306,149">
       <relation target="" sidePair="right-right,bottom-bottom"/>
       <Button icon="ui://wcwip4ahlr7815"/>
     </component>
-    <text id="n21_lr78" name="MoneyTxt" xy="136,13" size="161,66" group="n24_lr78" font="ui://wcwip4ahlr78v" fontSize="50" color="#ffffff" align="center" vAlign="middle" text="100+10">
-      <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
+    <image id="n41_sgdj" name="n41" src="sgdj1h" fileName="Resources/状态栏-拆分.png" xy="0,0" group="n24_lr78">
+      <relation target="" sidePair="width-width%,height-height%,center-center%,top-top"/>
+    </image>
+    <image id="n42_sgdj" name="n42" src="sgdj1i" fileName="Resources/金币.png" xy="71,19" size="57,47" group="n24_lr78">
+      <relation target="n41_sgdj" sidePair="width-width%,height-height%,middle-middle%,left-left"/>
+    </image>
+    <text id="n21_lr78" name="MoneyTxt" xy="145,10" size="161,66" group="n24_lr78" font="ui://wcwip4ahlr78v" fontSize="50" color="#ffffff" align="center" vAlign="middle" text="100+10">
+      <relation target="n42_sgdj" sidePair="width-width%,height-height%,middle-middle%,left-right"/>
     </text>
-    <text id="n22_lr78" name="UnitCntTxt" xy="443,12" size="100,66" group="n24_lr78" font="ui://wcwip4ahlr78v" fontSize="50" color="#ffffff" align="center" vAlign="middle" text="5/10">
-      <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
+    <image id="n43_sgdj" name="n43" src="sgdj1j" fileName="Resources/单位上限.png" xy="344,19" size="66,47" group="n24_lr78">
+      <relation target="n41_sgdj" sidePair="width-width%,height-height%,middle-middle%,left-left"/>
+    </image>
+    <text id="n22_lr78" name="UnitCntTxt" xy="449,10" size="100,66" group="n24_lr78" font="ui://wcwip4ahlr78v" fontSize="50" color="#ffffff" align="center" vAlign="middle" text="5/10">
+      <relation target="n43_sgdj" sidePair="width-width%,height-height%,middle-middle%,left-right"/>
     </text>
-    <text id="n23_lr78" name="RoundTxt" xy="1749,7" size="75,66" group="n24_lr78" font="ui://wcwip4ahlr78v" fontSize="50" color="#ffffff" align="center" vAlign="middle" text="1/8">
-      <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
+    <text id="n23_lr78" name="RoundTxt" xy="1749,11" size="75,66" group="n24_lr78" font="ui://wcwip4ahlr78v" fontSize="50" color="#ffffff" align="center" vAlign="middle" text="1/8">
+      <relation target="n45_sgdj" sidePair="width-width%,height-height%,middle-middle%,left-right"/>
     </text>
-    <group id="n24_lr78" name="GlobalInfo" xy="136,7" size="1688,72"/>
+    <text id="n45_sgdj" name="n44" xy="1537,11" size="204,66" group="n24_lr78" font="ui://wcwip4ahlr78v" fontSize="50" color="#ffffff" align="center" vAlign="middle" text="回合数：">
+      <relation target="n41_sgdj" sidePair="width-width%,height-height%,middle-middle%,right-right"/>
+    </text>
+    <group id="n24_lr78" name="GlobalInfo" xy="0,0" size="1920,89"/>
     <component id="n36_lr78" name="CreateArmyCom" src="lr78z" fileName="Com/CreateArmyCom.xml" xy="1002,948">
       <gearDisplay controller="UnitUIController" pages="1,2"/>
     </component>
-    <component id="n40_sgdj" name="n40" src="lr78w" fileName="Com/ArmyPanelCom.xml" xy="-12,743">
+    <component id="n40_sgdj" name="ArmyPanelCom" src="lr78w" fileName="Com/ArmyPanelCom.xml" xy="-12,743">
       <gearDisplay controller="UnitUIController" pages="1"/>
     </component>
   </displayList>

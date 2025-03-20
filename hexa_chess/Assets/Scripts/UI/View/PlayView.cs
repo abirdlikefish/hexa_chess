@@ -8,7 +8,7 @@ public class PlayView : IFguiView
     private bool isShow;
     GComponent playView ;
     // GButton screenInputBtn;
-    GButton testBtn;
+    // GButton testBtn;
 
     GButton nextBtn;
 
@@ -54,7 +54,7 @@ public class PlayView : IFguiView
     }
     private void InitComponent()
     {
-        testBtn = playView.GetChild("TestBtn").asButton;
+        // testBtn = playView.GetChild("TestBtn").asButton;
         nextBtn = playView.GetChild("NextBtn").asButton;
         moneyTxt = playView.GetChild("MoneyTxt").asTextField;
         unitCntTxt = playView.GetChild("UnitCntTxt").asTextField;
@@ -71,7 +71,7 @@ public class PlayView : IFguiView
     }
     private void InitEvent()
     {
-        testBtn.onClick.Add(() => MyEvent.OnClick_testBtn?.Invoke());
+        // testBtn.onClick.Add(() => MyEvent.OnClick_testBtn?.Invoke());
         nextBtn.onClick.Add(() => MyEvent.OnClick_nextBtn?.Invoke());
     }
 

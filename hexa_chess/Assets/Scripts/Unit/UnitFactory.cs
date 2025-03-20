@@ -10,6 +10,8 @@ public class UnitFactory
     public UnitConfigListSO UnitConfigListSO { get{ return unitConfigListSO ;} }
     Dictionary<MyEnum.ArmyType , GameObject> armyPrefabList;
     Dictionary<MyEnum.CityType , GameObject> cityPrefabList;
+    Dictionary<MyEnum.ArmyType , int> armyCntList;
+    Dictionary<MyEnum.CityType , int> cityCntList;
     Dictionary<MyEnum.TheOperator , Dictionary<MyEnum.UnitType , Transform>> parentGO;
     public UnitFactory()
     {
@@ -17,6 +19,8 @@ public class UnitFactory
         // unitPrefabList = new Dictionary<MyEnum.UnitType, GameObject>();
         armyPrefabList = new Dictionary<MyEnum.ArmyType, GameObject>();
         cityPrefabList = new Dictionary<MyEnum.CityType, GameObject>();
+        armyCntList = new Dictionary<MyEnum.ArmyType, int>();
+        cityCntList = new Dictionary<MyEnum.CityType, int>();
         foreach (var unitConfig in unitConfigListSO.armyConfigList)
         {
             armyPrefabList.Add(unitConfig.armyType , Resources.Load<GameObject>(unitConfig.prefabPath));
@@ -25,6 +29,17 @@ public class UnitFactory
         {
             cityPrefabList.Add(unitConfig.cityType , Resources.Load<GameObject>(unitConfig.prefabPath));
         }
+        foreach (MyEnum.ArmyType armyType in System.Enum.GetValues(typeof(MyEnum.ArmyType)))
+        {
+            armyCntList.Add(armyType , 0);
+        }
+        foreach (MyEnum.CityType cityType in System.Enum.GetValues(typeof(MyEnum.CityType)))
+        {
+            cityCntList.Add(cityType , 0);
+        }
+
+
+
         parentGO = new Dictionary<MyEnum.TheOperator , Dictionary<MyEnum.UnitType , Transform>>();
         foreach (MyEnum.TheOperator theOperator in System.Enum.GetValues(typeof(MyEnum.TheOperator)))
         {
@@ -45,6 +60,8 @@ public class UnitFactory
         MyStruct.UnitConfig unitConfig = unitConfigListSO.GetUnitConfig(armyTypeType);
         Unit unit = GameObject.Instantiate(armyPrefabList[armyTypeType] , parentGO[theOperator][MyEnum.UnitType.Army]).GetComponent<Unit>();
         unit.Init(theOperator , unitConfig , coord);
+        armyCntList[armyTypeType]++;
+        unit.UnitName = MyConst.ArmyName[armyTypeType] + armyCntList[armyTypeType].ToString();
         return unit;
     }
     public Unit LoadUnit(MyEnum.TheOperator theOperator , Vector2Int coord,MyEnum.CityType cityType)
@@ -53,6 +70,8 @@ public class UnitFactory
         MyStruct.UnitConfig unitConfig = unitConfigListSO.GetUnitConfig(cityType);
         Unit unit = GameObject.Instantiate(cityPrefabList[cityType] , parentGO[theOperator][MyEnum.UnitType.City]).GetComponent<Unit>();
         unit.Init(theOperator , unitConfig , coord);
+        cityCntList[cityType]++;
+        unit.UnitName = MyConst.CityName[cityType] + cityCntList[cityType].ToString();
         return unit;
     }
 }

@@ -55,11 +55,25 @@ public static class MyConst
             { MyEnum.ArmyType.Infantry, "Sprite/ArmyIcon/Infantry_small" },
             { MyEnum.ArmyType.Tank, "Sprite/ArmyIcon/Tank_small" }
         };
+        ArmyName = new Dictionary<MyEnum.ArmyType, string>
+        {
+            { MyEnum.ArmyType.None, "无" },
+            { MyEnum.ArmyType.Artillery, "炮兵" },
+            { MyEnum.ArmyType.Infantry, "步兵" },
+            { MyEnum.ArmyType.Tank, "坦克" }
+        };
+        CityName = new Dictionary<MyEnum.CityType, string>
+        {
+            { MyEnum.CityType.None, "无" },
+            { MyEnum.CityType.Home, "大本营" }
+        };
     }
     public static float GridSize;
     public static Dictionary<MyEnum.GridType , string> GridPicturePath;
     public static Dictionary<MyEnum.ArmyType , string> ArmyUIIconPath;
     public static Dictionary<MyEnum.ArmyType , string> ArmyUIIconPath_small;
+    public static Dictionary<MyEnum.ArmyType , string> ArmyName;
+    public static Dictionary<MyEnum.CityType , string> CityName;
     public static Dictionary<MyEnum.MoveDirection, Vector2Int> MoveStep;
     public static Dictionary<MyEnum.GridUIState, Color> GridUIColor;
     public static Dictionary<MyEnum.GridSpriteLayer, string> GridSpriteSortingLayer;

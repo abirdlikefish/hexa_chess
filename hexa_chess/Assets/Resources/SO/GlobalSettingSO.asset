@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: GlobalSettingSO
   m_EditorClassIdentifier: 
   cameraRange: {x: 5, y: 5, z: 5}
+  mapSize: 10
   showGridInfoWin_preTime: 0.5
   showGridInfoWin_minMoveDis: 1
+  InitialCoin: 68
+  InitialPopulation: 55

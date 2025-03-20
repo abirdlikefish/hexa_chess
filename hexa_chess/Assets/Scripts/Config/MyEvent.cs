@@ -20,6 +20,7 @@ public static class MyEvent
 
     public static Action<Vector2Int> OnPress;
     public static Action OnPressEnd;
+    public static Action<MyEnum.ArmyType> SelectArmyToCreate;
     
     // game manager -> ui
     public static Action<IUnit> OpenUnitUI;

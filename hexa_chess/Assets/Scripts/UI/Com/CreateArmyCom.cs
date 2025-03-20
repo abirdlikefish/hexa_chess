@@ -67,6 +67,7 @@ public class CreateArmyCom : IFguiCom
         if(selectedArmyBtn != null) selectedArmyBtn.selected = false;
         selectedArmyBtn = item == null ? null : item.asButton;
         if(selectedArmyBtn != null) Debug.Log("SelectedArmy: " + ((MyEnum.ArmyType)selectedArmyBtn.data).ToString());
+        if(selectedArmyBtn != null) MyEvent.SelectArmyToCreate?.Invoke((MyEnum.ArmyType)selectedArmyBtn.data);
     }
     void OpenUnitUI(IUnit unit)
     {
