@@ -79,18 +79,21 @@ class GameManager : MonoBehaviour
     /// </summary>
     public bool JudgeShouldEndGame()
     {
+        Debug.Log("JudgeShouldEndGame");
         //todo: 这边要改一下，要把Base的血量同步过来
-        if (PlayerHP <= 0)
+        if (UnitManager.Instance.GetHomeHP(MyEnum.TheOperator.Player) <= 0)
         {
             // gameStateMachine.ChangeState(gameStateMachine.GameLose);
             gameStateMachine.ChangeState(MyEnum.GameState.GameLose);
+            Debug.Log("Game Lose");
             return true;
         }
 
-        if (EnemyHP <= 0)
+        if (UnitManager.Instance.GetHomeHP(MyEnum.TheOperator.Enemy) <= 0)
         {
             // gameStateMachine.ChangeState(gameStateMachine.GameWin);
             gameStateMachine.ChangeState(MyEnum.GameState.GameWin);
+            Debug.Log("Game Win");
             return true;
         }
 
