@@ -154,6 +154,7 @@ public class MapManager : IMapManager , IMapManager_edit
 
     public void CreateMap(int size)
     {
+        Debug.Log($"CreateMap:{size}");
         MapSO mapSO = Resources.Load<MapSO>("SO/MapSO");
         if(mapSO.grid_x != size * 2 - 1)
         {
