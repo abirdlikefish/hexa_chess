@@ -50,11 +50,12 @@ MapManager.Instance.SearchCreateArmyArea(MyEnum.TheOperator.Player , playerState
     {        
         if (coord == null) return;
         Vector2Int? selectedUnit = MapManager.Instance.GetCreateArmyArea(coord.Value);
-        if (selectedUnit == null)
+        if (selectedUnit == null || selectedType == MyEnum.ArmyType.None)
         {
             Cancel();
             return;
         }
+        // if(selectedType == MyEnum.ArmyType.None) return;
         UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Player, selectedUnit.Value, selectedType);
         playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
     }
