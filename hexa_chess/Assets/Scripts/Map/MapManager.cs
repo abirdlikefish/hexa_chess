@@ -418,7 +418,7 @@ public class MapManager : IMapManager , IMapManager_edit
             Vector2Int midCoord = new Vector2Int((int)mid.y, (int)mid.z);
             if(midCost != searchMovableAreaGridInfoMap[midCoord.x, midCoord.y].moveCost) continue;
             // if(midCost > moveForce) continue;
-            if(gridMap[midCoord.x, midCoord.y].GetUnit(MyEnum.UnitType.Army) != null)
+            if(gridMap[midCoord.x, midCoord.y].GetUnit(MyEnum.UnitType.Army) == null)
             {
                 gridMap[midCoord.x, midCoord.y].ChangeUIState(theOperator , MyEnum.GridUIState.Legal);
                 movableGridList.Add(midCoord);
@@ -449,7 +449,7 @@ public class MapManager : IMapManager , IMapManager_edit
                 {
                     searchMovableAreaGridInfoMap[nextCoord.x, nextCoord.y].SetGrid(midCoord, nextCost, gridMap[nextCoord.x , nextCoord.y].GetHeight() , moveDirection);
                     searchQueue.Add(new Vector3(nextCost, nextCoord.x, nextCoord.y));
-                    gridMap[nextCoord.x, nextCoord.y].ChangeUIState(theOperator , MyEnum.GridUIState.Legal);
+                    // gridMap[nextCoord.x, nextCoord.y].ChangeUIState(theOperator , MyEnum.GridUIState.Legal);
                 }
             }
         }
