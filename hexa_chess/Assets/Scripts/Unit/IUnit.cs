@@ -7,7 +7,7 @@ public interface IUnit
 
     MyEnum.UnitType UnitType{get;}
     string UnitName{get;}
-    void Attack(IUnit other);//传入攻击对象的脚本接口
+    bool Attack(IUnit other);//传入攻击对象的脚本接口
 
     void GetDamage(int damage);
 

@@ -5,13 +5,13 @@ using UnityEngine;
 public interface IArmy : IUnit
 {
     MyEnum.ArmyType ArmyType { get; }
-    void Move(List<Vector2Int> path,float cost);//移动
-    void Station();//驻扎
+    bool Move(List<Vector2Int> path,float cost);//移动
+    bool Station();//驻扎
 
-    void Rest();//休息
+    bool Rest();//休息
 
-    void Dismiss();//解散
+    bool Dismiss();//解散
 
-    void Skip();//跳过
+    bool Skip();//跳过
 
 }

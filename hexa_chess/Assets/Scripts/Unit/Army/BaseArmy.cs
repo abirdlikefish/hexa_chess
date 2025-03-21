@@ -27,7 +27,7 @@ public class BaseArmy : Unit , IArmy
 
 
 
-    public void Move(List<Vector2Int> path,float cost)
+    public bool Move(List<Vector2Int> path,float cost)
     {
         if (unitState == MyEnum.UnitStates.Able)
         {
@@ -37,7 +37,7 @@ public class BaseArmy : Unit , IArmy
             {
                 sequence.Append(transform.DOMove((Vector3)MapManager.Coord_To_Pos(path[i]),1.0f/MovingSpeed).SetEase(Ease.Linear));
             }
-            unitState = MyEnum.UnitStates.Disable;
+            // unitState = MyEnum.UnitStates.Disable;
             sequence.Play();
             sequence.OnComplete(() => {
                 // unitState = MyEnum.UnitStates.Able;
@@ -52,11 +52,13 @@ public class BaseArmy : Unit , IArmy
             {
                 unitState = MyEnum.UnitStates.Disable;
             }
+            return true;
             
         }
         else
         {
-            Debug.Log("单位不可操作！");
+            // Debug.Log("单位不可操作！");
+            return false;
         }
     }
 
@@ -95,35 +97,39 @@ public class BaseArmy : Unit , IArmy
         armyStateController.selectedPage = operationBuff.ToString();
     }
 
-    public void Station()
+    public bool Station()
     {
         MoveForce = 0;
         operationBuff = MyEnum.OperationBuff.Station;
         unitState = MyEnum.UnitStates.Disable;
         RefreshArmyInfoView();
         StartCoroutine(Tmp_ArmyAnimation());
+        return true;
     }
 
-    public void Rest()
+    public bool Rest()
     {
         MoveForce = 0;
         operationBuff = MyEnum.OperationBuff.Rest;
         unitState = MyEnum.UnitStates.Disable;
         RefreshArmyInfoView();
         StartCoroutine(Tmp_ArmyAnimation());
+        return true;
     }
 
-    public void Dismiss()
+    public bool Dismiss()
     {
         StartCoroutine(Tmp_ArmyAnimation_Dismiss());
+        return true;
     }
 
-    public void Skip()
+    public bool Skip()
     {
         MoveForce = 0;
         unitState = MyEnum.UnitStates.Disable;
         RefreshArmyInfoView();
         // StartCoroutine(Tmp_ArmyAnimation());
+        return true;
     }
 
     IEnumerator Tmp_ArmyAnimation()

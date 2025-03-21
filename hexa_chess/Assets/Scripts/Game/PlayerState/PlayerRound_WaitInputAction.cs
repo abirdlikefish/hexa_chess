@@ -75,26 +75,38 @@ public class PlayerRound_WaitInputAction : PlayerRoundState
             Cancel();
             return;
         }
-        (playerStateMachine.selectedUnit as IArmy).Move(path , moveCost);
-        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
+        bool flag = (playerStateMachine.selectedUnit as IArmy).Move(path , moveCost);
+        if(flag)
+            playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
+        else
+            playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
     }
 
     private void SelectedDismiss()
     {
-        (playerStateMachine.selectedUnit as IArmy).Dismiss();
-        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
+        bool flag = (playerStateMachine.selectedUnit as IArmy).Dismiss();
+        if(flag)
+            playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
+        else
+            playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
     }
 
     private void SelectedStation()
     {
-        (playerStateMachine.selectedUnit as IArmy).Station();
-        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
+        bool flag = (playerStateMachine.selectedUnit as IArmy).Station();
+        if(flag)
+            playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
+        else
+            playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
     }
 
     private void SelectedRest()
     {
-        (playerStateMachine.selectedUnit as IArmy).Rest();
-        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
+        bool flag = (playerStateMachine.selectedUnit as IArmy).Rest();
+        if(flag)
+            playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
+        else
+            playerStateMachine.ChangeState(MyEnum.PlayerRoundState.Idle);
     }
 
     private void PressSkip()

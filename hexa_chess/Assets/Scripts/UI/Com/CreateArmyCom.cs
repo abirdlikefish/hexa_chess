@@ -61,6 +61,7 @@ public class CreateArmyCom : IFguiCom
         item.GetChild("over").asLoader.url = MyConst.ArmyUIIconPath[armyType];
         item.GetChild("selectedOver").asLoader.url = MyConst.ArmyUIIconPath[MyEnum.ArmyType.None];
         MyStruct.UnitConfig midConfig = unitConfigListSO.GetUnitConfig(armyType);
+        item.GetChild("ArmyNameTxt").text = MyConst.ArmyName[armyType];
         item.GetChild("AtkTxt").text = midConfig.Atk.ToString();
         item.GetChild("HpTxt").text = midConfig.MaxHp.ToString();
         item.GetChild("MoveForceTxt").text = midConfig.Action.ToString();

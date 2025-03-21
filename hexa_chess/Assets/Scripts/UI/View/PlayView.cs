@@ -135,7 +135,7 @@ public class PlayView : IFguiView
     private void GameOver(MyEnum.TheOperator theOperator)
     {
         Debug.LogWarning("GameOver " + theOperator + " Win");
-        roundController.selectedPage = "EndOver";
+        roundController.selectedPage = "EndRound";
     }
 
 }

@@ -10,7 +10,7 @@ public class PlayerRound_WaitInput_Enemy : PlayerRoundState
     public override void Enter()
     {
         base.Enter();
-MapManager.Instance.SearchAttackArea(MyEnum.TheOperator.Player, playerStateMachine.selectedGrid.Value , 5);
+        MapManager.Instance.SearchAttackArea(MyEnum.TheOperator.Player, playerStateMachine.selectedGrid.Value , playerStateMachine.selectedUnit.AttackRadius);
         MyEvent.OnGridClick_left += SelectTarget;
     }
     
@@ -25,15 +25,22 @@ MapManager.Instance.SearchAttackArea(MyEnum.TheOperator.Player, playerStateMachi
     //选择要攻击的敌人
     public void SelectTarget(Vector2Int? targetcoord)
     {
-        if (targetcoord == null) return;
+        if (targetcoord == null)
+        {
+            Cancel();
+            return;
+        }
         IUnit selectedUnit = MapManager.Instance.GetAttackedUnit(targetcoord.Value);
         if (selectedUnit == null)
         {
             Cancel();
             return;
         }
-        playerStateMachine.selectedUnit.Attack(selectedUnit);
-        playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
+        bool flag = playerStateMachine.selectedUnit.Attack(selectedUnit);
+        if(flag)
+            playerStateMachine.ChangeState(MyEnum.PlayerRoundState.PlayingAnimation);
+        else
+            Cancel();
     }
 
     public override void Cancel()

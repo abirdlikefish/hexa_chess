@@ -24,7 +24,7 @@ public interface IMapManager
     /// 从后向前遍历 ， 终点非法则返回null
     /// </summary>
     public List<Vector2Int> GetMovePath(Vector2Int endCoord , out float moveCost);
-    public List<Vector2Int> SearchAttackArea(MyEnum.TheOperator theOperator , Vector2Int coord , float atkRange);
+    public List<Vector2Int> SearchAttackArea(MyEnum.TheOperator theOperator , Vector2Int coord , int atkRange);
     public List<Vector2Int> SearchCreateArmyArea(MyEnum.TheOperator theOperator , Vector2Int coord , int createRange);
     public Vector2Int? GetCreateArmyArea(Vector2Int coord);
     public IUnit GetAttackedUnit(Vector2Int coord);
@@ -564,7 +564,7 @@ public class MapManager : IMapManager , IMapManager_edit
     }
 
     private bool[,] isSearched;
-    public List<Vector2Int> SearchAttackArea(MyEnum.TheOperator theOperator , Vector2Int coord , float atkRange)
+    public List<Vector2Int> SearchAttackArea(MyEnum.TheOperator theOperator , Vector2Int coord , int atkRange)
     {
         if(!IsInMap(coord))
         {

@@ -63,7 +63,7 @@ public class Unit : MonoBehaviour, IUnit
     {
         
     }
-    public void Attack(IUnit other)
+    public bool Attack(IUnit other)
     {
         if (unitState == MyEnum.UnitStates.Able)
         {
@@ -71,10 +71,12 @@ public class Unit : MonoBehaviour, IUnit
             Debug.Log("单位攻击指令执行！");
             other.GetDamage(Atk);
             MyEvent.AnimaEnd?.Invoke();
+            return true;
         }
         else
         {
             Debug.Log("单位不可操作！");
+            return false;
         }
     }
 

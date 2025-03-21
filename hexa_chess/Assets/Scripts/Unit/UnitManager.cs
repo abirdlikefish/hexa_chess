@@ -99,6 +99,7 @@ public class UnitManager : UnitManagerAPI
     {
         foreach (var i in unitList[theOperator])
         {
+            if(i.UnitType == MyEnum.UnitType.City) continue;
             if (i.GetStates() == MyEnum.UnitStates.Able)
                 return true;
         }
@@ -111,6 +112,7 @@ public class UnitManager : UnitManagerAPI
         foreach (var i in unitList[theOperator])
         // foreach(var i in unitList)
         {
+            if(i.UnitType == MyEnum.UnitType.City) continue;
             if (i.GetStates() == MyEnum.UnitStates.Able)
                 return i;
         }
