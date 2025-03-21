@@ -72,7 +72,7 @@ public class AIHelper
         var res = UnitManager.Instance.GetCity(TheOperator.Player,CityType.Home);
         if(res.Count == 0)
         {
-            Debug.LogError("敌方没有城市");
+            Debug.LogError("Player没有城市");
             return 0;
         }
         Vector2Int homePos = res[0].Coord;
