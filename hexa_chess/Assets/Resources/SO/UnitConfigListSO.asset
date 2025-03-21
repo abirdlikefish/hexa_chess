@@ -71,7 +71,7 @@ MonoBehaviour:
     Atk: 0
     Def: 0
     AttackRadius: 0
-    viewRange: 20
+    viewRange: 2
     movingSpeed: 0
     Coin: 0
     Occupation: 0

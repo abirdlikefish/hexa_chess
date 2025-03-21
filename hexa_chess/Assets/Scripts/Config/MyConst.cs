@@ -67,6 +67,10 @@ public static class MyConst
             { MyEnum.CityType.None, "无" },
             { MyEnum.CityType.Home, "大本营" }
         };
+        VFXPath = new Dictionary<MyEnum.VFXType, string>
+        {
+            { MyEnum.VFXType.Bomb, "VFX/VFX_Bomb" },
+        };
     }
     public static float GridSize;
     public static Dictionary<MyEnum.GridType , string> GridPicturePath;
@@ -77,4 +81,5 @@ public static class MyConst
     public static Dictionary<MyEnum.MoveDirection, Vector2Int> MoveStep;
     public static Dictionary<MyEnum.GridUIState, Color> GridUIColor;
     public static Dictionary<MyEnum.GridSpriteLayer, string> GridSpriteSortingLayer;
+    public static Dictionary<MyEnum.VFXType, string> VFXPath;
 }

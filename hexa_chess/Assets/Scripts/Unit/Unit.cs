@@ -98,6 +98,7 @@ public class Unit : MonoBehaviour, IUnit
     IEnumerator Tmp_DamageAnimation()
     {
         yield return new WaitForSeconds(0.3f);
+        yield return VFXManager.Instance.PlayVFX(MyEnum.VFXType.Bomb, transform.position);
         MyEvent.AnimaEnd?.Invoke();
         DestroyCheck();
     }
