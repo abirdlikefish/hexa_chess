@@ -15,6 +15,8 @@ public interface IAIManager
     /// 结束回合
     /// </summary>
     public void EndTurn();
+
+    public float AIOperatorationInterval { get; }
 }
 
 public class AIManager : MonoBehaviour,IAIManager
@@ -24,6 +26,8 @@ public class AIManager : MonoBehaviour,IAIManager
     {
         get => instance;
     }
+
+    public float AIOperatorationInterval => GameManager.instance.globalSettingSO.AIOperatorationInterval;
 
     private AIPlayer aiPlayer;
 

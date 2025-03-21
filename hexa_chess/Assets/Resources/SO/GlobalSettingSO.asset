@@ -19,3 +19,4 @@ MonoBehaviour:
   InitialCoin: 68
   InitialPopulation: 55
   Income: 1
+  AIOperatorationInterval: 1

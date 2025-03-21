@@ -42,17 +42,18 @@ public class AIPlayer
     public IEnumerator Turn(int round)
     {
         Debug.Log($"AIPlayer Turn: Round {round}");
-        CreateUnit(round);
+        yield return CreateUnit(round);
         yield return CalculateOperation();
         EndTurn();
     }
 
-    private void CreateUnit(int round)
+    private IEnumerator CreateUnit(int round)
     {
         foreach (var aiCreateUnit in aiCreateUnitSO.aiCreateUnits)
         {
             if (aiCreateUnit.round == round)
             {
+                yield return new WaitForSeconds(AIManager.Instance.AIOperatorationInterval);
                 if (aiCreateUnit.unitType == MyEnum.UnitType.City)
                 {
                     var city = UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Enemy,
@@ -61,19 +62,12 @@ public class AIPlayer
                 }
                 else
                 {
-                    List<ICity> homes = UnitManager.Instance.GetCity(MyEnum.TheOperator.Enemy, MyEnum.CityType.Home);
-                    ICity home;
-                    if (homes.Count == 0)
-                    {
-                        Debug.LogError("AI没有城市");
-                        return;
-                    }
-                    home = homes[0];
+                    ICity home = UnitManager.Instance.GetHome(MyEnum.TheOperator.Enemy);
                     var list = MapManager.Instance.SearchCreateArmyArea(MyEnum.TheOperator.Enemy, home.Coord, home.CreateArmyRange);
                     if (list.Count == 0)
                     {
                         Debug.LogError("无法创建部队");
-                        return;
+                        yield break;
                     }
                     var army = UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Enemy,
                         list[0], aiCreateUnit.armyType);
@@ -89,6 +83,7 @@ public class AIPlayer
         foreach (var unit in _units)
         {
             yield return CalculateOperation(unit);
+            yield return new WaitForSeconds(AIManager.Instance.AIOperatorationInterval);
         }
     }
 
