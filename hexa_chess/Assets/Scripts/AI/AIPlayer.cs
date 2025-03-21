@@ -46,6 +46,8 @@ public class AIPlayer
     /// </summary>
     public IEnumerator Turn(int round)
     {
+        // 注意在回合开始时，将animateEnd置为false，否则player的animated结束导致这里为true,第一次等待失败
+        animateEnd = false;
         Debug.Log($"AIPlayer Turn: Round {round}");
         yield return CreateUnit(round);
         yield return CalculateOperation();
@@ -279,10 +281,16 @@ public class AIPlayer
                 break;
             case AIAction.MoveAttack:
                 MoveUnit(unit, targetPos);
+                Debug.Log($"AIPlayer CalculateOperation MoveAttack:Move at {DateTime.Now.ToString("HH:mm:ss.fff")} {animateEnd}");
+                yield return new WaitUntil(() => animateEnd);
+                animateEnd = false;
+                Debug.Log($"AIPlayer CalculateOperation MoveAttack:Attack at {DateTime.Now.ToString("HH:mm:ss.fff")}");
                 AttackUnit(unit, targetUnit);
                 break;
             case AIAction.RetreatRest:
                 MoveUnit(unit, targetPos);
+                yield return new WaitUntil(() => animateEnd);
+                animateEnd = false;
                 RestUnit(unit);
                 break;
             case AIAction.None:
