@@ -29,7 +29,7 @@ MonoBehaviour:
     HaveZOC: 1
     creatableArmy: 
     createArmyRange: 0
-  - prefabPath: Prefabs/Tank
+  - prefabPath: Prefabs/Artillery
     unitType: 1
     armyType: 2
     cityType: 0
@@ -45,7 +45,7 @@ MonoBehaviour:
     HaveZOC: 0
     creatableArmy: 
     createArmyRange: 0
-  - prefabPath: Prefabs/Tank
+  - prefabPath: Prefabs/Infantry
     unitType: 1
     armyType: 1
     cityType: 0
