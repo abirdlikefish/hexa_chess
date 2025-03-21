@@ -26,10 +26,10 @@ public class VFXManager : MonoBehaviour, IVFXManager
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(PlayVFX(MyEnum.VFXType.Bomb, new Vector3(8, 14, 0)));
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    StartCoroutine(PlayVFX(MyEnum.VFXType.Bomb, new Vector3(8, 14, 0)));
+        //}
     }
 
     private Dictionary<MyEnum.VFXType, GameObject> vfxDic = new Dictionary<MyEnum.VFXType, GameObject>();
@@ -44,7 +44,7 @@ public class VFXManager : MonoBehaviour, IVFXManager
             {
                 ps.Play();
             }
-            //Destroy(vfx, 1.0f);
+            Destroy(vfx, 1.0f);
             yield return new WaitForSeconds(1.0f);
         }
         yield return null;
