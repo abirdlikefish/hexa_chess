@@ -12,6 +12,7 @@ public class EnemyRound : GameState
     public override void Enter()
     {
         base.Enter();
+        MyEvent.AnimaEnd += EndAnimation;
         MyEvent.EnemyRoundEnd += EnemyRoundEnd;
         UnitManager.Instance.RoundBeginOperation(MyEnum.TheOperator.Enemy);
         AIManager.Instance.Action(GameManager.instance.CurrentRoundsCounter());
@@ -20,6 +21,8 @@ public class EnemyRound : GameState
     public override void Exit()
     {
         base.Exit();
+        AIManager.Instance.Stop();
+        MyEvent.AnimaEnd -= EndAnimation;
         MyEvent.EnemyRoundEnd -= EnemyRoundEnd;
         GameManager.instance.IncreaseRoundsCounter();
     }
@@ -33,5 +36,10 @@ public class EnemyRound : GameState
     public void EnemyRoundEnd()
     {
         gameStateMachine.ChangeState(MyEnum.GameState.PlayerRound);
+    }
+
+    private void EndAnimation()
+    {
+        GameManager.instance.JudgeShouldEndGame();
     }
 }
