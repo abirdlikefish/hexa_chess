@@ -124,7 +124,7 @@ public class Unit : MonoBehaviour, IUnit
 
 
     //回合结束检定，将单位转入可操作
-    public void RoundBeginCheck()
+    public virtual void RoundBeginCheck()
     {
         unitState = MyEnum.UnitStates.Able;
         moveForce = maxMoveForce;

@@ -107,7 +107,8 @@ public class PlayView : IFguiView
         Debug.Log("SetGlobalInfo");
         moneyTxt.text = money.x.ToString() + "/+" + money.y.ToString();
         unitCntTxt.text = unitCnt.x.ToString() + "/" + unitCnt.y.ToString();
-        roundTxt.text = round.x.ToString() + "/" + round.y.ToString();
+        // roundTxt.text = round.x.ToString() + "/" + round.y.ToString();
+        roundTxt.text = round.x.ToString() ;
     }
     private void OnMouseWheel(EventContext context)
     {

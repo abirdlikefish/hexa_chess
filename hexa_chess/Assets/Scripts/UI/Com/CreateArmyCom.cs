@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CreateArmyCom : IFguiCom
 {
+    private UnitConfigListSO unitConfigListSO;
     private GComponent parent;
     private GComponent createArmyCom;
     private bool isShow = false;
@@ -13,6 +14,8 @@ public class CreateArmyCom : IFguiCom
 
     public IFguiCom Create(GComponent parent)
     {
+        unitConfigListSO = Resources.Load<UnitConfigListSO>("SO/UnitConfigListSO");
+
         this.parent = parent;
         createArmyCom = parent.GetChild("CreateArmyCom").asCom;
         armyList = createArmyCom.GetChild("ArmyList").asList;
@@ -57,10 +60,11 @@ public class CreateArmyCom : IFguiCom
         // item.GetChild("over").asLoader.url = MyConst.ArmyUIIconPath[MyEnum.ArmyType.None];;
         item.GetChild("over").asLoader.url = MyConst.ArmyUIIconPath[armyType];
         item.GetChild("selectedOver").asLoader.url = MyConst.ArmyUIIconPath[MyEnum.ArmyType.None];
-        // item.GetChild("AtkTxt").text = "1";
-        // item.GetChild("HpTxt").text = "1";
-        // item.GetChild("MoveForceTxt").text = "1";
-        // item.GetChild("AtkRangeTxt").text = "1";
+        MyStruct.UnitConfig midConfig = unitConfigListSO.GetUnitConfig(armyType);
+        item.GetChild("AtkTxt").text = midConfig.Atk.ToString();
+        item.GetChild("HpTxt").text = midConfig.MaxHp.ToString();
+        item.GetChild("MoveForceTxt").text = midConfig.Action.ToString();
+        item.GetChild("AtkRangeTxt").text = midConfig.AttackRadius.ToString();
     }
     void SelectArmy(GComponent item)
     {

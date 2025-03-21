@@ -109,7 +109,7 @@ class GameManager : MonoBehaviour
     {
         roundsCounter++;
         Debug.Log($"roundsCounter:{roundsCounter}");
-        MyEvent.SetGlobalInfo(new Vector2(UnitManager.Instance.GetCoin(MyEnum.TheOperator.Player),GameManager.instance.globalSettingSO.Income) , 
+        MyEvent.SetGlobalInfo?.Invoke(new Vector2(UnitManager.Instance.GetCoin(MyEnum.TheOperator.Player),GameManager.instance.globalSettingSO.Income) , 
                                 new Vector2(UnitManager.Instance.GetPopulation(MyEnum.TheOperator.Player),GameManager.instance.globalSettingSO.InitialPopulation) , 
                                 new Vector2(GameManager.instance.CurrentRoundsCounter(),100));
     }

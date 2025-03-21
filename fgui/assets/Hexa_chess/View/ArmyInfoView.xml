@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="100,100" pivot="0.5,0.5" anchor="true">
+  <controller name="StateController" pages="0,Normal,1,Station,2,Rest" selected="2"/>
   <displayList>
     <image id="n5_sgdj" name="n5" src="lr78h" fileName="Resources/Panel/攻击力.png" xy="-8,82" size="25,24" aspect="true">
       <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </image>
-    <image id="n6_sgdj" name="n6" src="sgdj1k" fileName="Resources/Panel/图标-血.png" xy="81,81" size="20,26" aspect="true">
+    <image id="n6_sgdj" name="n6" src="sgdj1k" fileName="Resources/Panel/图标-血.png" xy="58,81" size="20,26" aspect="true">
       <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </image>
     <text id="n2_8qxp" name="AtkTxt" xy="21,69" size="20,45" font="ui://wcwip4ahlr78v" fontSize="33" color="#ffcc33" align="center" vAlign="middle" text="5">
       <relation target="n5_sgdj" sidePair="width-width%,height-height%,middle-middle%,left-right"/>
     </text>
-    <text id="n1_8qxp" name="HpTxt" xy="105,69" size="20,45" font="ui://wcwip4ahlr78v" fontSize="33" color="#ffcc33" text="1">
+    <text id="n1_8qxp" name="HpTxt" xy="82,69" size="20,45" font="ui://wcwip4ahlr78v" fontSize="33" color="#ffcc33" text="1">
       <relation target="n6_sgdj" sidePair="width-width%,height-height%,middle-middle%,left-right"/>
     </text>
+    <loader id="n10_rbnv" name="n10" xy="25,-8" size="50,50" url="ui://wcwip4ahlr781d">
+      <gearDisplay controller="StateController" pages="2"/>
+      <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
+    </loader>
+    <loader id="n11_rbnv" name="n11" xy="27,-8" size="50,50" url="ui://wcwip4ahlr781e">
+      <gearDisplay controller="StateController" pages="1"/>
+      <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
+    </loader>
   </displayList>
 </component>

@@ -50,7 +50,11 @@ MapManager.Instance.SearchCreateArmyArea(MyEnum.TheOperator.Player , playerState
 
     public void SelectGrid(Vector2Int? coord)
     {        
-        if (coord == null) return;
+        if (coord == null)
+        {
+            Cancel();
+            return;
+        }
         Vector2Int? selectedUnit = MapManager.Instance.GetCreateArmyArea(coord.Value);
         if (selectedUnit == null || selectedType == MyEnum.ArmyType.None)
         {

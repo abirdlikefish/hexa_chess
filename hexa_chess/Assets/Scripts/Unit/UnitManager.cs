@@ -265,7 +265,7 @@ public class UnitManager : UnitManagerAPI
         currentCoin[theOperator] -= coin;
         currentPopulation[theOperator] += occupation;
         if(theOperator == MyEnum.TheOperator.Player)
-            MyEvent.SetGlobalInfo(new Vector2(currentCoin[theOperator], GameManager.instance.globalSettingSO.Income),
+            MyEvent.SetGlobalInfo?.Invoke(new Vector2(currentCoin[theOperator], GameManager.instance.globalSettingSO.Income),
                 new Vector2(currentPopulation[theOperator], GameManager.instance.globalSettingSO.InitialPopulation),
                 new Vector2(GameManager.instance.CurrentRoundsCounter(), 100));
     }
@@ -273,7 +273,7 @@ public class UnitManager : UnitManagerAPI
     {
         currentCoin[theOperator] += coin;
         if(theOperator == MyEnum.TheOperator.Player)
-            MyEvent.SetGlobalInfo(new Vector2(currentCoin[theOperator], GameManager.instance.globalSettingSO.Income),
+            MyEvent.SetGlobalInfo?.Invoke(new Vector2(currentCoin[theOperator], GameManager.instance.globalSettingSO.Income),
                 new Vector2(currentPopulation[theOperator], GameManager.instance.globalSettingSO.InitialPopulation),
                 new Vector2(GameManager.instance.CurrentRoundsCounter(), 100));
     }

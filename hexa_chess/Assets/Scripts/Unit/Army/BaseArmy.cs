@@ -16,6 +16,17 @@ public class BaseArmy : Unit , IArmy
    
     protected GTextField armyInfoView_hp = null;
     protected GTextField armyInfoView_atk = null;
+    protected Controller armyStateController = null;
+
+    public override void RoundBeginCheck()
+    {
+        base.RoundBeginCheck();
+        operationBuff = MyEnum.OperationBuff.Normal;
+        RefreshArmyInfoView();
+    }
+
+
+
     public void Move(List<Vector2Int> path,float cost)
     {
         if (unitState == MyEnum.UnitStates.Able)
@@ -29,7 +40,7 @@ public class BaseArmy : Unit , IArmy
             unitState = MyEnum.UnitStates.Disable;
             sequence.Play();
             sequence.OnComplete(() => {
-                unitState = MyEnum.UnitStates.Able;
+                // unitState = MyEnum.UnitStates.Able;
                 // Debug.Log("移动动画完成");
                 UnitManager.Instance.ExitGrid(this);
                 this.Coord = path[0];
@@ -37,6 +48,10 @@ public class BaseArmy : Unit , IArmy
                 MyEvent.AnimaEnd?.Invoke();
             });
             MoveForce -= cost;
+            if(MoveForce <= 0)
+            {
+                unitState = MyEnum.UnitStates.Disable;
+            }
             
         }
         else
@@ -60,6 +75,7 @@ public class BaseArmy : Unit , IArmy
         coin = iniConfig.Coin;
         occupation = iniConfig.Occupation;
         haveZOC = iniConfig.HaveZOC;
+        RefreshArmyInfoView();
     }
 
     protected void RefreshArmyInfoView()
@@ -72,9 +88,11 @@ public class BaseArmy : Unit , IArmy
                 Debug.LogError("ArmyInfoView is null");
             armyInfoView_hp = armyInfoView.GetChild("HpTxt").asTextField;
             armyInfoView_atk = armyInfoView.GetChild("AtkTxt").asTextField;
+            armyStateController = armyInfoView.GetController("StateController");
         }
         armyInfoView_hp.text = CurrentHP.ToString();
         armyInfoView_atk.text = Atk.ToString();
+        armyStateController.selectedPage = operationBuff.ToString();
     }
 
     public void Station()
@@ -82,6 +100,7 @@ public class BaseArmy : Unit , IArmy
         MoveForce = 0;
         operationBuff = MyEnum.OperationBuff.Station;
         unitState = MyEnum.UnitStates.Disable;
+        RefreshArmyInfoView();
         StartCoroutine(Tmp_ArmyAnimation());
     }
 
@@ -90,6 +109,7 @@ public class BaseArmy : Unit , IArmy
         MoveForce = 0;
         operationBuff = MyEnum.OperationBuff.Rest;
         unitState = MyEnum.UnitStates.Disable;
+        RefreshArmyInfoView();
         StartCoroutine(Tmp_ArmyAnimation());
     }
 
@@ -102,6 +122,7 @@ public class BaseArmy : Unit , IArmy
     {
         MoveForce = 0;
         unitState = MyEnum.UnitStates.Disable;
+        RefreshArmyInfoView();
         // StartCoroutine(Tmp_ArmyAnimation());
     }
 

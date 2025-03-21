@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="1920,1080" designImage="ui://wcwip4ahlr7814" designImageAlpha="0">
   <controller name="UnitUIController" pages="0,Hide,1,ShowArmy,2,ShowCity" selected="0"/>
-  <controller name="RoundController" pages="0,PlayerRound,1,EnemyRound,2,EndRound" selected="0"/>
+  <controller name="RoundController" pages="0,PlayerRound,1,EnemyRound,2,EndRound" selected="1"/>
   <displayList>
     <component id="n0_rznp" name="ScreenInputBtn" src="rznp1" fileName="Com/ScreenInputBtn.xml" xy="0,-2" size="1920,1080">
+      <gearDisplay controller="RoundController" pages="0,1"/>
       <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </component>
     <component id="n2_ku3u" name="NextBtn" src="pdzn3" fileName="Com/Btn.xml" xy="1622,924" size="306,149">
@@ -31,6 +32,14 @@
     </text>
     <text id="n45_sgdj" name="n44" xy="1537,11" size="204,66" group="n24_lr78" font="ui://wcwip4ahlr78v" fontSize="50" color="#ffffff" align="center" vAlign="middle" text="回合数：">
       <relation target="n41_sgdj" sidePair="width-width%,height-height%,middle-middle%,right-right"/>
+    </text>
+    <text id="n48_rbnv" name="PlayerRoundTxt" xy="825,11" size="204,66" group="n24_lr78" font="ui://wcwip4ahlr78v" fontSize="50" color="#ffffff" align="center" vAlign="middle" text="我方回合">
+      <gearDisplay controller="RoundController" pages="0"/>
+      <relation target="n41_sgdj" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
+    </text>
+    <text id="n49_rbnv" name="EnemyRoundTxt" xy="825,10" size="204,66" group="n24_lr78" font="ui://wcwip4ahlr78v" fontSize="50" color="#ffffff" align="center" vAlign="middle" text="敌方回合">
+      <gearDisplay controller="RoundController" pages="1"/>
+      <relation target="n41_sgdj" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </text>
     <group id="n24_lr78" name="GlobalInfo" xy="0,0" size="1920,89"/>
     <component id="n36_lr78" name="CreateArmyCom" src="lr78z" fileName="Com/CreateArmyCom.xml" xy="1002,948">
