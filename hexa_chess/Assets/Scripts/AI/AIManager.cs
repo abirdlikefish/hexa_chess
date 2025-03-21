@@ -16,6 +16,10 @@ public interface IAIManager
     /// </summary>
     public void EndTurn();
 
+    /// <summary>
+    /// 停止回合
+    /// </summary>
+    public void Stop();
     public float AIOperatorationInterval { get; }
 }
 
@@ -55,12 +59,14 @@ public class AIManager : MonoBehaviour,IAIManager
     {
         return aiPlayer;
     }
-
     public void Action(int round)
     {
-        StartCoroutine(aiPlayer.Turn(round));
+         StartCoroutine(aiPlayer.Turn(round));
     }
-
+    public void Stop()
+    {
+        StopAllCoroutines();
+    }
     public void EndTurn()
     {
         MyEvent.EnemyRoundEnd?.Invoke();
