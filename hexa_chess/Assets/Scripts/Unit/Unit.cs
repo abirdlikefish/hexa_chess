@@ -68,9 +68,11 @@ public class Unit : MonoBehaviour, IUnit
         if (unitState == MyEnum.UnitStates.Able)
         {
             //消耗当前所有行动力
+            MoveForce = 0;
+            unitState= MyEnum.UnitStates.Disable;
             Debug.Log("单位攻击指令执行！");
             other.GetDamage(Atk);
-            MyEvent.AnimaEnd?.Invoke();
+//            MyEvent.AnimaEnd?.Invoke();
             return true;
         }
         else
@@ -85,23 +87,26 @@ public class Unit : MonoBehaviour, IUnit
         int finalDamage;
         switch (operationBuff)
         {
-            case MyEnum.OperationBuff.Rest: finalDamage = damage += 1;
+            case MyEnum.OperationBuff.Rest: damage = damage + 1 - Def;
             break;
-            case MyEnum.OperationBuff.Station: finalDamage = damage - 2;
+            case MyEnum.OperationBuff.Station: damage = damage - 2 - Def;
             break;
-            default:    finalDamage = damage;
+            default:    damage = damage - Def;
             break;
         }
-        CurrentHP -= finalDamage;
-        StartCoroutine(Tmp_DamageAnimation());
+        if (damage < 0) damage = 0;
+        StartCoroutine(Tmp_DamageAnimation(damage));
         // DestroyCheck();
     }
 
-    IEnumerator Tmp_DamageAnimation()
+    IEnumerator Tmp_DamageAnimation(int damage)
     {
         yield return new WaitForSeconds(0.3f);
         yield return VFXManager.Instance.PlayVFX(MyEnum.VFXType.Bomb, transform.position);
         MyEvent.AnimaEnd?.Invoke();
+        CurrentHP -= damage;
+        if(CurrentHP < 0)
+            CurrentHP= 0;
         DestroyCheck();
     }
 
@@ -137,5 +142,15 @@ public class Unit : MonoBehaviour, IUnit
     {
         UnitManager.Instance.ExitGrid(this);
         Destroy(this.gameObject);
+    }
+
+    public virtual void Show()
+    {
+        transform.GetComponent<SpriteRenderer>().enabled = true;
+    }
+
+    public virtual void Hide()
+    {
+        transform.GetComponent<SpriteRenderer>().enabled = false;
     }
 }

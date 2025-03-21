@@ -13,7 +13,8 @@ public class BaseArmy : Unit , IArmy
     // public override Vector2Int Coord {get {return base.Coord;} set{coordPosition = value; transform.position = MapManager.Coord_To_Pos(value);}}
     public override int CurrentHP {get {return base.CurrentHP;} set{base.CurrentHP = value;RefreshArmyInfoView();}}
     public override Vector2Int Coord {get {return base.Coord;} set{base.Coord = value;RefreshArmyInfoView();}}
-   
+
+    protected Transform uiPanel;
     protected GTextField armyInfoView_hp = null;
     protected GTextField armyInfoView_atk = null;
     protected Controller armyStateController = null;
@@ -84,8 +85,8 @@ public class BaseArmy : Unit , IArmy
     {
         if(armyInfoView_hp == null)
         {
-            UIPanel uiPanel = transform.Find("ArmyInfoView").GetComponent<UIPanel>();
-            GComponent armyInfoView = uiPanel.ui;
+            uiPanel = transform.Find("ArmyInfoView");            
+            GComponent armyInfoView = uiPanel.GetComponent<UIPanel>().ui;
             if(armyInfoView == null)
                 Debug.LogError("ArmyInfoView is null");
             armyInfoView_hp = armyInfoView.GetChild("HpTxt").asTextField;
@@ -145,5 +146,16 @@ public class BaseArmy : Unit , IArmy
         UnitManager.Instance.RemoveUnit(this);
     }
 
-    
+    public override void Show()
+    {
+        base.Show();
+        uiPanel.gameObject.SetActive(true);
+    }
+
+    public override void Hide()
+    {
+        base.Hide();
+        uiPanel.gameObject.SetActive(false);
+    }
+
 }

@@ -41,6 +41,7 @@ public class PlayView : IFguiView
         {
             item.Show();
         }
+        roundController.selectedPage = "PlayerRound";
     }
     public void HideView()
     {

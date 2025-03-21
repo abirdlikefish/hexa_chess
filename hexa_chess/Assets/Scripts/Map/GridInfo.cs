@@ -178,12 +178,32 @@ public class GridInfo : MonoBehaviour
         }
         // Debug.LogWarning("AddUnit " + unit.UnitType);
         unitList[unit.UnitType] = unit;
+        ChangeUnitEnable();
         // if(this.unit != null)
         // {
         //     return false;
         // }
         // this.unit = unit;
         return true;
+    }
+    private void ChangeUnitEnable()
+    {
+        if (GetWatchedCnt(MyEnum.TheOperator.Player) > 0)
+        {
+            foreach(var unit in unitList)
+            {
+                if(unit.Value != null)
+                    unit.Value.Show();
+            }
+        }
+        else
+        {
+            foreach (var unit in unitList)
+            {
+                if (unit.Value != null)
+                    unit.Value.Hide();
+            }
+        }
     }
     public IUnit GetUnit(MyEnum.UnitType unitType)
     {
@@ -205,6 +225,7 @@ public class GridInfo : MonoBehaviour
     public bool ChangeVirtualField(MyEnum.TheOperator theOperator , bool isAdd)
     {
         gridState[theOperator].WatchedCnt += isAdd ? 1 : -1;
+        ChangeUnitEnable();
         return true;
     }
     public float GetMoveCost(MyEnum.TheOperator theOperator)

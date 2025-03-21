@@ -44,5 +44,8 @@ public interface IUnit
     void RoundBeginCheck();
     MyEnum.UnitStates GetStates();
 
+    void Show();
+    void Hide();    
+
     
 }

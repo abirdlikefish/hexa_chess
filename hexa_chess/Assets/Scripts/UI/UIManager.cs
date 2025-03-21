@@ -21,6 +21,7 @@ public class UIManager
     public static void Init()
     {
         instance = new UIManager();
+        GRoot.inst.RemoveChildren();
         UIPackage.AddPackage("fgui/Hexa_chess");
         GRoot.inst.SetContentScaleFactor(1920, 1080);
 
