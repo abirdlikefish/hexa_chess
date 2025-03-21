@@ -84,7 +84,7 @@ public class UnitFactory
         unit.Init(theOperator , unitConfig , coord);
         armyCntList[armyTypeType]++;
         unit.UnitName = MyConst.ArmyName[armyTypeType] + armyCntList[armyTypeType].ToString();
-        // unit.transform.GetComponent<SpriteRenderer>().sprite = armySpriteList[armyTypeType][theOperator];
+        unit.transform.GetComponent<SpriteRenderer>().sprite = armySpriteList[armyTypeType][theOperator];
         return unit;
     }
     public Unit LoadUnit(MyEnum.TheOperator theOperator , Vector2Int coord,MyEnum.CityType cityType)
@@ -95,7 +95,7 @@ public class UnitFactory
         unit.Init(theOperator , unitConfig , coord);
         cityCntList[cityType]++;
         unit.UnitName = MyConst.CityName[cityType] + cityCntList[cityType].ToString();
-        // unit.transform.GetComponent<SpriteRenderer>().sprite = citySpriteList[cityType][theOperator];
+        unit.transform.GetComponent<SpriteRenderer>().sprite = citySpriteList[cityType][theOperator];
         return unit;
     }
 }
