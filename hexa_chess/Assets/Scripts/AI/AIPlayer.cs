@@ -65,12 +65,12 @@ public class AIPlayer
                     ICity home;
                     if (homes.Count == 0)
                     {
-                        Debug.LogError("敌方没有城市");
+                        Debug.LogError("AI没有城市");
                         return;
                     }
                     home = homes[0];
                     var list = MapManager.Instance.SearchCreateArmyArea(MyEnum.TheOperator.Enemy, home.Coord, home.CreateArmyRange);
-                    if(list.Count == 0)
+                    if (list.Count == 0)
                     {
                         Debug.LogError("无法创建部队");
                         return;
@@ -94,11 +94,11 @@ public class AIPlayer
 
     private IEnumerator CalculateOperation(IUnit unit)
     {
-        if (unit == null || unit is ICity)
+        if (unit == null || unit.UnitType == MyEnum.UnitType.City)
         {
-            yield return null;
+            yield break;
         }
-
+        Debug.Log($"AIPlayer CalculateOperation Start:{unit.UnitType} {(unit as IArmy)?.ArmyType}");
         float homeDisDelta = 0;
         float safetyDelta = AIHelper.Instance.SafetyDelta();
         float damage = AIHelper.Instance.GetDamage(unit);
@@ -138,10 +138,10 @@ public class AIPlayer
 
         // 计算驻扎
         double garrisionValue = (3 - hpPercentage) * (1 + 2 / (distanceToEnemy + 1));
-
+        Debug.Log($"AIPlayer CalculateOperation GarrisionValue:{garrisionValue}");
         // 计算休息
         double restValue = (3 - 1.5 * hpPercentage) * (distanceToEnemy / 3.0 + 0.5);
-
+        Debug.Log($"AIPlayer CalculateOperation RestValue:{restValue}");
         //移动
         Dictionary<Vector2Int, double> moveValues = new();
         foreach (var pos in moveablePos)
@@ -232,6 +232,12 @@ public class AIPlayer
                 maxValue = v;
                 targetPos = k;
                 aiAction = AIAction.Move;
+
+                if (targetPos == unit.Coord)
+                {
+                    aiAction = AIAction.Garrison;
+                    Debug.Log("AIPlayer CalculateOperation Move to Garrison");
+                }
             }
         }
         foreach (var (k, v) in moveAttackValues)
@@ -280,10 +286,16 @@ public class AIPlayer
                 RestUnit(unit);
                 break;
             case AIAction.None:
+                Debug.LogError("AIPlayer CalculateOperation None");
                 break;
         }
-        yield return new WaitForSeconds(2.0f);
-
+        bool animateEnd = false;
+        MyEvent.AnimaEnd += () =>
+        {
+            Debug.Log("AIPlayer CalculateOperation AnimaEnd");
+            animateEnd = true;
+        };
+        yield return new WaitUntil(() => animateEnd);
     }
 
     private void RestUnit(IUnit unit)
@@ -311,7 +323,7 @@ public class AIPlayer
     private void MoveUnit(IUnit unit, Vector2Int coordPosition)
     {
         Debug.Log($"AIPlayer MoveUnit: {unit.Coord} {coordPosition} {unit.MoveForce}");
-        var mid = MapManager.Instance.SearchMovableArea(unit.TheOperator, unit.Coord, unit.MoveForce);
+        var mid = AIHelper.Instance.GetReachablePos(unit);
         Debug.LogWarning("AIPlayer MoveUnit: " + mid.Count + mid.Contains(coordPosition));
 
         var movePath = MapManager.Instance.GetMovePath(coordPosition, out var moveCost);

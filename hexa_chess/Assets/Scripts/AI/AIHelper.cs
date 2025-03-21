@@ -123,16 +123,30 @@ public class AIHelper
         float res = MapManager.Instance.GetWatchedCnt(MyEnum.TheOperator.Player,pos);
         return res;
     }
-
+    // todo: 手动排除有单位的位置
     public List<Vector2Int> GetReachablePos(IUnit unit)
     {
-        Debug.Log($"GetReachablePos:{unit.Coord} {unit.MoveForce}");
-        return MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Enemy, unit.Coord, unit.MoveForce);
+        return GetReachablePos(unit, unit.MoveForce);
     }
-
+    // todo: 手动排除有单位的位置
     public List<Vector2Int> GetReachablePos(IUnit unit,float moveForce)
     {
-        return MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Enemy, unit.Coord, moveForce);
+        Debug.Log($"GetReachablePos:{unit.Coord} {moveForce}");
+        var list = MapManager.Instance.SearchMovableArea(MyEnum.TheOperator.Enemy, unit.Coord, moveForce);
+        var res = new List<Vector2Int>();
+        foreach (var item in list)
+        {
+            if (MapManager.Instance.GetUnit(item, UnitType.Army) == null)
+            {
+                res.Add(item);
+                Debug.Log($"GetReachablePos:可到达位置{item}");
+            }
+            else
+            {
+                Debug.Log($"GetReachablePos:排除位置{item}");
+            }
+        }
+        return res;
     }
 
     internal List<Vector2Int> GetAttackablePos(IUnit unit)
