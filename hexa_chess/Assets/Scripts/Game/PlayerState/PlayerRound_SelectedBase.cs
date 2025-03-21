@@ -19,7 +19,8 @@ public class PlayerRound_SelectedBase : PlayerRoundState
         MyEvent.SelectArmyToCreate += SelectArmyToCreate;
         MyEvent.OpenUnitUI?.Invoke(playerStateMachine.selectedUnit);
         // MapManager.Instance.SearchCreateArmyArea(MyEnum.TheOperator.Player , playerStateMachine.selectedGrid.Value, (playerStateMachine.selectedUnit as ICity));
-MapManager.Instance.SearchCreateArmyArea(MyEnum.TheOperator.Player , playerStateMachine.selectedGrid.Value, 5);
+MapManager.Instance.SearchCreateArmyArea(MyEnum.TheOperator.Player , playerStateMachine.selectedGrid.Value,
+    UnitManager.Instance.GetHome(MyEnum.TheOperator.Player).CreateArmyRange);
     }
 
     public override void Exit()

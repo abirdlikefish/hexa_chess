@@ -12,4 +12,6 @@ public class GlobalSettingSO : ScriptableObject
     public int InitialCoin;
     public int InitialPopulation;
     public int Income;
+
+    public float AIOperatorationInterval;
 }

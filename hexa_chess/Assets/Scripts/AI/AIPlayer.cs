@@ -53,7 +53,7 @@ public class AIPlayer
         {
             if (aiCreateUnit.round == round)
             {
-                yield return new WaitForSeconds(1.0f);
+                yield return new WaitForSeconds(AIManager.Instance.AIOperatorationInterval);
                 if (aiCreateUnit.unitType == MyEnum.UnitType.City)
                 {
                     var city = UnitManager.Instance.CreateNewUnit(MyEnum.TheOperator.Enemy,
@@ -62,14 +62,7 @@ public class AIPlayer
                 }
                 else
                 {
-                    List<ICity> homes = UnitManager.Instance.GetCity(MyEnum.TheOperator.Enemy, MyEnum.CityType.Home);
-                    ICity home;
-                    if (homes.Count == 0)
-                    {
-                        Debug.LogError("AI没有城市");
-                        yield break;
-                    }
-                    home = homes[0];
+                    ICity home = UnitManager.Instance.GetHome(MyEnum.TheOperator.Enemy);
                     var list = MapManager.Instance.SearchCreateArmyArea(MyEnum.TheOperator.Enemy, home.Coord, home.CreateArmyRange);
                     if (list.Count == 0)
                     {
@@ -90,7 +83,7 @@ public class AIPlayer
         foreach (var unit in _units)
         {
             yield return CalculateOperation(unit);
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(AIManager.Instance.AIOperatorationInterval);
         }
     }
 
