@@ -114,4 +114,8 @@ public static class MyEnum
         SelectedBase,//选的不是常规单位而是大本营
     }
 
+    public enum VFXType
+    {
+        Bomb
+    }
 }

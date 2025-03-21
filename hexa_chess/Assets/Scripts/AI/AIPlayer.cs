@@ -30,10 +30,15 @@ public class AIPlayer
         //_inviews = new HashSet<Vector2Int>();
         this.aiCreateUnitSO = aiCreateUnitSO;
     }
-
+    bool animateEnd = false;
     public void OnInit()
     {
         Debug.Log("AIPlayer OnInit");
+        MyEvent.AnimaEnd += () =>
+        {
+            Debug.Log("AIPlayer CalculateOperation AnimaEnd");
+            animateEnd = true;
+        };
     }
 
     /// <summary>
@@ -284,13 +289,9 @@ public class AIPlayer
                 Debug.LogError("AIPlayer CalculateOperation None");
                 break;
         }
-        bool animateEnd = false;
-        MyEvent.AnimaEnd += () =>
-        {
-            Debug.Log("AIPlayer CalculateOperation AnimaEnd");
-            animateEnd = true;
-        };
+
         yield return new WaitUntil(() => animateEnd);
+        animateEnd = false;
     }
 
     private void RestUnit(IUnit unit)
