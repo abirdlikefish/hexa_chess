@@ -29,6 +29,7 @@ public interface UnitManagerAPI
     public List<ICity> GetCity(MyEnum.TheOperator theOperator, MyEnum.CityType cityType);
     //获取家园血量
     public int GetHomeHP(MyEnum.TheOperator theOperator);
+    public ICity GetHome(MyEnum.TheOperator theOperator);
 }
 
 // public interface UnitPoolHandler
@@ -299,6 +300,16 @@ public class UnitManager : UnitManagerAPI
             return 0;
         }
         return GetCity(theOperator, MyEnum.CityType.Home)[0].CurrentHP;
+    }
+
+    public ICity GetHome(MyEnum.TheOperator theOperator)
+    {
+        if (GetCity(theOperator, MyEnum.CityType.Home).Count != 1)
+        {
+            Debug.LogError($"{theOperator}home count:{GetCity(theOperator, MyEnum.CityType.Home).Count}");
+            return null;
+        }
+        return GetCity(theOperator, MyEnum.CityType.Home)[0];
     }
 }
 
