@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="1042,706" opaque="false" designImage="ui://wcwip4ahrbnv1z" designImageAlpha="23" designImageLayer="1">
+  <displayList>
+    <image id="n0_rbnv" name="n0" src="rbnv20" fileName="Resources/GameOver/结算界面-底图.png" xy="0,0"/>
+    <component id="n1_rbnv" name="RestartBtn" src="pdzn3" fileName="Com/Btn.xml" xy="387,264" size="283,83">
+      <Button icon="ui://wcwip4ahrbnv1y"/>
+    </component>
+    <component id="n4_rbnv" name="ExitBtn" src="pdzn3" fileName="Com/Btn.xml" xy="388,379" size="283,83">
+      <Button icon="ui://wcwip4ahrbnv21"/>
+    </component>
+  </displayList>
+</component>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component size="459,361" designImage="ui://wcwip4ahlr7814" designImageAlpha="0">
+<component size="459,361" opaque="false" designImage="ui://wcwip4ahlr7814" designImageAlpha="0">
   <displayList>
     <loader id="n0_lr78" name="n0" xy="0,0" size="459,361" url="ui://wcwip4ahlr7819" autoSize="true">
       <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>

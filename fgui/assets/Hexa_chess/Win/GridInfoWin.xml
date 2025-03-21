@@ -2,23 +2,26 @@
 <component size="231,153" designImage="ui://wcwip4ahsgdj1n" designImageAlpha="0">
   <displayList>
     <image id="n7_sgdj" name="n7" src="sgdj1g" fileName="Resources/Grid/弹窗2.png" xy="0,0"/>
-    <text id="n8_sgdj" name="n8" xy="18,15" size="124,34" font="ui://wcwip4ahlr78v" fontSize="24" color="#ffffff" text="行动力消耗">
+    <text id="n8_sgdj" name="n8" xy="18,36" size="124,33" font="ui://wcwip4ahlr78v" fontSize="24" color="#ffffff" text="行动力消耗">
       <relation target="n7_sgdj" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </text>
-    <text id="n9_sgdj" name="MoveCostTxt" xy="161,14" size="16,34" font="ui://wcwip4ahlr78v" fontSize="24" color="#ffffff" text="2">
+    <text id="n9_sgdj" name="MoveCostTxt" xy="161,35" size="16,33" font="ui://wcwip4ahlr78v" fontSize="24" color="#ffffff" text="2">
       <relation target="n8_sgdj" sidePair="width-width%,height-height%,middle-middle%,left-right"/>
     </text>
-    <text id="n10_sgdj" name="n10" xy="18,49" size="124,34" font="ui://wcwip4ahlr78v" fontSize="24" color="#ffffff" text="攻击力修正">
+    <text id="n10_sgdj" name="n10" xy="18,64" size="124,33" font="ui://wcwip4ahlr78v" fontSize="24" color="#ffffff" text="攻击力修正">
       <relation target="n7_sgdj" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </text>
-    <text id="n11_sgdj" name="AtkOffsetTxt" xy="161,49" size="16,34" font="ui://wcwip4ahlr78v" fontSize="24" color="#ffffff" text="2">
+    <text id="n11_sgdj" name="AtkOffsetTxt" xy="161,64" size="16,33" font="ui://wcwip4ahlr78v" fontSize="24" color="#ffffff" text="2">
       <relation target="n10_sgdj" sidePair="width-width%,height-height%,middle-middle%,left-right"/>
     </text>
-    <text id="n12_sgdj" name="n12" xy="18,84" size="124,34" font="ui://wcwip4ahlr78v" fontSize="24" color="#ffffff" text="防御力修正">
+    <text id="n12_sgdj" name="n12" xy="18,92" size="124,33" font="ui://wcwip4ahlr78v" fontSize="24" color="#ffffff" text="防御力修正">
       <relation target="n7_sgdj" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </text>
-    <text id="n13_sgdj" name="DefOffsetTxt" xy="161,84" size="16,34" font="ui://wcwip4ahlr78v" fontSize="24" color="#ffffff" text="2">
+    <text id="n13_sgdj" name="DefOffsetTxt" xy="161,92" size="16,33" font="ui://wcwip4ahlr78v" fontSize="24" color="#ffffff" text="2">
       <relation target="n12_sgdj" sidePair="width-width%,height-height%,middle-middle%,left-right"/>
+    </text>
+    <text id="n15_rbnv" name="GridNameTxt" xy="77,7" size="76,34" font="ui://wcwip4ahlr78v" fontSize="24" color="#ffffff" text="单位名">
+      <relation target="n7_sgdj" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </text>
   </displayList>
 </component>

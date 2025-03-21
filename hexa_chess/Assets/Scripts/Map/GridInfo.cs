@@ -221,12 +221,36 @@ public class GridInfo : MonoBehaviour
     {
         return baseGrid.height;
     }
+    public MyEnum.GridType GetGridType(MyEnum.TheOperator theOperator)
+    {
+        if(gridState[theOperator].currentState == MyEnum.GridState.Fog)
+        {
+            return MyEnum.GridType.Empty;
+        }
+        return baseGrid.gridType;
+    }
+    public string GetGridName(MyEnum.TheOperator theOperator)
+    {
+        if(gridState[theOperator].currentState == MyEnum.GridState.Fog)
+        {
+            return "未知";
+        }
+        return baseGrid.gridName;
+    }
     public int GetAtkOffset(MyEnum.TheOperator theOperator)
     {
+        if(gridState[theOperator].currentState == MyEnum.GridState.Fog)
+        {
+            return -1;
+        }
         return baseGrid.atkOffset + gridState[theOperator].atkOffset;
     }
     public int GetDefOffset(MyEnum.TheOperator theOperator)
     {
+        if(gridState[theOperator].currentState == MyEnum.GridState.Fog)
+        {
+            return -1;
+        }
         return baseGrid.defOffset + gridState[theOperator].defOffset;
     }
     public int GetWatchedCnt(MyEnum.TheOperator theOperator)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="1920,1080" designImage="ui://wcwip4ahlr7814" designImageAlpha="0">
   <controller name="UnitUIController" pages="0,Hide,1,ShowArmy,2,ShowCity" selected="0"/>
-  <controller name="RoundController" pages="0,PlayerRound,1,EnemyRound,2,EndRound" selected="1"/>
+  <controller name="RoundController" pages="0,PlayerRound,1,EnemyRound,2,EndRound" selected="2"/>
   <displayList>
     <component id="n0_rznp" name="ScreenInputBtn" src="rznp1" fileName="Com/ScreenInputBtn.xml" xy="0,-2" size="1920,1080">
       <gearDisplay controller="RoundController" pages="0,1"/>
@@ -50,6 +50,9 @@
     </component>
     <component id="n47_sgdj" name="CityPanelCom" src="sgdj1o" fileName="Com/CityPanelCom.xml" xy="-12,743">
       <gearDisplay controller="UnitUIController" pages="2"/>
+    </component>
+    <component id="n51_rbnv" name="GameOverCom" src="rbnv22" fileName="Com/GameOverCom.xml" xy="439,187">
+      <gearDisplay controller="RoundController" pages="2"/>
     </component>
   </displayList>
 </component>

@@ -83,10 +83,11 @@ public class PlayerRound : GameState
     
     private void ShowGridInfoWin(Vector2Int coord)
     {
+        string gridName = MapManager.Instance.GetGridName(MyEnum.TheOperator.Player, coord);
         int atk = MapManager.Instance.GetAtkOffset(MyEnum.TheOperator.Player, coord);
         int def = MapManager.Instance.GetDefOffset(MyEnum.TheOperator.Player, coord);
         float moveCost = MapManager.Instance.GetMoveCost(MyEnum.TheOperator.Player, coord);
-        MyEvent.ShowGridInfoWin?.Invoke(atk, def, moveCost);
+        MyEvent.ShowGridInfoWin?.Invoke(gridName , atk, def, moveCost);
     }
     private void CloseGridInfoWin()
     {

@@ -13,6 +13,8 @@ public interface IMapManager
     public IUnit GetUnit(Vector2Int coord , MyEnum.UnitType unitType);
     public void ChangeZOC( MyEnum.TheOperator theOperator , Vector2Int coord, bool isAdd);
     public bool ChangeOneVirtualField( MyEnum.TheOperator theOperator , Vector2Int coord, bool isAdd);
+    public string GetGridName(MyEnum.TheOperator theOperator , Vector2Int coord);
+    public MyEnum.GridType GetGridType(MyEnum.TheOperator theOperator , Vector2Int coord);
     public int GetAtkOffset(MyEnum.TheOperator theOperator , Vector2Int coord);
     public int GetDefOffset(MyEnum.TheOperator theOperator , Vector2Int coord);
     public float GetMoveCost(MyEnum.TheOperator theOperator , Vector2Int coord);
@@ -359,6 +361,8 @@ public class MapManager : IMapManager , IMapManager_edit
         }
         return gridMap[coord.x, coord.y].ChangeVirtualField(theOperator, isAdd);
     }
+    public string GetGridName(MyEnum.TheOperator theOperator , Vector2Int coord) => gridMap[coord.x, coord.y].GetGridName(theOperator);
+    public MyEnum.GridType GetGridType(MyEnum.TheOperator theOperator , Vector2Int coord) => gridMap[coord.x, coord.y].GetGridType(theOperator);
     public int GetAtkOffset(MyEnum.TheOperator theOperator , Vector2Int coord) => gridMap[coord.x, coord.y].GetAtkOffset(theOperator);
     public int GetDefOffset(MyEnum.TheOperator theOperator , Vector2Int coord) => gridMap[coord.x, coord.y].GetDefOffset(theOperator);
     public float GetMoveCost(MyEnum.TheOperator theOperator , Vector2Int coord) => gridMap[coord.x, coord.y].GetMoveCost(theOperator);

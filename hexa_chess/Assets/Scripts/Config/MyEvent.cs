@@ -25,7 +25,7 @@ public static class MyEvent
     // game manager -> ui
     public static Action<IUnit> OpenUnitUI;
     public static Action<Vector2, Vector2, Vector2> SetGlobalInfo;
-    public static Action<int , int , float> ShowGridInfoWin;
+    public static Action<string ,int , int , float> ShowGridInfoWin;
     public static Action HideGridInfoWin;
     public static Action<bool> EnterPlayerRound;
 
@@ -52,4 +52,34 @@ public static class MyEvent
     /// 游戏结束
     /// </summary>
     public static Action<MyEnum.TheOperator> OnGameEnd;
+
+    public static void ClearEvent()
+    {
+        UIUpdate = null;
+        OnGridClick_left = null;
+        OnGridClick_right = null;
+        OnClick_testBtn = null;
+        OnClick_nextBtn = null;
+        OnClick_attackBtn = null;
+        OnClick_restBtn = null;
+        OnClick_stationBtn = null;
+        OnClick_dismissBtn = null;
+        OnClick_skipBtn = null;
+        OnClick_GenerateBtn = null;
+        OnPress = null;
+        OnPressEnd = null;
+        SelectArmyToCreate = null;
+        OpenUnitUI = null;
+        SetGlobalInfo = null;
+        ShowGridInfoWin = null;
+        HideGridInfoWin = null;
+        EnterPlayerRound = null;
+        CameraMove = null;
+        DragScreen = null;
+        GetSelectedArmy = null;
+        AnimaEnd = null;
+        OnEnemyRoundBegin = null;
+        EnemyRoundEnd = null;
+        OnGameEnd = null;
+    }
 }

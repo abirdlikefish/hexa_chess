@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<component size="100,100" pivot="0.5,0.5" anchor="true">
-  <controller name="StateController" pages="0,Normal,1,Station,2,Rest" selected="2"/>
+<component size="100,100" pivot="0.5,0.5" anchor="true" opaque="false">
+  <controller name="StateController" pages="0,Normal,1,Station,2,Rest" selected="1"/>
   <displayList>
     <image id="n5_sgdj" name="n5" src="lr78h" fileName="Resources/Panel/攻击力.png" xy="-8,82" size="25,24" aspect="true">
       <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
@@ -14,11 +14,11 @@
     <text id="n1_8qxp" name="HpTxt" xy="82,69" size="20,45" font="ui://wcwip4ahlr78v" fontSize="33" color="#ffcc33" text="1">
       <relation target="n6_sgdj" sidePair="width-width%,height-height%,middle-middle%,left-right"/>
     </text>
-    <loader id="n10_rbnv" name="n10" xy="25,-8" size="50,50" url="ui://wcwip4ahlr781d">
+    <loader id="n10_rbnv" name="n10" xy="32,-11" size="50,50" touchable="false" url="ui://wcwip4ahrbnv1x">
       <gearDisplay controller="StateController" pages="2"/>
       <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </loader>
-    <loader id="n11_rbnv" name="n11" xy="27,-8" size="50,50" url="ui://wcwip4ahlr781e">
+    <loader id="n11_rbnv" name="n11" xy="36,-18" size="50,50" touchable="false" url="ui://wcwip4ahrbnv1u">
       <gearDisplay controller="StateController" pages="1"/>
       <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </loader>

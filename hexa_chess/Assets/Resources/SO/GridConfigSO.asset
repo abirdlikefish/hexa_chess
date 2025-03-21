@@ -13,42 +13,50 @@ MonoBehaviour:
   m_Name: GridConfigSO
   m_EditorClassIdentifier: 
   gridConfigs:
-  - gridType: 7
+  - gridName: "\u5C71"
+    gridType: 7
     moveCost: 20
     atkOffset: 0
     defOffset: 0
     height: 10
-  - gridType: 6
+  - gridName: "\u68EE\u6797"
+    gridType: 6
     moveCost: 2
     atkOffset: 0
     defOffset: 1
     height: 0
-  - gridType: 5
+  - gridName: 
+    gridType: 5
     moveCost: 1
     atkOffset: 0
     defOffset: -1
     height: 0
-  - gridType: 4
+  - gridName: 
+    gridType: 4
     moveCost: 1.5
     atkOffset: 1
     defOffset: 1
     height: 0
-  - gridType: 3
+  - gridName: 
+    gridType: 3
     moveCost: 0.5
     atkOffset: 0
     defOffset: 0
     height: 0
-  - gridType: 2
+  - gridName: 
+    gridType: 2
     moveCost: 2
     atkOffset: 0
     defOffset: -1
     height: 0
-  - gridType: 1
+  - gridName: 
+    gridType: 1
     moveCost: 1
     atkOffset: 0
     defOffset: 0
     height: 0
-  - gridType: 0
+  - gridName: 
+    gridType: 0
     moveCost: 1
     atkOffset: 0
     defOffset: 0

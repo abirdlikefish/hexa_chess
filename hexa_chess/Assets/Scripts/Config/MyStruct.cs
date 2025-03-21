@@ -40,6 +40,7 @@ public class MyStruct
     [Serializable]
     public struct GridConfig
     {
+        public string gridName;
         public MyEnum.GridType gridType;
         public float moveCost;
         public int atkOffset;

@@ -35,6 +35,7 @@ public class PlayView : IFguiView
         MyEvent.OpenUnitUI += OpenUnitUI;
         MyEvent.SetGlobalInfo += SetGlobalInfo;
         MyEvent.EnterPlayerRound += EnterPlayerRound;
+        MyEvent.OnGameEnd += GameOver;
         Stage.inst.onMouseWheel.Add(OnMouseWheel);
         foreach (var item in fguiOtherComs)
         {
@@ -49,6 +50,7 @@ public class PlayView : IFguiView
         MyEvent.OpenUnitUI -= OpenUnitUI;
         MyEvent.SetGlobalInfo -= SetGlobalInfo;
         MyEvent.EnterPlayerRound -= EnterPlayerRound;
+        MyEvent.OnGameEnd -= GameOver;
         Stage.inst.onMouseWheel.Remove(OnMouseWheel);
         foreach (var item in fguiOtherComs)
         {
@@ -71,6 +73,7 @@ public class PlayView : IFguiView
             new ArmyPanelCom().Create(playView),
             new CityPanelCom().Create(playView),
             new CreateArmyCom().Create(playView),
+            new GameOverCom().Create(playView),
         };
 
     }
@@ -127,6 +130,12 @@ public class PlayView : IFguiView
         {
             roundController.selectedPage = "EnemyRound";
         }
+    }
+
+    private void GameOver(MyEnum.TheOperator theOperator)
+    {
+        Debug.LogWarning("GameOver " + theOperator + " Win");
+        roundController.selectedPage = "EndOver";
     }
 
 }

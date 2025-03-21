@@ -11,7 +11,7 @@ class GameManager : MonoBehaviour
     /// <summary>
     /// 每回合回复的金币数量
     /// </summary>
-    private int CurrentCost;
+    // private int CurrentCost;
 
     /// <summary>
     /// 记录回合数
@@ -38,8 +38,8 @@ class GameManager : MonoBehaviour
         EnemyHP = 10;
         roundsCounter = 0;
         globalSettingSO = Resources.Load<GlobalSettingSO>("SO/GlobalSettingSO");
-        CurrentCost = 0;
-        maxUnitNumber = 10;
+        // CurrentCost = 0;
+        // maxUnitNumber = 10;
     }
 
     private void Awake()

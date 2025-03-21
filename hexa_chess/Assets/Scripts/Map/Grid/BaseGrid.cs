@@ -18,6 +18,7 @@ public class BaseGrid
     public Sprite GridPicture { get { return gridPicture; } }
     // protected GameObject parentGO;
     public MyEnum.GridType gridType;
+    public string gridName;
     public float moveCost;
     public int atkOffset;
     public int defOffset;
@@ -37,6 +38,7 @@ public class BaseGrid
         this.gridType = gridType;
         gridPicture = Resources.Load<Sprite>(MyConst.GridPicturePath[gridType]);
         MyStruct.GridConfig gridConfig = GetGridConfig(gridType);
+        gridName = gridConfig.gridName;
         moveCost = gridConfig.moveCost;
         atkOffset = gridConfig.atkOffset;
         defOffset = gridConfig.defOffset;

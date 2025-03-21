@@ -17,11 +17,6 @@
     <component id="8qxpe" name="GridInfoWin.xml" path="/Win/" exported="true"/>
     <image id="lr78f" name="范围.png" path="/Resources/Panel/"/>
     <image id="lr78h" name="攻击力.png" path="/Resources/Panel/"/>
-    <image id="lr78j" name="面板背景.png" path="/Resources/Panel/"/>
-    <image id="lr78k" name="文字-攻击.png" path="/Resources/Panel/"/>
-    <image id="lr78l" name="文字-解散.png" path="/Resources/Panel/"/>
-    <image id="lr78m" name="文字-休息.png" path="/Resources/Panel/"/>
-    <image id="lr78n" name="文字-驻扎.png" path="/Resources/Panel/"/>
     <image id="lr78o" name="行动力-无.png" path="/Resources/Panel/"/>
     <image id="lr78p" name="行动力-有.png" path="/Resources/Panel/"/>
     <image id="lr78r" name="血条-无.png" path="/Resources/Panel/"/>
@@ -58,6 +53,15 @@
     <image id="sgdj1n" name="背景1.png" path="/Resources/"/>
     <component id="sgdj1o" name="CityPanelCom.xml" path="/Com/"/>
     <image id="rbnv1p" name="坦克-我方.png" path="/Resources/"/>
+    <image id="rbnv1u" name="图标拆分修改-驻扎.png" path="/Resources/Panel/"/>
+    <image id="rbnv1v" name="图标拆分修改-攻击.png" path="/Resources/Panel/"/>
+    <image id="rbnv1w" name="图标拆分修改-解散.png" path="/Resources/Panel/"/>
+    <image id="rbnv1x" name="图标拆分修改-休息.png" path="/Resources/Panel/"/>
+    <image id="rbnv1y" name="再战一局.png" path="/Resources/GameOver/"/>
+    <image id="rbnv1z" name="结算界面.png" path="/Resources/GameOver/"/>
+    <image id="rbnv20" name="结算界面-底图.png" path="/Resources/GameOver/"/>
+    <image id="rbnv21" name="退出游戏.png" path="/Resources/GameOver/"/>
+    <component id="rbnv22" name="GameOverCom.xml" path="/Com/"/>
   </resources>
   <publish name=""/>
 </packageDescription>
