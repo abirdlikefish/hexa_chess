@@ -82,8 +82,10 @@ public class UnitFactory
         MyStruct.UnitConfig unitConfig = unitConfigListSO.GetUnitConfig(armyTypeType);
         Unit unit = GameObject.Instantiate(armyPrefabList[armyTypeType] , parentGO[theOperator][MyEnum.UnitType.Army]).GetComponent<Unit>();
         unit.Init(theOperator , unitConfig , coord);
-        armyCntList[armyTypeType]++;
-        unit.UnitName = MyConst.ArmyName[armyTypeType] + armyCntList[armyTypeType].ToString();
+        if(theOperator == MyEnum.TheOperator.Player)
+            armyCntList[armyTypeType]++;
+        //unit.UnitName = MyConst.ArmyName[armyTypeType] + armyCntList[armyTypeType].ToString();
+        unit.UnitName = "第" + armyCntList[armyTypeType].ToString() + MyConst.ArmyName[armyTypeType] + "团";
         unit.transform.GetComponent<SpriteRenderer>().sprite = armySpriteList[armyTypeType][theOperator];
         return unit;
     }
@@ -94,9 +96,8 @@ public class UnitFactory
         Unit unit = GameObject.Instantiate(cityPrefabList[cityType] , parentGO[theOperator][MyEnum.UnitType.City]).GetComponent<Unit>();
         unit.Init(theOperator , unitConfig , coord);
         cityCntList[cityType]++;
-        if (unit.UnitType == MyEnum.UnitType.Army)
-            unit.UnitName = "第" + cityCntList[cityType].ToString() + MyConst.CityName[cityType] + "团";
-        else
+//        if (unit.UnitType == MyEnum.UnitType.Army)
+//        else
             unit.UnitName = "大本营";
 //        unit.UnitName = MyConst.CityName[cityType] + cityCntList[cityType].ToString();
         unit.transform.GetComponent<SpriteRenderer>().sprite = citySpriteList[cityType][theOperator];
