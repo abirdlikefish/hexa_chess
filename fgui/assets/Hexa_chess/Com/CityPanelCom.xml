@@ -4,7 +4,7 @@
     <loader id="n0_lr78" name="n0" xy="0,0" size="459,361" url="ui://wcwip4ahlr7819" autoSize="true">
       <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </loader>
-    <text id="n39_sgdj" name="CityNameTxt" xy="229,59" pivot="0.5,0.5" anchor="true" size="60,39" font="ui://wcwip4ahlr78v" fontSize="28" color="#ffffff" align="center" vAlign="middle" text="步兵">
+    <text id="n39_sgdj" name="CityNameTxt" xy="229,59" pivot="0.5,0.5" anchor="true" size="72,47" font="ui://wcwip4ahlr78v" fontSize="34" color="#ffffff" align="center" vAlign="middle" text="步兵">
       <relation target="n0_lr78" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </text>
     <image id="n36_sgdj" name="n36" src="sgdj1k" fileName="Resources/Panel/图标-血.png" xy="45,100" group="n27_lr78">
