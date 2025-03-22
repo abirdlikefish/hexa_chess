@@ -25,31 +25,31 @@ MonoBehaviour:
     atkOffset: 0
     defOffset: 1
     height: 0
-  - gridName: 
+  - gridName: "\u6CBC\u6CFD"
     gridType: 5
     moveCost: 1
     atkOffset: 0
     defOffset: -1
     height: 0
-  - gridName: 
+  - gridName: "\u4E18\u9675"
     gridType: 4
     moveCost: 1.5
     atkOffset: 1
-    defOffset: 1
+    defOffset: 0
     height: 0
-  - gridName: 
+  - gridName: "\u9053\u8DEF"
     gridType: 3
     moveCost: 0.5
     atkOffset: 0
     defOffset: 0
     height: 0
-  - gridName: 
+  - gridName: "\u6C34\u57DF"
     gridType: 2
     moveCost: 2
     atkOffset: 0
     defOffset: -1
     height: 0
-  - gridName: 
+  - gridName: "\u5E73\u539F"
     gridType: 1
     moveCost: 1
     atkOffset: 0

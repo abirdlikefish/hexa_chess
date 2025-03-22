@@ -66,6 +66,7 @@ public class CreateArmyCom : IFguiCom
         item.GetChild("HpTxt").text = midConfig.MaxHp.ToString();
         item.GetChild("MoveForceTxt").text = midConfig.Action.ToString();
         item.GetChild("AtkRangeTxt").text = midConfig.AttackRadius.ToString();
+        item.GetChild("CoinCostTxt").text = midConfig.Coin.ToString();
     }
     void SelectArmy(GComponent item)
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
+using static MyEnum;
 
 public interface UnitManagerAPI
 {
@@ -55,6 +56,10 @@ public class UnitManager : UnitManagerAPI
         InitUnitManager(MyEnum.TheOperator.Player);
         InitUnitManager(MyEnum.TheOperator.Enemy);
     }
+    public static void Init()
+    {
+        _instance = new UnitManager();
+    }
 
     public void InitUnitManager(MyEnum.TheOperator theOperator)
     {
@@ -70,7 +75,7 @@ public class UnitManager : UnitManagerAPI
         {
             if (_instance == null)
             {
-                _instance = new UnitManager();
+                Init();
             }
             return _instance;
         }
@@ -134,12 +139,12 @@ public class UnitManager : UnitManagerAPI
 
     public void RoundBeginOperation(MyEnum.TheOperator theOperator)
     {
-        // Debug.LogWarning("回合开始操作");
         currentCoin[theOperator] += GameManager.instance.globalSettingSO.Income;
         foreach (Unit unit in unitList[theOperator])
         {
             unit.RoundBeginCheck();
         }
+        Debug.LogWarning("回合开始操作 " + theOperator.ToString() + " 金币数" + currentCoin[theOperator]);
     }
 
     public void RoundEndOperation(MyEnum.TheOperator theOperator)
@@ -169,7 +174,7 @@ public class UnitManager : UnitManagerAPI
             Unit unit = unitFactory.LoadUnit(theOperator, coord, armyType);
             //单位加入管理器
             unitList[theOperator].Add(unit);
-            currentPopulation[theOperator]++;
+//            currentPopulation[theOperator]++;
             // MapManager.Instance.AddUnit(coord,unit);
             return true;
         }
@@ -193,7 +198,7 @@ public class UnitManager : UnitManagerAPI
     {
         Unit unit = midUnit as Unit;
         unitList[unit.TheOperator].Remove(unit);
-        if (unit.UnitType == MyEnum.UnitType.Army) currentPopulation[unit.TheOperator]--;
+        if (unit.UnitType == MyEnum.UnitType.Army) currentPopulation[unit.TheOperator]-= unitFactory.UnitConfigListSO.GetUnitConfig((midUnit as IArmy).ArmyType).Occupation;
         unit.Dead();
         return;
     }

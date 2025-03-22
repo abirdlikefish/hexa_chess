@@ -28,6 +28,7 @@ public interface IUnit
     int Atk { get; }
     int CurrentHP{get;}
     float MoveForce{get;}
+    float MaxMoveForce { get; }
 
     // int GetUnitHp();
 

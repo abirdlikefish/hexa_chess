@@ -40,6 +40,11 @@ public class PlayerRound : GameState
         MyEvent.EnterPlayerRound?.Invoke(true);
 
         DefaultSelectedUnit = UnitManager.Instance.GetAbleUnit(MyEnum.TheOperator.Player);
+
+
+        MyEvent.SetGlobalInfo?.Invoke(new Vector2(UnitManager.Instance.GetCoin(MyEnum.TheOperator.Player), GameManager.instance.globalSettingSO.Income),
+                                new Vector2(UnitManager.Instance.GetPopulation(MyEnum.TheOperator.Player), GameManager.instance.globalSettingSO.InitialPopulation),
+                                new Vector2(GameManager.instance.CurrentRoundsCounter(), 100));
     }
 
     public override void Exit()

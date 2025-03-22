@@ -16,7 +16,7 @@ MonoBehaviour:
   mapSize: 10
   showGridInfoWin_preTime: 0.5
   showGridInfoWin_minMoveDis: 1
-  InitialCoin: 68
-  InitialPopulation: 55
-  Income: 1
-  AIOperatorationInterval: 1
+  InitialCoin: 60
+  InitialPopulation: 100
+  Income: 8
+  AIOperatorationInterval: 0.5

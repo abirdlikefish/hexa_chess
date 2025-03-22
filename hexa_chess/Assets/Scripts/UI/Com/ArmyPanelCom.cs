@@ -76,8 +76,8 @@ public class ArmyPanelCom : IFguiCom
         if(unit != null && unit.UnitType == MyEnum.UnitType.Army)
         {
             atkTxt.text = (unit as IArmy).Atk.ToString();
-            hpTxt.text = (unit as IArmy).CurrentHP.ToString();
-            moveForceTxt.text = (unit as IArmy).MoveForce.ToString();
+            hpTxt.text = (unit as IArmy).CurrentHP.ToString() + "/" + (unit as IArmy).MaxHp.ToString();
+            moveForceTxt.text = (unit as IArmy).MoveForce.ToString() + "/" + (unit as IArmy).MaxMoveForce.ToString();
             atkRangeTxt.text = (unit as IArmy).AttackRadius.ToString();
             ArmyNameTxt.text = (unit as IArmy).UnitName;
             // ArmyNameTxt.text = "TestName";
