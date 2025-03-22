@@ -134,7 +134,9 @@ public class AIPlayer
                 continue;
             }
             double attackValue = 2.5 * AIHelper.Instance.GetAttackValue(pos) *
-                (0.4 + AIHelper.Instance.GetHPPercentage(attackUnit)) * (1.3 - 0.1 * enemyNum); ;
+                (0.4 + AIHelper.Instance.GetHPPercentage(attackUnit)) * (1.3 - 0.1 * enemyNum);
+            if (unit.Atk >= attackUnit.CurrentHP)
+                attackValue *= 3;
             attackValues.Add(attackUnit, attackValue);
         }
 
@@ -177,6 +179,8 @@ public class AIPlayer
                 }
                 double attackValue = 2.5 * AIHelper.Instance.GetAttackValue(attackPos) *
                     (0.4 + AIHelper.Instance.GetHPPercentage(attackUnit)) * (1.3 - 0.1 * enemyNum);
+                if (unit.Atk >= attackUnit.CurrentHP)
+                    attackValue *= 3;
                 double moveAttackValue = attackValue + 0.3 * homeDisDelta;
                 if (moveAttackValue > maxMoveAttackValue)
                 {
