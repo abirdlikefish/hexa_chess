@@ -94,7 +94,11 @@ public class UnitFactory
         Unit unit = GameObject.Instantiate(cityPrefabList[cityType] , parentGO[theOperator][MyEnum.UnitType.City]).GetComponent<Unit>();
         unit.Init(theOperator , unitConfig , coord);
         cityCntList[cityType]++;
-        unit.UnitName = MyConst.CityName[cityType] + cityCntList[cityType].ToString();
+        if (unit.UnitType == MyEnum.UnitType.Army)
+            unit.UnitName = "第" + cityCntList[cityType].ToString() + MyConst.CityName[cityType] + "团";
+        else
+            unit.UnitName = "大本营";
+//        unit.UnitName = MyConst.CityName[cityType] + cityCntList[cityType].ToString();
         unit.transform.GetComponent<SpriteRenderer>().sprite = citySpriteList[cityType][theOperator];
         return unit;
     }

@@ -42,6 +42,7 @@ public class PlayerRound_WaitInputAction : PlayerRoundState
     
     private void SelectedAttack()//点击了攻击按钮
     {
+        if (playerStateMachine.selectedUnit.GetStates() == MyEnum.UnitStates.Disable) return;
         playerStateMachine.ChangeState(MyEnum.PlayerRoundState.WaitInput_Enemy);
     }
 
