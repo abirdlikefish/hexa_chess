@@ -28,6 +28,7 @@ public class GridInfoWin : Window , IFguiWin
         base.OnShown();
         Vector2 midPos = Input.mousePosition;
         midPos.y = Screen.height - midPos.y;
+        midPos = GRoot.inst.GlobalToLocal(midPos);
         this.SetXY(midPos.x, midPos.y);
     }
 

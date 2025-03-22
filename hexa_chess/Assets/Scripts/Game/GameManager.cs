@@ -103,6 +103,15 @@ class GameManager : MonoBehaviour
     public void Update()
     {
         gameStateMachine.currentState.Update();
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.LogWarning("quit game");
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit()
+#endif
+        }
     }
 
     public void IncreaseRoundsCounter()
