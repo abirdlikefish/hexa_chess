@@ -4,14 +4,14 @@
     <loader id="n0_lr78" name="n0" xy="0,0" size="459,361" url="ui://wcwip4ahlr7819" autoSize="true">
       <relation target="" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </loader>
-    <text id="n39_sgdj" name="CityNameTxt" xy="229,59" pivot="0.5,0.5" anchor="true" size="60,39" fontSize="28" color="#ffffff" align="center" vAlign="middle" text="步兵">
+    <text id="n39_sgdj" name="CityNameTxt" xy="229,59" pivot="0.5,0.5" anchor="true" size="60,39" font="ui://wcwip4ahlr78v" fontSize="28" color="#ffffff" align="center" vAlign="middle" text="步兵">
       <relation target="n0_lr78" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </text>
     <image id="n36_sgdj" name="n36" src="sgdj1k" fileName="Resources/Panel/图标-血.png" xy="45,100" group="n27_lr78">
       <relation target="n0_lr78" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
     </image>
     <text id="n25_lr78" name="HpTxt" xy="256,90" size="27,55" group="n27_lr78" font="ui://wcwip4ahlr78v" fontSize="41" color="#ffd799" align="center" vAlign="middle" text="4"/>
-    <text id="n22_lr78" name="n22" xy="88,93" size="115,50" group="n27_lr78" font="ui://wcwip4ahlr78v" fontSize="37" color="#ffffff" align="center" vAlign="middle" text="生命值"/>
+    <text id="n22_lr78" name="n22" xy="88,93" size="114,50" group="n27_lr78" font="ui://wcwip4ahlr78v" fontSize="37" color="#ffffff" align="center" vAlign="middle" text="生命值"/>
     <group id="n27_lr78" name="n27" xy="45,90" size="238,55"/>
     <text id="n40_sgdj" name="DescribeTxt" xy="51,163" size="346,144" font="ui://wcwip4ahlr78v" fontSize="27" color="#ffd799" autoSize="none" text="啊大富科技阿萨德联发科啊上岛咖啡就开始打了飞机考拉空岛菲利克斯大那是"/>
   </displayList>
