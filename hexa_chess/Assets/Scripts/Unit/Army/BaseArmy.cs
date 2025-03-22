@@ -22,8 +22,8 @@ public class BaseArmy : Unit , IArmy
     public override void RoundBeginCheck()
     {
         base.RoundBeginCheck();
-        operationBuff = MyEnum.OperationBuff.Normal;
-        RefreshArmyInfoView();
+//s        operationBuff = MyEnum.OperationBuff.Normal;
+//        RefreshArmyInfoView();
     }
 
 
@@ -32,6 +32,8 @@ public class BaseArmy : Unit , IArmy
     {
         if (unitState == MyEnum.UnitStates.Able)
         {
+            operationBuff = MyEnum.OperationBuff.Normal;
+            RefreshArmyInfoView();
             Sequence sequence = DOTween.Sequence();
             Debug.Log($"Path Count:{path?.Count}");
             for(int i = path.Count - 2; i >= 0; i--)

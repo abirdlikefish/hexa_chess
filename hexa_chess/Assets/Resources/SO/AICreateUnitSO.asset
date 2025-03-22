@@ -19,6 +19,30 @@ MonoBehaviour:
     cityType: 1
     count: 1
     createPos: {x: 14, y: 13}
+  - round: 0
+    unitType: 1
+    armyType: 1
+    cityType: 0
+    count: 1
+    createPos: {x: 13, y: 13}
+  - round: 0
+    unitType: 1
+    armyType: 1
+    cityType: 0
+    count: 1
+    createPos: {x: 13, y: 14}
+  - round: 0
+    unitType: 1
+    armyType: 2
+    cityType: 0
+    count: 1
+    createPos: {x: 15, y: 12}
+  - round: 0
+    unitType: 1
+    armyType: 3
+    cityType: 0
+    count: 1
+    createPos: {x: 14, y: 12}
   - round: 1
     unitType: 1
     armyType: 1

@@ -14,4 +14,5 @@ public interface IArmy : IUnit
 
     bool Skip();//跳过
 
+
 }

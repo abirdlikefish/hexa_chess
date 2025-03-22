@@ -22,7 +22,7 @@
     <image id="lr78r" name="血条-无.png" path="/Resources/Panel/"/>
     <image id="lr78s" name="血条-有.png" path="/Resources/Panel/"/>
     <image id="lr78u" name="背景.png" path="/Resources/"/>
-    <font id="lr78v" name="Uranus_Pixel_11Px.ttf" path="/Resources/" renderMode="" samplePointSize="16"/>
+    <font id="lr78v" name="Uranus_Pixel_11Px.ttf" path="/Resources/" exported="true" renderMode="" samplePointSize="16"/>
     <component id="lr78w" name="ArmyPanelCom.xml" path="/Com/"/>
     <component id="lr78x" name="Btn_select.xml" path="/Com/"/>
     <component id="lr78y" name="SelectArmyBtn.xml" path="/Com/"/>
@@ -63,5 +63,5 @@
     <image id="rbnv21" name="退出游戏.png" path="/Resources/GameOver/"/>
     <component id="rbnv22" name="GameOverCom.xml" path="/Com/"/>
   </resources>
-  <publish name=""/>
+  <publish name="" path="E:\gamedev\自卫反击战\Hexa_chess\hexa_chess\Assets\Resources\fgui" packageCount="2"/>
 </packageDescription>

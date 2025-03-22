@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component size="167,206" extention="Button">
-  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="3"/>
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="1"/>
   <displayList>
     <loader id="n2_lr78" name="up" xy="0,0" size="167,206">
       <gearDisplay controller="button" pages="0"/>
@@ -16,18 +16,24 @@
     </loader>
     <loader id="n6_lr78" name="icon" xy="0,0" size="167,206"/>
     <image id="n7_sgdj" name="n7" src="sgdj1f" fileName="Resources/Army/弹窗1.png" xy="0,0" group="n26_sgdj"/>
-    <text id="n8_sgdj" name="ArmyNameTxt" xy="81,32" pivot="0.5,0.5" anchor="true" size="36,24" group="n26_sgdj" fontSize="16" color="#ffffff" align="center" vAlign="middle" text="步兵"/>
+    <text id="n8_sgdj" name="ArmyNameTxt" xy="81,32" pivot="0.5,0.5" anchor="true" size="36,24" group="n26_sgdj" font="ui://wcwip4ahlr78v" fontSize="16" color="#ffffff" align="center" vAlign="middle" text="步兵"/>
     <image id="n9_sgdj" name="n9" src="sgdj1k" fileName="Resources/Panel/图标-血.png" xy="37,48" size="27,36" group="n26_sgdj" scale="0.7,0.7"/>
-    <text id="n10_sgdj" name="HpTxt" xy="92,41" size="21,42" group="n26_sgdj" font="ui://wcwip4ahlr78v" fontSize="30" color="#ffd799" align="center" vAlign="middle" text="4"/>
+    <text id="n10_sgdj" name="HpTxt" xy="92,41" size="21,41" group="n26_sgdj" font="ui://wcwip4ahlr78v" fontSize="30" color="#ffd799" align="center" vAlign="middle" text="4"/>
     <image id="n13_sgdj" name="n13" src="sgdj1l" fileName="Resources/Panel/图标-行动力.png" xy="31,78" size="38,38" group="n26_sgdj" scale="0.7,0.7"/>
-    <text id="n15_sgdj" name="MoveForceTxt" xy="92,72" size="21,42" group="n26_sgdj" font="ui://wcwip4ahlr78v" fontSize="30" color="#ffd799" align="center" vAlign="middle" text="4"/>
-    <text id="n17_sgdj" name="AtkTxt" xy="92,103" size="21,42" group="n26_sgdj" font="ui://wcwip4ahlr78v" fontSize="30" color="#ffd799" align="center" vAlign="middle" text="4"/>
+    <text id="n15_sgdj" name="MoveForceTxt" xy="92,72" size="21,41" group="n26_sgdj" font="ui://wcwip4ahlr78v" fontSize="30" color="#ffd799" align="center" vAlign="middle" text="4"/>
+    <text id="n17_sgdj" name="AtkTxt" xy="92,103" size="21,41" group="n26_sgdj" font="ui://wcwip4ahlr78v" fontSize="30" color="#ffd799" align="center" vAlign="middle" text="4"/>
     <image id="n18_sgdj" name="n18" src="lr78h" fileName="Resources/Panel/攻击力.png" xy="34,112" size="33,33" group="n26_sgdj" scale="0.7,0.7"/>
-    <text id="n21_sgdj" name="AtkRangeTxt" xy="93,135" size="19,42" group="n26_sgdj" font="ui://wcwip4ahlr78v" fontSize="30" color="#ffd799" align="center" vAlign="middle" text="5"/>
+    <text id="n21_sgdj" name="AtkRangeTxt" xy="93,135" size="19,41" group="n26_sgdj" font="ui://wcwip4ahlr78v" fontSize="30" color="#ffd799" align="center" vAlign="middle" text="5"/>
     <image id="n22_sgdj" name="n22" src="lr78f" fileName="Resources/Panel/范围.png" xy="34,143" size="33,34" group="n26_sgdj" scale="0.7,0.7"/>
     <group id="n26_sgdj" name="n26" xy="0,0" size="167,206" advanced="true">
       <gearDisplay controller="button" pages="1,3"/>
     </group>
+    <image id="n27_9jh4" name="n27" src="sgdj1i" fileName="Resources/金币.png" xy="42,180" size="35,29" aspect="true" scale="0.989,1">
+      <relation target="n26_sgdj" sidePair="width-width%,height-height%,center-center%,middle-middle%"/>
+    </image>
+    <text id="n29_9jh4" name="CoinCostTxt" xy="84,172" size="19,41" font="ui://wcwip4ahlr78v" fontSize="30" color="#ffd799" align="center" vAlign="middle" text="5">
+      <relation target="n27_9jh4" sidePair=""/>
+    </text>
   </displayList>
   <Button mode="Check"/>
 </component>

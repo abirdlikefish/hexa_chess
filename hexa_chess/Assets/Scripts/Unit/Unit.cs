@@ -23,6 +23,7 @@ public class Unit : MonoBehaviour, IUnit
     public virtual int CurrentHP {get {return currentHp;} set{currentHp = value;}}
 
     protected float maxMoveForce;
+    public float MaxMoveForce => maxMoveForce;
     private float moveForce;//当前行动力
     public float MoveForce {get {return moveForce;} set{moveForce = value;}}
 
@@ -123,6 +124,7 @@ public class Unit : MonoBehaviour, IUnit
     public void RecoverHp(int hp)
     {
         CurrentHP += hp;
+        if(CurrentHP > MaxHp)   CurrentHP= MaxHp;
     }
 
     public MyEnum.UnitStates GetStates()

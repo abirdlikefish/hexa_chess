@@ -17,14 +17,14 @@ MonoBehaviour:
     unitType: 1
     armyType: 3
     cityType: 0
-    MaxHp: 8
-    Action: 4
-    Atk: 3
+    MaxHp: 13
+    Action: 3
+    Atk: 4
     Def: 0
     AttackRadius: 1
     viewRange: 3
     movingSpeed: 2.68
-    Coin: 20
+    Coin: 25
     Occupation: 2
     HaveZOC: 1
     creatableArmy: 
@@ -33,14 +33,14 @@ MonoBehaviour:
     unitType: 1
     armyType: 2
     cityType: 0
-    MaxHp: 3
+    MaxHp: 8
     Action: 2
-    Atk: 3
+    Atk: 4
     Def: 0
     AttackRadius: 2
     viewRange: 4
     movingSpeed: 2.68
-    Coin: 10
+    Coin: 12
     Occupation: 1
     HaveZOC: 0
     creatableArmy: 
@@ -49,14 +49,14 @@ MonoBehaviour:
     unitType: 1
     armyType: 1
     cityType: 0
-    MaxHp: 5
+    MaxHp: 10
     Action: 3
-    Atk: 2
+    Atk: 3
     Def: 0
     AttackRadius: 1
     viewRange: 3
     movingSpeed: 2.68
-    Coin: 5
+    Coin: 8
     Occupation: 1
     HaveZOC: 0
     creatableArmy: 
@@ -66,7 +66,7 @@ MonoBehaviour:
     unitType: 2
     armyType: 0
     cityType: 1
-    MaxHp: 10
+    MaxHp: 25
     Action: 0
     Atk: 0
     Def: 0
@@ -77,4 +77,4 @@ MonoBehaviour:
     Occupation: 0
     HaveZOC: 1
     creatableArmy: 010000000200000003000000
-    createArmyRange: 2
+    createArmyRange: 3

@@ -48,11 +48,12 @@ class GameManager : MonoBehaviour
         {
             instance = this;
         }
+        InitializeAllValue();
+        UnitManager.Init();
         MapManager.Init();
         UIManager.Init();
         // gameStateMachine = new GameStateMachine();
 
-        InitializeAllValue();
         gameStateMachine = GameStateMachine.Instance;
 
 
@@ -69,6 +70,11 @@ class GameManager : MonoBehaviour
         gameStateMachine.Initialize();
         gameStateMachine.ChangeState(MyEnum.GameState.PlayerRound);
         gameStateMachine.SynchronousHp(PlayerHP, EnemyHP);
+
+
+        MyEvent.SetGlobalInfo?.Invoke(new Vector2(UnitManager.Instance.GetCoin(MyEnum.TheOperator.Player), GameManager.instance.globalSettingSO.Income),
+                                new Vector2(UnitManager.Instance.GetPopulation(MyEnum.TheOperator.Player), GameManager.instance.globalSettingSO.InitialPopulation),
+                                new Vector2(GameManager.instance.CurrentRoundsCounter(), 100));
 
 
         // MyEvent.OnClick_testBtn += ChangeGameState;
