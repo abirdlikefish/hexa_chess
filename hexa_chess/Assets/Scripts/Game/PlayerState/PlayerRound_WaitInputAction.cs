@@ -54,7 +54,7 @@ public class PlayerRound_WaitInputAction : PlayerRoundState
             return;
         }
         playerStateMachine.selectedUnit = MapManager.Instance.GetUnit(coord.Value , MyEnum.UnitType.City) ?? MapManager.Instance.GetUnit(coord.Value , MyEnum.UnitType.Army);
-        if(playerStateMachine.selectedUnit == null || playerStateMachine.selectedUnit.TheOperator != MyEnum.TheOperator.Player)
+        if(playerStateMachine.selectedUnit == null || playerStateMachine.selectedUnit.TheOperator != MyEnum.TheOperator.Player || playerStateMachine.selectedUnit.UnitType== MyEnum.UnitType.City)
         {
             Cancel();
             return;
